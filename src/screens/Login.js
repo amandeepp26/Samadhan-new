@@ -20,8 +20,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {StackActions} from '@react-navigation/native';
 import {communication} from '../utils/communication';
 import Button from '../components/Button';
+import Provider from '../api/Provider';
 
-const Login = ({route, navigation}) => {
+const Login = ({route, navigation, loginUser}) => {
   //#region Variables
   const [snackbarText, setSnackbarText] = React.useState('');
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
@@ -30,13 +31,11 @@ const Login = ({route, navigation}) => {
   const [username, setUsername] = React.useState('');
   const [isPasswordInvalid, setIsPasswordInvalid] = React.useState(false);
   const [password, setPassword] = React.useState('');
-  //#endregion
 
   React.useEffect(() => {
     if (route.params?.mobile) {
       setUsername(route.params?.mobile);
     }
-
     // const unsubscribe = navigation.addListener('blur', e => {
     //   route.params.setUserFunc();
     // });
@@ -65,98 +64,98 @@ const Login = ({route, navigation}) => {
   const StoreUserData = async user => {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(user));
-      navigation.dispatch(StackActions.replace('HomeStack'));
+      loginUser();
     } catch (error) {}
   };
-//   const CheckLogin = () => {
-//     setIsButtonLoading(true);
-//     let params = {
-//       data: {
-//         uname: username,
-//         auth: password,
-//       },
-//     };
-//     console.log('params:**********', params, '*======================*');
-//     Provider.createDFCommon(Provider.API_URLS.LoginCheck, params)
-//       .then(response => {
-//         console.log(
-//           'resp===========:',
-//           response.data.data,
-//           '=======================',
-//         );
-//         console.log(params);
-//         console.log('resp:', response.data);
-//         if (response.data && response.data.code === 200) {
-//           GetUserDetails(response.data.data.user_refno);
-//         } else {
-//           setSnackbarText(communication.InvalidUserNotExists);
-//           setIsSnackbarVisible(true);
-//         }
-//         setIsButtonLoading(false);
-//       })
-//       .catch(e => {
-//         console.log(e);
-//         setSnackbarText(e.message);
-//         setIsSnackbarVisible(true);
-//         setIsButtonLoading(false);
-//       });
-//   };
-//   const GetUserDetails = user_refno => {
-//     setIsButtonLoading(true);
-//     let params = {
-//       data: {
-//         user_refno: user_refno,
-//       },
-//     };
-//     Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
-//       .then(response => {
-//         if (response.data && response.data.code === 200) {
-//           const user = {
-//             UserID: response.data.data.Sess_UserRefno,
-//             FullName:
-//               response.data.data.Sess_FName === ''
-//                 ? response.data.data.Sess_Username
-//                 : response.data.data.Sess_FName,
-//             RoleID: response.data.data.Sess_group_refno,
-//             RoleName: response.data.data.Sess_Username,
-//             Sess_FName: response.data.data.Sess_FName,
-//             Sess_MobileNo: response.data.data.Sess_MobileNo,
-//             Sess_Username: response.data.data.Sess_Username,
-//             Sess_role_refno: response.data.data.Sess_role_refno,
-//             Sess_group_refno: response.data.data.Sess_group_refno,
-//             Sess_designation_refno: response.data.data.Sess_designation_refno,
-//             Sess_locationtype_refno: response.data.data.Sess_locationtype_refno,
-//             Sess_group_refno_extra_1:
-//               response.data.data.Sess_group_refno_extra_1,
-//             Sess_if_create_brand: response.data.data.Sess_if_create_brand,
-//             Sess_User_All_GroupRefnos:
-//               response.data.data.Sess_User_All_GroupRefnos,
-//             Sess_branch_refno: response.data.data.Sess_branch_refno,
-//             Sess_company_refno: response.data.data.Sess_company_refno,
-//             Sess_CompanyAdmin_UserRefno:
-//               response.data.data.Sess_CompanyAdmin_UserRefno,
-//             Sess_CompanyAdmin_group_refno:
-//               response.data.data.Sess_CompanyAdmin_group_refno,
-//             Sess_RegionalOffice_Branch_Refno:
-//               response.data.data.Sess_RegionalOffice_Branch_Refno,
-//             Sess_menu_refno_list: response.data.data.Sess_menu_refno_list,
-//             Sess_empe_refno: response.data.data.Sess_empe_refno,
-//             Sess_profile_address: response.data.data.Sess_profile_address,
-//           };
+  const CheckLogin = () => {
+    setIsButtonLoading(true);
+    let params = {
+      data: {
+        uname: username,
+        auth: password,
+      },
+    };
+    console.log('params:**********', params, '*======================*');
+    Provider.createDFCommon(Provider.API_URLS.LoginCheck, params)
+      .then(response => {
+        console.log(
+          'resp===========:',
+          response.data.data,
+          '=======================',
+        );
+        console.log(params);
+        console.log('resp:', response.data);
+        if (response.data && response.data.code === 200) {
+          GetUserDetails(response.data.data.user_refno);
+        } else {
+          setSnackbarText(communication.InvalidUserNotExists);
+          setIsSnackbarVisible(true);
+        }
+        setIsButtonLoading(false);
+      })
+      .catch(e => {
+        console.log(e);
+        setSnackbarText(e.message);
+        setIsSnackbarVisible(true);
+        setIsButtonLoading(false);
+      });
+  };
+  const GetUserDetails = user_refno => {
+    setIsButtonLoading(true);
+    let params = {
+      data: {
+        user_refno: user_refno,
+      },
+    };
+    Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
+      .then(response => {
+        if (response.data && response.data.code === 200) {
+          const user = {
+            UserID: response.data.data.Sess_UserRefno,
+            FullName:
+              response.data.data.Sess_FName === ''
+                ? response.data.data.Sess_Username
+                : response.data.data.Sess_FName,
+            RoleID: response.data.data.Sess_group_refno,
+            RoleName: response.data.data.Sess_Username,
+            Sess_FName: response.data.data.Sess_FName,
+            Sess_MobileNo: response.data.data.Sess_MobileNo,
+            Sess_Username: response.data.data.Sess_Username,
+            Sess_role_refno: response.data.data.Sess_role_refno,
+            Sess_group_refno: response.data.data.Sess_group_refno,
+            Sess_designation_refno: response.data.data.Sess_designation_refno,
+            Sess_locationtype_refno: response.data.data.Sess_locationtype_refno,
+            Sess_group_refno_extra_1:
+              response.data.data.Sess_group_refno_extra_1,
+            Sess_if_create_brand: response.data.data.Sess_if_create_brand,
+            Sess_User_All_GroupRefnos:
+              response.data.data.Sess_User_All_GroupRefnos,
+            Sess_branch_refno: response.data.data.Sess_branch_refno,
+            Sess_company_refno: response.data.data.Sess_company_refno,
+            Sess_CompanyAdmin_UserRefno:
+              response.data.data.Sess_CompanyAdmin_UserRefno,
+            Sess_CompanyAdmin_group_refno:
+              response.data.data.Sess_CompanyAdmin_group_refno,
+            Sess_RegionalOffice_Branch_Refno:
+              response.data.data.Sess_RegionalOffice_Branch_Refno,
+            Sess_menu_refno_list: response.data.data.Sess_menu_refno_list,
+            Sess_empe_refno: response.data.data.Sess_empe_refno,
+            Sess_profile_address: response.data.data.Sess_profile_address,
+          };
 
-//           StoreUserData(user, navigation);
-//         } else {
-//           setSnackbarText(communication.InvalidUserNotExists);
-//           setIsSnackbarVisible(true);
-//         }
-//         setIsButtonLoading(false);
-//       })
-//       .catch(e => {
-//         setSnackbarText(e.message);
-//         setIsSnackbarVisible(true);
-//         setIsButtonLoading(false);
-//       });
-//   };
+          StoreUserData(user, navigation);
+        } else {
+          setSnackbarText(communication.InvalidUserNotExists);
+          setIsSnackbarVisible(true);
+        }
+        setIsButtonLoading(false);
+      })
+      .catch(e => {
+        setSnackbarText(e.message);
+        setIsSnackbarVisible(true);
+        setIsButtonLoading(false);
+      });
+  };
   const ValidateLogin = () => {
     Keyboard.dismiss();
     let isValid = true;
@@ -172,6 +171,7 @@ const Login = ({route, navigation}) => {
       CheckLogin();
     }
   };
+
   const NewUser = () => {
     setUsername('');
     setPassword('');
@@ -237,10 +237,14 @@ const Login = ({route, navigation}) => {
               onChangeText={onUsernameChanged}
               error={isUsernameInvalid}
             />
-
-            <HelperText type="error" visible={isUsernameInvalid}>
-              {communication.InvalidUsername}
-            </HelperText>
+            {isUsernameInvalid && (
+              <HelperText
+                style={{marginLeft: 10}}
+                type="error"
+                visible={isUsernameInvalid}>
+                {communication.InvalidUsername}
+              </HelperText>
+            )}
             <TextInput
               underlineColor="transparent"
               style={Styles.textinput}
@@ -251,13 +255,18 @@ const Login = ({route, navigation}) => {
               onChangeText={onPasswordChanged}
               error={isPasswordInvalid}
             />
-            <HelperText type="error" visible={isPasswordInvalid}>
-              {communication.InvalidPassowrd}
-            </HelperText>
+            {isPasswordInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10}}
+                visible={isPasswordInvalid}>
+                {communication.InvalidPassowrd}
+              </HelperText>
+            )}
             <Pressable
               mode="text"
               uppercase={false}
-              style={[Styles.flexAlignEnd, {marginTop: -12, marginRight: 20}]}
+              style={[Styles.flexAlignEnd, {marginTop: 10, marginRight: 20}]}
               onPress={() => ForgotPassword()}>
               <Text
                 style={[
@@ -268,41 +277,32 @@ const Login = ({route, navigation}) => {
                 Forgot Password?{' '}
               </Text>
             </Pressable>
-            <Button text={'Login'} />
-            <View>
-              <View
-                style={[
-                  Styles.marginTop32,
-                  //   Styles.marginHorizontal24,
-                  Styles.flexJustifyCenter,
-                  Styles.flexAlignCenter,
-                  Styles.borderBottom1,
-                  {
-                    borderColor: 'black',
-                  },
-                ]}></View>
-              <View
-                style={[
-                  Styles.flexAlignSelfCenter,
-                  Styles.flexAlignCenter,
-                  Styles.width32,
-                  Styles.backgroundColor,
-                  {marginTop: -10},
-                ]}>
-                <Text>OR</Text>
-              </View>
-              <Title
-                onPress={() => NewUser()}
-                style={[
-                  Styles.padding24,
-                  Styles.fontBold,
-                  Styles.fontSize14,
-                  Styles.primaryColor,
-                  Styles.textCenter,
-                ]}>
-                New user
-              </Title>
+            <Button
+              text={'Login'}
+              isButtonLoading={isButtonLoading}
+              onPress={ValidateLogin}
+            />
+
+            <View
+              style={[
+                Styles.marginTop32,
+                {flexDirection: 'row', alignItems: 'center'},
+              ]}>
+              <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+              <Text style={{marginHorizontal: 10, color: 'black'}}>OR</Text>
+              <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
             </View>
+            <Title
+              onPress={() => NewUser()}
+              style={[
+                Styles.padding24,
+                Styles.fontBold,
+                Styles.fontSize14,
+                Styles.primaryColor,
+                Styles.textCenter,
+              ]}>
+              New user
+            </Title>
           </View>
         </View>
       </ScrollView>

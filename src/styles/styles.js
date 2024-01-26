@@ -5,7 +5,7 @@ export const Styles = StyleSheet.create({
   textinput: {
     borderRadius: 10,
     backgroundColor: '#f0f0f0',
-    width: '85%',
+    width: '90%',
     fontSize: 13,
     alignSelf: 'center',
     shadowColor: theme.colors.textDark,
@@ -19,8 +19,7 @@ export const Styles = StyleSheet.create({
     borderColor: '#d0d0d0',
     elevation: 2,
     paddingLeft: 20,
-    marginTop: -5,
-    marginBottom: -10,
+    marginTop: 15,
   },
   /* #region Colors */
   primaryColor: {

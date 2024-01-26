@@ -1,5 +1,5 @@
 import {View, Image, ScrollView, Keyboard,TextInput, Pressable, StyleSheet} from 'react-native';
-import {Snackbar, Title, HelperText, Text} from 'react-native-paper';
+import {Snackbar, Title, HelperText, Text, ActivityIndicator} from 'react-native-paper';
 import {Styles} from '../styles/styles';
 import React from 'react';
 import {theme} from '../theme/apptheme';
@@ -8,19 +8,33 @@ import {StackActions} from '@react-navigation/native';
 import {communication} from '../utils/communication';
 import Button from '../components/Button';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import Provider from '../api/Provider';
+import { ValidateFullName, ValidateMobile } from '../utils/validations';
 
 const Signup = ({route, navigation}) => {
   //#region Variables
   const [snackbarText, setSnackbarText] = React.useState('');
   const [isSnackbarVisible, setIsSnackbarVisible] = React.useState(false);
-  const [isUsernameInvalid, setIsUsernameInvalid] = React.useState(false);
+
+  const [isFullNameInvalid, setIsFullNameInvalid] = React.useState(false);
+  const [fullName, setFullName] = React.useState('');
+
+  const [isMobileNumberInvalid, setIsMobileNumberInvalid] =
+    React.useState(false);
+  const [mobileNumber, setMobileNumber] = React.useState('');
+  const [isotploading, setisotploading] = React.useState(false);
+
   const [isButtonLoading, setIsButtonLoading] = React.useState(false);
-  const [username, setUsername] = React.useState('');
-  const [mobile, setMobile] = React.useState('');
+
   const [isPasswordInvalid, setIsPasswordInvalid] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [isConfirmPasswordInvalid, setIsConfirmPasswordInvalid] =
+    React.useState(false);
   const [otp, setOtp] = React.useState('');
+  const [isOTPInvalid, setIsOTPInvalid] = React.useState(false);
+
+  const [otpButtonDisabled, setOTPButtonDisabled] = React.useState(false);
 
   //#endregion
 
@@ -37,20 +51,29 @@ const Signup = ({route, navigation}) => {
 
   //#region Events
 
-  const onUsernameChanged = text => {
-    setUsername(text);
+  const onFullNameChanged = text => {
+    setFullName(text);
     setIsSnackbarVisible(false);
     if (text.length > 0) {
-      setIsUsernameInvalid(false);
+      setIsFullNameInvalid(false);
     }
   };
-   const onMobileChanged = text => {
-     setMobile(text);
-     setIsSnackbarVisible(false);
-     if (text.length > 0) {
-       setIsUsernameInvalid(false);
-     }
-   };
+  const onMobileNumberChanged = text => {
+    setMobileNumber(text);
+    setIsSnackbarVisible(false);
+    if (text.length > 0) {
+      setIsMobileNumberInvalid(false);
+    } else {
+      setOtp('');
+      setOTPButtonDisabled(false);
+    }
+  };
+  const onOtpChange = text => {
+    setOtp(text);
+    if (text.length > 0) {
+      setIsOTPInvalid(false);
+    }
+  };
   const onPasswordChanged = text => {
     setPassword(text);
     setIsSnackbarVisible(false);
@@ -58,132 +81,116 @@ const Signup = ({route, navigation}) => {
       setIsPasswordInvalid(false);
     }
   };
+  const onConfirmPasswordChanged = text => {
+    setConfirmPassword(text);
+    setIsSnackbarVisible(false);
+    if (text.length > 0) {
+      setIsConfirmPasswordInvalid(false);
+    }
+  };
   //#endregion
 
-  //#region Api calling
-  const StoreUserData = async user => {
-    try {
-      await AsyncStorage.setItem('user', JSON.stringify(user));
-      navigation.dispatch(StackActions.replace('HomeStack'));
-    } catch (error) {}
+  //#region API calling
+  const GETOTP = () => {
+    setisotploading(true);
+    const params = {
+      data: {
+        Mobileno: mobileNumber,
+        EntryFrom: 1,
+      },
+    };
+    Provider.createDFCommon(Provider.API_URLS.MobileCheck, params)
+      .then(response => {
+        console.log('otp is---->',response.data)
+        if (response.data && response.data.code === 200) {
+          let otp = response.data.data.OTP_No;
+          if (otp !== undefined && otp !== null) {
+            setOtp(otp.toString());
+            setisotploading(false)
+          }
+        } else if (response.data.code === 304) {
+          setSnackbarText(communication.AlreadyExists);
+          setIsSnackbarVisible(true);
+        } else {
+          setSnackbarText(response.data.message);
+          setIsSnackbarVisible(true);
+        }
+        setisotploading(false);
+      })
+      .catch(e => {
+        setSnackbarText(e.message);
+        setIsSnackbarVisible(true);
+        setisotploading(false);
+      });
   };
-  //   const CheckLogin = () => {
-  //     setIsButtonLoading(true);
-  //     let params = {
-  //       data: {
-  //         uname: username,
-  //         auth: password,
-  //       },
-  //     };
-  //     console.log('params:**********', params, '*======================*');
-  //     Provider.createDFCommon(Provider.API_URLS.LoginCheck, params)
-  //       .then(response => {
-  //         console.log(
-  //           'resp===========:',
-  //           response.data.data,
-  //           '=======================',
-  //         );
-  //         console.log(params);
-  //         console.log('resp:', response.data);
-  //         if (response.data && response.data.code === 200) {
-  //           GetUserDetails(response.data.data.user_refno);
-  //         } else {
-  //           setSnackbarText(communication.InvalidUserNotExists);
-  //           setIsSnackbarVisible(true);
-  //         }
-  //         setIsButtonLoading(false);
-  //       })
-  //       .catch(e => {
-  //         console.log(e);
-  //         setSnackbarText(e.message);
-  //         setIsSnackbarVisible(true);
-  //         setIsButtonLoading(false);
-  //       });
-  //   };
-  //   const GetUserDetails = user_refno => {
-  //     setIsButtonLoading(true);
-  //     let params = {
-  //       data: {
-  //         user_refno: user_refno,
-  //       },
-  //     };
-  //     Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
-  //       .then(response => {
-  //         if (response.data && response.data.code === 200) {
-  //           const user = {
-  //             UserID: response.data.data.Sess_UserRefno,
-  //             FullName:
-  //               response.data.data.Sess_FName === ''
-  //                 ? response.data.data.Sess_Username
-  //                 : response.data.data.Sess_FName,
-  //             RoleID: response.data.data.Sess_group_refno,
-  //             RoleName: response.data.data.Sess_Username,
-  //             Sess_FName: response.data.data.Sess_FName,
-  //             Sess_MobileNo: response.data.data.Sess_MobileNo,
-  //             Sess_Username: response.data.data.Sess_Username,
-  //             Sess_role_refno: response.data.data.Sess_role_refno,
-  //             Sess_group_refno: response.data.data.Sess_group_refno,
-  //             Sess_designation_refno: response.data.data.Sess_designation_refno,
-  //             Sess_locationtype_refno: response.data.data.Sess_locationtype_refno,
-  //             Sess_group_refno_extra_1:
-  //               response.data.data.Sess_group_refno_extra_1,
-  //             Sess_if_create_brand: response.data.data.Sess_if_create_brand,
-  //             Sess_User_All_GroupRefnos:
-  //               response.data.data.Sess_User_All_GroupRefnos,
-  //             Sess_branch_refno: response.data.data.Sess_branch_refno,
-  //             Sess_company_refno: response.data.data.Sess_company_refno,
-  //             Sess_CompanyAdmin_UserRefno:
-  //               response.data.data.Sess_CompanyAdmin_UserRefno,
-  //             Sess_CompanyAdmin_group_refno:
-  //               response.data.data.Sess_CompanyAdmin_group_refno,
-  //             Sess_RegionalOffice_Branch_Refno:
-  //               response.data.data.Sess_RegionalOffice_Branch_Refno,
-  //             Sess_menu_refno_list: response.data.data.Sess_menu_refno_list,
-  //             Sess_empe_refno: response.data.data.Sess_empe_refno,
-  //             Sess_profile_address: response.data.data.Sess_profile_address,
-  //           };
-
-  //           StoreUserData(user, navigation);
-  //         } else {
-  //           setSnackbarText(communication.InvalidUserNotExists);
-  //           setIsSnackbarVisible(true);
-  //         }
-  //         setIsButtonLoading(false);
-  //       })
-  //       .catch(e => {
-  //         setSnackbarText(e.message);
-  //         setIsSnackbarVisible(true);
-  //         setIsButtonLoading(false);
-  //       });
-  //   };
-  const ValidateLogin = () => {
+  const InsertNewUser = () => {
+    setIsButtonLoading(true);
+    const params = {
+      data: {
+        Mobileno: mobileNumber,
+        firstname: fullName,
+        auth: password,
+        confirm_password: password,
+        EntryFrom: 'App',
+      },
+    };
+    Provider.createDFCommon(Provider.API_URLS.NewUserProfile, params)
+      .then(response => {
+        if (response.data && response.data.code === 200) {
+          navigation.navigate('Login', {mobile: mobileNumber});
+        } else if (response.data.code === 304) {
+          setSnackbarText(communication.AlreadyExists);
+          setIsSnackbarVisible(true);
+        } else {
+          setSnackbarText(communication.NoData);
+          setIsSnackbarVisible(true);
+        }
+        setIsButtonLoading(false);
+      })
+      .catch(e => {
+        setSnackbarText(e.message);
+        setIsSnackbarVisible(true);
+        setIsButtonLoading(false);
+      });
+  };
+  const ValidateSignup = () => {
     Keyboard.dismiss();
     let isValid = true;
-    if (username.length === 0) {
+    if (fullName.length === 0 || !ValidateFullName(fullName)) {
       isValid = false;
-      setIsUsernameInvalid(true);
+      setIsFullNameInvalid(true);
+    }
+    if (
+      mobileNumber.length === 0 ||
+      !ValidateMobile(mobileNumber) ||
+      mobileNumber.length != 10
+    ) {
+      isValid = false;
+      setIsMobileNumberInvalid(true);
+    }
+    if (
+      otp.length === 0
+    ) {
+      isValid = false;
+      setIsOTPInvalid(true);
     }
     if (password.length < 3) {
       isValid = false;
       setIsPasswordInvalid(true);
     }
-    if (isValid) {
-      CheckLogin();
+    if (confirmPassword.length < 3) {
+      isValid = false;
+      setIsConfirmPasswordInvalid(true);
     }
-  };
-  const NewUser = () => {
-    setUsername('');
-    setPassword('');
-    setIsUsernameInvalid(false);
-    setIsPasswordInvalid(false);
-    navigation.navigate('Signup');
-  };
-  const ForgotPassword = () => {
-    setUsername('');
-    setPassword('');
-    setIsUsernameInvalid(false);
-    setIsPasswordInvalid(false);
-    navigation.navigate('ForgotPassword');
+    if (isValid) {
+      if (password !== confirmPassword) {
+        setIsConfirmPasswordInvalid(true);
+        setSnackbarText(communication.InvalidPasswordsMatch);
+        setIsSnackbarVisible(true);
+      } else {
+        InsertNewUser();
+      }
+    }
   };
   //#endregion
 
@@ -228,69 +235,99 @@ const Signup = ({route, navigation}) => {
 
             <TextInput
               underlineColor="transparent"
-              style={[Styles.textinput, {marginTop: 5}]}
+              style={[Styles.textinput]}
               dense
               placeholder="Mobile number"
               autoComplete="username"
-              keyboardType='numeric'
-              value={mobile}
+              keyboardType="numeric"
+              value={mobileNumber}
               maxLength={10}
-              onChangeText={onMobileChanged}
-              error={isUsernameInvalid}
+              onChangeText={onMobileNumberChanged}
+              error={isMobileNumberInvalid}
             />
-
-            <HelperText type="error" visible={isUsernameInvalid}>
-              {communication.InvalidMobileNumber}
-            </HelperText>
+            {isMobileNumberInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10, marginBottom: -10}}
+                visible={isMobileNumberInvalid}>
+                {communication.InvalidMobileNumber}
+              </HelperText>
+            )}
             <TextInput
               underlineColor="transparent"
               style={[Styles.textinput]}
               dense
               placeholder="Full name"
               autoComplete="username"
-              value={username}
-              onChangeText={onUsernameChanged}
-              error={isUsernameInvalid}
+              value={fullName}
+              onChangeText={onFullNameChanged}
+              error={isFullNameInvalid}
             />
-
-            <HelperText type="error" visible={isUsernameInvalid}>
-              {communication.InvalidFullname}
-            </HelperText>
-            <View style={{alignItems:'center',flexDirection:'row',alignSelf:'center',width:'85%'}}>
+            {isFullNameInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10, marginBottom: -10}}
+                visible={isFullNameInvalid}>
+                {communication.InvalidFullname}
+              </HelperText>
+            )}
+            <View
+              style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+                alignSelf: 'center',
+                width: '85%',
+              }}>
               <OTPInputView
                 style={{
                   width: '72%',
                   alignSelf: 'center',
-                  // marginTop: 30,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 30,
-                  marginBottom: 20,
+                  height: 10,
                 }}
                 pinCount={4}
                 code={otp}
                 autoFocusOnLoad
                 keyboardType="number-pad"
-                onCodeChanged={(e) => setOtp(e)}
+                error={isOTPInvalid}
+                onCodeChanged={onOtpChange}
                 // onCodeFilled={(e) => dispatch(setOTP(e))}
                 codeInputFieldStyle={style.underlineStyleBase}
                 codeInputHighlightStyle={style.underlineStyleHighLighted}
               />
               <Title
+                onPress={() => GETOTP()}
+                disabled={otpButtonDisabled}
                 style={[
                   Styles.padding24,
                   Styles.fontBold,
                   Styles.fontSize13,
                   Styles.primaryColor,
-                  // Styles.textCenter,
-                  {paddingTop:0,marginLeft:3,}
+                  Styles.textCenter,
+                  {marginLeft: 3},
                 ]}>
-               GET OTP
+                {isotploading ? (
+                  <ActivityIndicator
+                    size={'small'}
+                    color={theme.colors.primary}
+                  />
+                ) : (
+                  'GET OTP'
+                )}
               </Title>
             </View>
+            {isOTPInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10, marginTop: -15, marginBottom: 5}}
+                visible={isOTPInvalid}>
+                {communication.InvalidOTP}
+              </HelperText>
+            )}
             <TextInput
               underlineColor="transparent"
-              style={[Styles.textinput]}
+              style={[Styles.textinput, {marginTop: 0}]}
               dense
               secureTextEntry={true}
               placeholder="Create Password"
@@ -298,9 +335,14 @@ const Signup = ({route, navigation}) => {
               onChangeText={onPasswordChanged}
               error={isPasswordInvalid}
             />
-            <HelperText type="error" visible={isPasswordInvalid}>
-              {communication.InvalidPassowrd}
-            </HelperText>
+            {isPasswordInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10, marginBottom: -10}}
+                visible={isPasswordInvalid}>
+                {communication.InvalidPassowrd}
+              </HelperText>
+            )}
             <TextInput
               underlineColor="transparent"
               style={[Styles.textinput]}
@@ -308,15 +350,30 @@ const Signup = ({route, navigation}) => {
               secureTextEntry={true}
               placeholder="Confirm Password"
               value={confirmPassword}
-              onChangeText={(e)=>setConfirmPassword(e)}
-              error={isPasswordInvalid}
+              onChangeText={onConfirmPasswordChanged}
+              error={isConfirmPasswordInvalid}
             />
-            <HelperText type="error" visible={isPasswordInvalid}>
-              {communication.InvalidPassowrd}
-            </HelperText>
+            {isConfirmPasswordInvalid && (
+              <HelperText
+                type="error"
+                style={{marginLeft: 10, marginBottom: -10}}
+                visible={isConfirmPasswordInvalid}>
+                {communication.InvalidConfirmPassowrd}
+              </HelperText>
+            )}
 
-            <Button text={'Submit'} />
-            <View style={{flexDirection: 'row',paddingHorizontal:-5,alignSelf:'center', marginTop: -20}}>
+            <Button
+              text={'Submit'}
+              onPress={ValidateSignup}
+              isButtonLoading={isButtonLoading}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingHorizontal: -5,
+                alignSelf: 'center',
+                marginTop: -20,
+              }}>
               <Title
                 style={[
                   Styles.padding24,
@@ -357,15 +414,15 @@ export default Signup;
 
 const style = StyleSheet.create({
   underlineStyleBase: {
-    width: 45,
-    height: 45,
+    width: 40,
+    height: 40,
     borderRadius: 10,
     borderWidth: 1,
     backgroundColor: '#f0f0f0',
     borderColor: '#D3DAE6',
     color: 'black',
     fontFamily: 'Poppins-Medium',
-    fontSize: 20,
+    fontSize: 16,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
