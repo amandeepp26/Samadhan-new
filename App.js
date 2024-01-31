@@ -8,29 +8,11 @@ import Signup from './src/screens/Signup';
 import Forgetpassword from './src/screens/ForgetPassword';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonComponent from './src/components/Button';
+import HomeScreen from './src/screens/admin/Home';
 
 const Stack = createNativeStackNavigator();
 
 
-
-function HomeScreen({navigation,loginUser}) {
-
-   const LogoutUser = async () => {
-     try {
-       await AsyncStorage.removeItem('user');
-       loginUser();
-     } catch (error) {
-       console.log(error);
-     }
-   };
-
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <ButtonComponent text={'Logout'} onPress={LogoutUser} />
-    </View>
-  );
-}
 
 function App({navigation}) {
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
@@ -67,7 +49,7 @@ function App({navigation}) {
           // If user is logged in, show the HomeScreen
           <Stack.Screen
             name="Home"
-            component={() => <HomeScreen loginUser={loginUser} />}
+            component={() => <HomeScreen loginUser={HomeScreen} />}
             options={{headerShown: false}}
           />
         ) : (

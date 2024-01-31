@@ -21,6 +21,7 @@ import {StackActions} from '@react-navigation/native';
 import {communication} from '../utils/communication';
 import Button from '../components/Button';
 import Provider from '../api/Provider';
+import { Icon } from 'react-native-elements';
 
 const Login = ({route, navigation, loginUser}) => {
   //#region Variables
