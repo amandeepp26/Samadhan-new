@@ -1,25 +1,130 @@
-import { View ,Text, StyleSheet, Image, TextInput, ScrollView} from "react-native";
+import { View ,Text, StyleSheet, Image, TextInput, ScrollView, Pressable, TouchableOpacity} from "react-native";
 import ButtonComponent from "../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Styles } from "../../styles/styles";
 import { Icon } from "react-native-elements";
 import { theme } from "../../theme/apptheme";
-import { Title } from "react-native-paper";
+import { ActivityIndicator, Title } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import Provider from "../../api/Provider";
+import { useEffect, useState } from "react";
 
-function HomeScreen({navigation, loginUser}) {
+function HomeScreen({ loginUser}) {
 
+  const navigation =useNavigation();
+  const [menuData,setMenuData] = useState([]);
+  const [showAll, setShowAll] = useState(false);
+  const [userCountData,setUserCountData] = useState([]);
+  const [isLoading,setIsLoading] = useState(true);
+  const [menuLoading, setMenuLoading] = useState(true);
+  const itemsToShow = showAll ? menuData : menuData.slice(0, 7);
+  useEffect(()=>{
+    getMenuList();
+    GetUserCount();
+  },[])
+
+  const getMenuList = async()=>{
+    const data = JSON.parse(await AsyncStorage.getItem('user'));
+    Sess_UserRefno = data.UserID;
+    Sess_group_refno = data.Sess_group_refno;
+    Sess_group_refno_extra_1 = data.Sess_group_refno_extra_1;
+    Sess_locationtype_refno = data.Sess_locationtype_refno;
+    Sess_menu_refno_list = data.Sess_menu_refno_list;
+     const params = {
+       data: {
+         Sess_UserRefno: Sess_UserRefno,
+         Sess_group_refno: Sess_group_refno,
+         Sess_group_refno_extra_1: Sess_group_refno_extra_1,
+         Sess_locationtype_refno: Sess_locationtype_refno,
+         Sess_menu_refno_list: Sess_menu_refno_list
+       }
+     };
+     console.log('params--->',params)
+     Provider.createDFCommon(Provider.API_URLS.get_leftside_menulist, params)
+       .then(response => {
+        console.warn('resp---->',response.data)
+         if (response.data && response.data.code === 200) {
+              setMenuData(response.data.data);
+              console.warn('data is---->',menuData)
+         } else if (response.data.code === 304) {
+          //  setSnackbarText(communication.AlreadyExists);
+          //  setIsSnackbarVisible(true);
+         } else {
+          //  setSnackbarText(communication.NoData);
+          //  setIsSnackbarVisible(true);
+         }
+         setMenuLoading(false);
+       })
+       .catch(e => {
+        //  setSnackbarText(e.message);
+        //  setIsSnackbarVisible(true);
+         setMenuLoading(false);
+       });
+  }
+
+  // Get user cound
+    const GetUserCount = async () => {
+    const data = JSON.parse(await AsyncStorage.getItem('user'));
+      Sess_UserRefno = data.UserID;
+      Sess_group_refno = data.Sess_group_refno;
+      let params = {
+        data: {
+          Sess_UserRefno: Sess_UserRefno,
+          Sess_group_refno: Sess_group_refno,
+        },
+      };
+      Provider.createDFDashboard(
+        Provider.API_URLS.GetdashboardTotaluser,
+        params,
+      )
+        .then(response => {
+          if (response.data && response.data.code === 200) {
+            // setTotalUsers(response.data.data[0].TotalUsers);
+            let usr_data = [
+              {
+                roleID: 0,
+                roleName: 'Dealer',
+                screen: '',
+                roleCount: response.data.data[0].TotalDealer,
+              },
+              {
+                roleID: 1,
+                roleName: 'Contractor',
+                screen: '',
+                roleCount: response.data.data[0].TotalContractor,
+              },
+              {
+                roleID: 2,
+                roleName: 'General User',
+                screen: 'General ',
+                roleCount: response.data.data[0].TotalGeneralUser,
+              },
+              {
+                roleID: 3,
+                roleName: 'Client',
+                screen: '',
+                roleCount: response.data.data[0].TotalClient,
+              },
+            ];
+
+            _user_count = usr_data;
+            setUserCountData(usr_data);
+            console.warn('users are---->',userCountData)
+          }
+          setIsLoading(false);
+        })
+        .catch(e => {
+          setIsLoading(false);
+        });
+    };
   return (
-    <View
-      style={[
-        Styles.backgroundColorFullWhite,
-        {flex: 1, paddingHorizontal: 20},
-      ]}>
+    <View style={[{flex: 1, backgroundColor: '#f7f7f8'}]}>
       {/* Header */}
       <View style={style.header}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image
-              src="https://i.pinimg.com/originals/7d/34/d9/7d34d9d53640af5cfd2614c57dfa7f13.png"
+              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
               style={{width: 50, height: 50, borderRadius: 50}}
             />
             <View
@@ -27,8 +132,8 @@ function HomeScreen({navigation, loginUser}) {
                 backgroundColor: theme.colors.primary,
                 borderRadius: 50,
                 padding: 2,
-                width: 25,
-                height: 25,
+                width: 22,
+                height: 22,
                 justifyContent: 'center',
                 position: 'absolute',
                 bottom: -5,
@@ -38,10 +143,10 @@ function HomeScreen({navigation, loginUser}) {
                 name="menu-outline"
                 type="ionicon"
                 color={'white'}
-                size={18}
+                size={15}
               />
             </View>
-          </View>
+          </TouchableOpacity>
           <View style={Styles.marginHorizontal12}>
             <Text
               style={[Styles.fontBold, Styles.fontSize20, Styles.primaryColor]}>
@@ -52,19 +157,20 @@ function HomeScreen({navigation, loginUser}) {
         </View>
         <Icon name="notifications" type="ionicon" size={27} color={'#FFDB58'} />
       </View>
-      <ScrollView style={{marginHorizontal: -20}}>
+      <ScrollView>
         {/* Body */}
         <View
           style={{
-            backgroundColor: '#f5f5f5',
-            paddingTop: 20,
+            backgroundColor: '#f7f7f8',
+            flex: 1,
+            paddingTop: 10,
             elevation: 3,
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             // marginHorizontal: -20,
             // paddingHorizontal:20
           }}>
-          <TextInput
+          {/* <TextInput
             style={{
               borderWidth: 1,
               borderColor: '#d3d3d3',
@@ -86,8 +192,9 @@ function HomeScreen({navigation, loginUser}) {
               top: 28, // Adjust the top position to align the icon vertically
               left: 15, // Adjust the left position to align the icon horizontally
             }}
-          />
+          /> */}
           {/* Users box */}
+
           <View style={style.borderBox}>
             <Title
               style={[
@@ -99,130 +206,60 @@ function HomeScreen({navigation, loginUser}) {
               ]}>
               Users
             </Title>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                paddingVertical: 10,
-              }}>
-              <View style={{alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.primaryLight,
-                    borderRadius: 50,
-                    width: 55,
-                    height: 55,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={[
-                      Styles.fontBold,
-                      Styles.textColorWhite,
-                      Styles.fontSize18,
-                    ]}>
-                    12
-                  </Text>
-                </View>
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Dealer
-                </Text>
+            {isLoading ? (
+              <View
+                style={[
+                  Styles.flex1,
+                  Styles.flexGrow,
+                  Styles.flexJustifyCenter,
+                  Styles.flexAlignCenter,
+                  {
+                    paddingBottom: 20,
+                  },
+                ]}>
+                <ActivityIndicator size="small" color={theme.colors.primary} />
               </View>
-              <View style={{alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.primaryLight,
-                    borderRadius: 50,
-                    width: 55,
-                    height: 55,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={[
-                      Styles.fontBold,
-                      Styles.textColorWhite,
-                      Styles.fontSize18,
-                    ]}>
-                    13
-                  </Text>
-                </View>
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Contractor
-                </Text>
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
+                  paddingVertical: 10,
+                }}>
+                {userCountData?.map((item, index) => (
+                  <View style={{alignItems: 'center'}}>
+                    <View
+                      style={{
+                        backgroundColor: theme.colors.primaryLight,
+                        borderRadius: 50,
+                        width: 55,
+                        height: 55,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <Text
+                        style={[
+                          Styles.fontBold,
+                          Styles.textColorWhite,
+                          Styles.fontSize18,
+                        ]}>
+                        {item.roleCount}
+                      </Text>
+                    </View>
+                    <Text
+                      style={[
+                        Styles.textColorDark,
+                        Styles.marginTop8,
+                        {fontWeight: '600', fontSize: 13},
+                      ]}>
+                      {' '}
+                      {item.roleName}
+                    </Text>
+                  </View>
+                ))}
               </View>
-              <View style={{alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.primaryLight,
-                    borderRadius: 50,
-                    width: 55,
-                    height: 55,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={[
-                      Styles.fontBold,
-                      Styles.textColorWhite,
-                      Styles.fontSize18,
-                    ]}>
-                    21
-                  </Text>
-                </View>
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  General User
-                </Text>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.primaryLight,
-                    borderRadius: 50,
-                    width: 55,
-                    height: 55,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text
-                    style={[
-                      Styles.fontBold,
-                      Styles.textColorWhite,
-                      Styles.fontSize18,
-                    ]}>
-                    48
-                  </Text>
-                </View>
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Client
-                </Text>
-              </View>
-            </View>
+            )}
           </View>
 
           <View style={style.borderBox}>
@@ -305,7 +342,7 @@ function HomeScreen({navigation, loginUser}) {
             </View>
           </View>
 
-          <View style={style.borderBox}>
+          {/* <View style={style.borderBox}>
             <View
               style={{
                 flexDirection: 'row',
@@ -358,10 +395,10 @@ function HomeScreen({navigation, loginUser}) {
                 </Text>
               </View>
             </View>
-          </View>
+          </View> */}
 
           {/* Serviec catlague */}
-          <View style={style.borderBox}>
+          {/* <View style={style.borderBox}>
             <Title
               style={[
                 Styles.marginTop16,
@@ -451,9 +488,9 @@ function HomeScreen({navigation, loginUser}) {
                 </Text>
               </View>
             </View>
-          </View>
+          </View> */}
 
-          {/* Serviec catlague */}
+          {/* Menu Section */}
           <View style={style.borderBox}>
             <Title
               style={[
@@ -463,87 +500,92 @@ function HomeScreen({navigation, loginUser}) {
                 {marginLeft: 10},
                 Styles.fontBold,
               ]}>
-              Masters
+              Menu
             </Title>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                paddingVertical: 10,
-              }}>
-              <View style={{alignItems: 'center'}}>
-                <View
-                  style={{
-                    backgroundColor: theme.colors.primaryLight,
-                    borderRadius: 50,
-                    width: 55,
-                    height: 55,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Image
-                    src="https://cdn-icons-png.flaticon.com/512/3769/3769455.png"
-                    style={{width: 35, height: 35}}
-                  />
-                </View>
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Work Floor
-                </Text>
+            {menuLoading ? (
+              <View
+                style={[
+                  Styles.flex1,
+                  Styles.flexGrow,
+                  Styles.flexJustifyCenter,
+                  Styles.flexAlignCenter,
+                  {
+                    paddingBottom: 20,
+                  },
+                ]}>
+                <ActivityIndicator size="small" color={theme.colors.primary} />
               </View>
-              <View style={{alignItems: 'center'}}>
-                <Image
-                  src="https://cdn-icons-png.flaticon.com/512/1527/1527531.png"
-                  style={{width: 55, height: 55}}
-                />
+            ) : (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 12,
+                  paddingVertical: 5,
+                }}>
+                {itemsToShow.map((item, index) => (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Menu', {data: menuData})
+                    }
+                    key={item.id}
+                    style={{
+                      width: '24%',
+                      marginBottom: 12,
+                      alignItems: 'center',
+                    }}>
+                    <Image
+                      resizeMode="contain"
+                      source={{
+                        uri: item.icon,
+                      }}
+                      style={{width: '42%', height: 35, borderRadius: 8}}
+                    />
+                    <Text
+                      style={[
+                        Styles.textColorDark,
+                        Styles.marginTop8,
+                        {
+                          fontWeight: '500',
+                          fontSize: 11.5,
+                          textAlign: 'center',
+                        },
+                      ]}>
+                      {item.title}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
 
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Work Location
-                </Text>
+                {menuData.length > 7 && !showAll && (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('Menu', {data: menuData})
+                    }
+                    style={{
+                      width: '24%',
+                      marginBottom: 16,
+                      alignItems: 'center',
+                      marginTop: 5,
+                    }}>
+                    <Icon
+                      name="grid"
+                      type="ionicon"
+                      size={30}
+                      color={theme.colors.primary}
+                    />
+                    <Text
+                      style={[
+                        Styles.textColorDark,
+                        Styles.marginTop8,
+                        {fontWeight: '500', fontSize: 12, textAlign: 'center'},
+                      ]}>
+                      View More →
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
-              <View style={{alignItems: 'center'}}>
-                <Image
-                  src="https://cdn-icons-png.flaticon.com/512/1225/1225959.png"
-                  style={{width: 55, height: 55}}
-                />
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Design Type
-                </Text>
-              </View>
-              <View style={{alignItems: 'center'}}>
-                <Image
-                  src="https://cdn-icons-png.flaticon.com/512/10703/10703134.png"
-                  style={{width: 55, height: 55}}
-                />
-                <Text
-                  style={[
-                    Styles.textColorDark,
-                    Styles.marginTop8,
-                    {fontWeight: '600', fontSize: 13},
-                  ]}>
-                  {' '}
-                  Add more
-                </Text>
-              </View>
-            </View>
+            )}
           </View>
         </View>
       </ScrollView>
@@ -560,7 +602,8 @@ const style = StyleSheet.create({
         alignItems:'center',
         justifyContent:'space-between',
         paddingVertical:20,
-        paddingHorizontal:20
+        paddingHorizontal:20,
+        backgroundColor:'#fff'
     },
     borderBox:{
         borderWidth:1,

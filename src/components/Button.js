@@ -9,12 +9,13 @@ import {
   Text,
 } from 'react-native-paper';
 import { Styles } from '../styles/styles';
+import { theme } from '../theme/apptheme';
 
-export default function ButtonComponent({isButtonLoading,text,onPress}) {
+export default function ButtonComponent({isButtonLoading,text,onPress,light}) {
   return (
     <Button
       mode="contained"
-      style={[Styles.marginTop16, Styles.primaryBgColor,{borderRadius:10,width:'85%',alignSelf:'center'}]}
+      style={[Styles.marginTop16, light ? {backgroundColor:theme.colors.primaryLight}: Styles.primaryBgColor,{borderRadius:10,width:'85%',alignSelf:'center'}]}
       loading={isButtonLoading}
       disabled={isButtonLoading}
       onPress={() => onPress()}>

@@ -110,6 +110,7 @@ const Login = ({route, navigation, loginUser}) => {
     };
     Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
       .then(response => {
+        console.log('user detail---->',response.data.data)
         if (response.data && response.data.code === 200) {
           const user = {
             UserID: response.data.data.Sess_UserRefno,

@@ -9,6 +9,8 @@ import Forgetpassword from './src/screens/ForgetPassword';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ButtonComponent from './src/components/Button';
 import HomeScreen from './src/screens/admin/Home';
+import DrawerNavigation from './src/navigations/DrawerNavigation';
+import Splash from './src/components/Splash';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,12 +18,17 @@ const Stack = createNativeStackNavigator();
 
 function App({navigation}) {
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
-
+  const [appReady,setAppReady] = React.useState(false);
   React.useEffect(() => {
     // Check if the user is logged in during app startup
     checkUserLoggedIn();
   }, []);
 
+    React.useEffect(() => {
+      setTimeout(() => {
+        setAppReady(true);
+      }, 1000);
+    }, []);
   const checkUserLoggedIn = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
@@ -38,22 +45,19 @@ function App({navigation}) {
     setIsUserLoggedIn(!isUserLoggedIn);
   };
 
+    if (!appReady) {
+      return <Splash />;
+    }
   return (
+    <>
+    {!isUserLoggedIn ?
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
           gestureEnabled: true,
         }}>
-        {isUserLoggedIn ? (
-          // If user is logged in, show the HomeScreen
-          <Stack.Screen
-            name="Home"
-            component={() => <HomeScreen loginUser={HomeScreen} />}
-            options={{headerShown: false}}
-          />
-        ) : (
-          // If user is not logged in, show the authentication screens
+       
           <>
             <Stack.Screen
               name="Login"
@@ -70,9 +74,13 @@ function App({navigation}) {
               options={{headerShown: false}}
             />
           </>
-        )}
+       
       </Stack.Navigator>
     </NavigationContainer>
+    :
+    <DrawerNavigation loginUser={loginUser} />
+    }
+    </>
   );
 }
 

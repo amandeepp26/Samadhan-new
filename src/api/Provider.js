@@ -1179,6 +1179,7 @@ class Provider {
       'pck_inbox_cash_receivedstatus_update/',
     pck_inbox_removestatus_update: 'pck_inbox_removestatus_update/',
     pck_inbox_cash_lending_list: 'pck_inbox_cash_lending_list/',
+    get_leftside_menulist: 'get_leftside_menulist/',
   };
 
   createDFPocketDairy(resource, params) {
