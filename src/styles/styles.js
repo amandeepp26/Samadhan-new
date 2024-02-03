@@ -4,6 +4,7 @@ import {theme} from '../theme/apptheme';
 export const Styles = StyleSheet.create({
   textinput: {
     borderRadius: 10,
+    height:40,
     backgroundColor: '#f0f0f0',
     color:'#000',
     width: '90%',
@@ -14,11 +15,11 @@ export const Styles = StyleSheet.create({
       width: 0, // Keep the width at 0
       height: -5, // Adjust the height to control the shadow position
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
+    shadowOpacity: 0.03,
+    shadowRadius: 1,
     borderWidth: 1,
     borderColor: '#d0d0d0',
-    elevation: 2,
+    elevation: 1,
     paddingLeft: 20,
     marginTop: 15,
   },

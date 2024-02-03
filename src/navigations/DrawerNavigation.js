@@ -69,187 +69,198 @@ function CustomDrawerContent({navigation,loginUser, ...rest}) {
             borderColor: '#d3d3d3',
             borderRadius: 15,
             marginHorizontal: 10,
-            paddingVertical: 10,
+            paddingVertical: 7,
           }}>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
               color: '#000',
             }}>
-            <Icon name="dashboard" type="ionicons" />
-            <Text
-              style={[
-                Styles.fontSize14,
-                Styles.marginHorizontal12,
-                {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  color: '#000',
-                  width: '80%',
-                  fontWeight: '500',
-                  borderColor: '#d5d5d5',
-                },
-              ]}>
-              Dashboard
-            </Text>
+              <View style={{marginBottom:10}}>
+            <Icon name="grid-outline" type="ionicon" size={22} />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  // Styles.marginHorizontal12,
+                  {
+                    color: '#000',
+                    fontWeight: '500',
+                  },
+                ]}>
+                Dashboard
+              </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+            
+              <View style={{marginBottom:10}} >
             <Icon name="person-circle-outline" size={22} type="ionicon" />
+          </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               User Profile
             </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+
+              <View style={{marginBottom:10}} >
             <Icon name="person-circle-outline" size={22} type="ionicon" />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               Control User Access
             </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+            
+              <View style={{marginBottom:10}} >
             <Icon name="create-outline" size={22} type="ionicon" />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               Pocket Diary
             </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+
+              <View style={{marginBottom:10}} >
             <Icon name="people-outline" size={22} type="ionicon" />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               Refer and win
             </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+              <View style={{marginBottom:10}} >
             <Icon name="headset-outline" size={22} type="ionicon" />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               Help and Support
             </Text>
+            </View>
           </Pressable>
           <Pressable
             style={{
               flexDirection: 'row',
-              paddingVertical: 10,
+              paddingVertical: 7,
               marginTop: 10,
               alignItems: 'center',
               paddingHorizontal: 10,
             }}>
+              <View style={{marginBottom:10}} >
             <Icon name="chatbox-ellipses-outline" size={22} type="ionicon" />
+            </View>
+            <View style={{borderBottomWidth: 1, width: '85%',
+                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
             <Text
               style={[
                 Styles.fontSize14,
-                Styles.marginHorizontal12,
                 {
-                  paddingBottom: 10,
-                  borderBottomWidth: 1,
-                  width: '80%',
                   fontWeight: '500',
-                  borderColor: '#d5d5d5',
                   color: '#000',
                 },
               ]}>
               Enquiry and status
             </Text>
+            </View>
           </Pressable>
 
           <View style={{alignItems: 'center'}}>
-            <ButtonComponent onPress={()=>{AsyncStorage.removeItem('user'),loginUser()}} light={true} text={'Logout'} />
+            <ButtonComponent
+              onPress={() => {
+                AsyncStorage.removeItem('user'), loginUser();
+              }}
+              light={true}
+              text={'Logout'}
+            />
             <Text
               style={[
                 Styles.fontSize14,

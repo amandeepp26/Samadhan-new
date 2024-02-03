@@ -6,6 +6,7 @@ import {
   Keyboard,
   Pressable,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 import {
   Snackbar,
@@ -191,7 +192,7 @@ const Login = ({route, navigation, loginUser}) => {
   //#endregion
 
   return (
-    <View style={[Styles.flex1, Styles.primaryBgColor]}>
+    <SafeAreaView style={[Styles.primaryBgColor,{flex:1,paddingBottom:5,}]}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View
           style={[
@@ -314,7 +315,7 @@ const Login = ({route, navigation, loginUser}) => {
         style={{backgroundColor: theme.colors.error}}>
         {snackbarText}
       </Snackbar>
-    </View>
+    </SafeAreaView>
   );
 };
 

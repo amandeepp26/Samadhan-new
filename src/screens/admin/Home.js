@@ -1,4 +1,4 @@
-import { View ,Text, StyleSheet, Image, TextInput, ScrollView, Pressable, TouchableOpacity} from "react-native";
+import { View ,Text, StyleSheet, Image, TextInput, ScrollView, Pressable, TouchableOpacity, SafeAreaView} from "react-native";
 import ButtonComponent from "../../components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Styles } from "../../styles/styles";
@@ -42,10 +42,8 @@ function HomeScreen({ loginUser}) {
      console.log('params--->',params)
      Provider.createDFCommon(Provider.API_URLS.get_leftside_menulist, params)
        .then(response => {
-        console.warn('resp---->',response.data)
          if (response.data && response.data.code === 200) {
               setMenuData(response.data.data);
-              console.warn('data is---->',menuData)
          } else if (response.data.code === 304) {
           //  setSnackbarText(communication.AlreadyExists);
           //  setIsSnackbarVisible(true);
@@ -79,6 +77,7 @@ function HomeScreen({ loginUser}) {
       )
         .then(response => {
           if (response.data && response.data.code === 200) {
+              console.warn('response->',response.data);
             // setTotalUsers(response.data.data[0].TotalUsers);
             let usr_data = [
               {
@@ -101,15 +100,14 @@ function HomeScreen({ loginUser}) {
               },
               {
                 roleID: 3,
-                roleName: 'Client',
+                roleName: 'Architect',
                 screen: '',
-                roleCount: response.data.data[0].TotalClient,
+                roleCount: response.data.data[0].TotalArchitect,
               },
             ];
 
             _user_count = usr_data;
             setUserCountData(usr_data);
-            console.warn('users are---->',userCountData)
           }
           setIsLoading(false);
         })
@@ -118,7 +116,7 @@ function HomeScreen({ loginUser}) {
         });
     };
   return (
-    <View style={[{flex: 1, backgroundColor: '#f7f7f8'}]}>
+    <SafeAreaView style={[{flex: 1, backgroundColor: '#f7f7f8'}]}>
       {/* Header */}
       <View style={style.header}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -527,7 +525,7 @@ function HomeScreen({ loginUser}) {
                 {itemsToShow.map((item, index) => (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('Menu', {data: menuData})
+                      navigation.navigate('Menu', {data: menuData,item:item})
                     }
                     key={item.id}
                     style={{
@@ -589,7 +587,7 @@ function HomeScreen({ loginUser}) {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

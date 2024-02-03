@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -15,8 +15,12 @@ import { theme } from '../../theme/apptheme';
 function MenuItems({route, navigation}) {
   const data = route.params.data;
 
-  const [selectedItem, setSelectedItem] = React.useState(null);
+  const [selectedItem, setSelectedItem] = React.useState(route.params?.item || null);
 
+  console.warn('item is---->',route.params.item)
+  useEffect(()=>{
+    handleMenuItemPress(route.params.item);
+  },[route.params])
   const handleMenuItemPress = item => {
     setSelectedItem(item);
   };

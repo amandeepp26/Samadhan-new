@@ -36,8 +36,8 @@
 24-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:8:7-41
 25        android:label="@string/app_name"
 25-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:7:7-39
-26        android:roundIcon="@mipmap/ic_launcher_round"
-26-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:9:7-52
+26        android:roundIcon="@mipmap/ic_launcher"
+26-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:9:7-46
 27        android:theme="@style/AppTheme" >
 27-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:11:7-38
 28        <activity

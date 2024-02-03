@@ -1,4 +1,4 @@
-import {View, Image, ScrollView, Keyboard,TextInput, Pressable, StyleSheet} from 'react-native';
+import {View, Image, ScrollView, Keyboard,TextInput, Pressable, StyleSheet, SafeAreaView} from 'react-native';
 import {Snackbar, Title, HelperText, Text, ActivityIndicator} from 'react-native-paper';
 import {Styles} from '../styles/styles';
 import React from 'react';
@@ -195,7 +195,7 @@ const Signup = ({route, navigation}) => {
   //#endregion
 
   return (
-    <View style={[Styles.flex1, Styles.primaryBgColor]}>
+    <SafeAreaView style={[Styles.flex1, Styles.primaryBgColor]}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View
           style={[
@@ -406,7 +406,7 @@ const Signup = ({route, navigation}) => {
         style={{backgroundColor: theme.colors.error}}>
         {snackbarText}
       </Snackbar>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -431,7 +431,7 @@ const style = StyleSheet.create({
       width: 0, // Keep the width at 0
       height: -5, // Adjust the height to control the shadow position
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.01,
     shadowRadius: 5,
     borderWidth: 1,
     borderColor: '#d0d0d0',
