@@ -247,6 +247,7 @@ const Forgetpassword = ({route, navigation}) => {
 
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput, {marginTop: 5}]}
               dense
               placeholder="Mobile number"
@@ -321,6 +322,7 @@ const Forgetpassword = ({route, navigation}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput, {marginTop: 0}]}
               dense
               secureTextEntry={true}
@@ -339,6 +341,7 @@ const Forgetpassword = ({route, navigation}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput]}
               dense
               secureTextEntry={true}

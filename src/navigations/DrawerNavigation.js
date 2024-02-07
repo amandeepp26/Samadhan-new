@@ -15,6 +15,10 @@ import { Styles } from '../styles/styles';
 import ButtonComponent from '../components/Button';
 import MenuItems from '../screens/admin/MenuItems';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ApprovedUser from '../screens/admin/Users/ApprovedUsers';
+import PendingUsers from '../screens/admin/Users/PendingUsers';
+import Activity from '../screens/admin/activity/Activity';
+import AddActivity from '../screens/admin/activity/AddActivity';
 
 // CustomDrawerContent component
 function CustomDrawerContent({navigation,loginUser, ...rest}) {
@@ -296,6 +300,10 @@ export default function DrawerNavigation({loginUser}) {
         )}>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Menu" component={MenuItems} />
+        <Drawer.Screen name="Approved" component={ApprovedUser} />
+        <Drawer.Screen name="Pending" component={PendingUsers} />
+        <Drawer.Screen name="Activity" component={Activity} />
+        <Drawer.Screen name="AddActivity" component={AddActivity} />
 
         {/* <Drawer.Screen name="Notifications" component={Login} /> */}
       </Drawer.Navigator>

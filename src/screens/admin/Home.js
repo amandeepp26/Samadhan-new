@@ -104,6 +104,12 @@ function HomeScreen({ loginUser}) {
                 screen: '',
                 roleCount: response.data.data[0].TotalArchitect,
               },
+              {
+                roleID: 4,
+                roleName: 'Client',
+                screen: '',
+                roleCount: response.data.data[0].TotalClient,
+              },
             ];
 
             _user_count = usr_data;
@@ -231,8 +237,8 @@ function HomeScreen({ loginUser}) {
                       style={{
                         backgroundColor: theme.colors.primaryLight,
                         borderRadius: 50,
-                        width: 55,
-                        height: 55,
+                        width: 50,
+                        height: 50,
                         justifyContent: 'center',
                         alignItems: 'center',
                       }}>
@@ -249,7 +255,7 @@ function HomeScreen({ loginUser}) {
                       style={[
                         Styles.textColorDark,
                         Styles.marginTop8,
-                        {fontWeight: '600', fontSize: 13},
+                        {fontWeight: '600', fontSize: 11},
                       ]}>
                       {' '}
                       {item.roleName}
@@ -268,7 +274,8 @@ function HomeScreen({ loginUser}) {
                 justifyContent: 'space-around',
                 marginVertical: 15,
               }}>
-              <View
+              <Pressable
+                onPress={() => navigation.navigate('Approved')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -290,8 +297,9 @@ function HomeScreen({ loginUser}) {
                   {' '}
                   Approve
                 </Text>
-              </View>
-              <View
+              </Pressable>
+              <Pressable
+                onPress={() => navigation.navigate('Pending')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -313,8 +321,9 @@ function HomeScreen({ loginUser}) {
                   {' '}
                   Pending
                 </Text>
-              </View>
-              <View
+              </Pressable>
+              <Pressable
+                onPress={() => navigation.navigate('Activity')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -336,7 +345,7 @@ function HomeScreen({ loginUser}) {
                   {' '}
                   Decline
                 </Text>
-              </View>
+              </Pressable>
             </View>
           </View>
 
@@ -525,7 +534,7 @@ function HomeScreen({ loginUser}) {
                 {itemsToShow.map((item, index) => (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('Menu', {data: menuData,item:item})
+                      navigation.navigate('Menu', {data: menuData, item: item})
                     }
                     key={item.id}
                     style={{

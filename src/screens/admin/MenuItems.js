@@ -34,7 +34,7 @@ function MenuItems({route, navigation}) {
         }}
         style={{
           padding: 12,
-          paddingVertical: 30,
+          paddingVertical: 20,
           alignItems: 'flex-start',
           borderBottomWidth:1,
           borderColor:'#d3d3d3',
@@ -45,7 +45,7 @@ function MenuItems({route, navigation}) {
       <ScrollView>
       <View style={{flexDirection: 'row'}}>
         {/* Left side (Green menu bar) */}
-        <View style={{backgroundColor: '#72A05F', width: '35%'}}>
+        <View style={{backgroundColor: '#72A05F', width: '30%'}}>
           {data?.map((item, index) => (
             <Pressable
               key={index}
@@ -61,7 +61,7 @@ function MenuItems({route, navigation}) {
               <Text
                 style={[
                   Styles.textColorWhite,
-                  Styles.fontSize16,
+                  Styles.fontSize14,
                   {textAlign: 'center', fontWeight: '500'},
                 ]}>
                 {item.title}
@@ -84,7 +84,7 @@ function MenuItems({route, navigation}) {
             <View
               key={nestedIndex}
               style={{
-                width: '50%',
+                width: '30%',
                 marginBottom: 12,
                 marginTop: 15,
                 alignItems: 'center',
@@ -97,7 +97,7 @@ function MenuItems({route, navigation}) {
                 style={[
                   Styles.textColorDark,
                   Styles.marginTop12,
-                  {fontWeight: '500', fontSize: 11.5, textAlign: 'center',paddingHorizontal:5},
+                  {fontWeight: '500', fontSize: 11, textAlign: 'center',paddingHorizontal:5},
                 ]}>
                 {nestedItem.title}
               </Text>

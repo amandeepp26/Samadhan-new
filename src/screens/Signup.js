@@ -235,6 +235,7 @@ const Signup = ({route, navigation}) => {
 
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput]}
               dense
               placeholder="Mobile number"
@@ -255,6 +256,7 @@ const Signup = ({route, navigation}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput]}
               dense
               placeholder="Full name"
@@ -327,6 +329,7 @@ const Signup = ({route, navigation}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput, {marginTop: 0}]}
               dense
               secureTextEntry={true}
@@ -345,6 +348,7 @@ const Signup = ({route, navigation}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput]}
               dense
               secureTextEntry={true}

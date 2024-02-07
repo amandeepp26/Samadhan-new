@@ -192,7 +192,7 @@ const Login = ({route, navigation, loginUser}) => {
   //#endregion
 
   return (
-    <SafeAreaView style={[Styles.primaryBgColor,{flex:1,paddingBottom:5,}]}>
+    <SafeAreaView style={[Styles.primaryBgColor, {flex: 1, paddingBottom: 5}]}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <View
           style={[
@@ -232,6 +232,7 @@ const Login = ({route, navigation, loginUser}) => {
 
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={[Styles.textinput, {marginTop: 5}]}
               dense
               placeholder="Username"
@@ -250,6 +251,7 @@ const Login = ({route, navigation, loginUser}) => {
             )}
             <TextInput
               underlineColor="transparent"
+              placeholderTextColor={theme.colors.textColorDark}
               style={Styles.textinput}
               dense
               secureTextEntry={true}
