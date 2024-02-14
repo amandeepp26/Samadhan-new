@@ -5,7 +5,7 @@ export const Styles = StyleSheet.create({
   textinput: {
     borderRadius: 10,
     height:40,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#ffff',
     color:'#000',
     width: '90%',
     fontSize: 13,

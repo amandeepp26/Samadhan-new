@@ -29,6 +29,8 @@ import {color} from 'react-native-elements/dist/helpers';
 import Search from '../../../components/Search';
 import {communication} from '../../../utils/communication';
 import ButtonComponent from '../../../components/Button';
+import NoItems from '../../../components/NoItems';
+import Header from '../../../components/Header';
 
 function Activity({route, navigation}) {
   //   const data = route.params.data;
@@ -52,43 +54,31 @@ function Activity({route, navigation}) {
   const [selectedUser, setSelectedUser] = useState(null);
 
 
-  useEffect(() => {
-    GetUserID();
-  }, []);
-
-  const GetUserID = async () => {
-    const userData = await AsyncStorage.getItem('user');
-    if (userData !== null) {
-      userID = JSON.parse(userData).UserID;
-      FetchData();
-    }
-  };
-
   const FetchData = from => {
-    if (from === 'approve' || from === 'decline') {
+    if (from === 'add' || from === 'update') {
       setSnackbarText(
-        'User ' +
-          (from === 'approve' ? 'approved' : 'declined') +
-          ' successfully',
+        'Item ' + (from === 'add' ? 'added' : 'updated') + ' successfully',
       );
       setSnackbarColor(theme.colors.success);
       setSnackbarVisible(true);
     }
     let params = {
       data: {
-        Sess_UserRefno: userID,
+        Sess_UserRefno: '2',
         group_refno: 'all',
       },
     };
-    Provider.createDFAdmin('getuserpendinglist/', params)
+    Provider.createDFAdmin(Provider.API_URLS.GroupFromRefNo, params)
       .then(response => {
         if (response.data && response.data.code === 200) {
           if (response.data.data) {
-            const lisData = [...response.data.data];
-            lisData.map((k, i) => {
-              k.key = (parseInt(i) + 1).toString();
-            });
-            console.log(response.data.data);
+            // response.data.data = APIConverter(response.data.data);
+            // const lisData = [...response.data.data];
+
+            console.log('response is----->', response.data.data);
+            // lisData.map((k, i) => {
+            //   k.key = (parseInt(i) + 1).toString();
+            // });
             setListData(response.data.data);
             setListSearchData(response.data.data);
           }
@@ -110,19 +100,9 @@ function Activity({route, navigation}) {
       });
   };
 
-          const ValidateData = () => {
-            let isValid = true;
-            if (executiveName.length === 0) {
-              setExError(true);
-              isValid = false;
-            }
-            if (isValid) {
-              setIsButtonLoading(true);
-              FetchData();
-            }
-          };
- 
-
+  useEffect(() => {
+    FetchData();
+  }, []);
  
   const RenderItems = data => {
     return (
@@ -133,7 +113,7 @@ function Activity({route, navigation}) {
           Styles.bordergray,
           {
             borderRadius: 10,
-            paddingVertical:7,
+            paddingVertical: 7,
             flexDirection: 'row',
             alignItems: 'center',
             borderWidth: 1,
@@ -152,15 +132,16 @@ function Activity({route, navigation}) {
         ]}>
         <View
           style={{
-            padding: 15,
-            width: 60,
-            height: 60,
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 50,
+            height: 50,
             backgroundColor: '#f5f5f5',
             borderRadius: 50,
           }}>
           <Icon
             name="person"
-            size={28}
+            size={22}
             type="ionicon"
             color={theme.colors.primary}
           />
@@ -183,7 +164,7 @@ function Activity({route, navigation}) {
                   color: '#000',
                 },
               ]}>
-              {data.firstname}
+              {data.group_name}
             </Text>
             <Text
               style={[
@@ -192,44 +173,31 @@ function Activity({route, navigation}) {
                 Styles.marginTop2,
               ]}
               selectable={true}>
-              Display: Yes
+              Display: {data.view_status == 1 ? 'Yes' : 'No'} 
             </Text>
-            
           </View>
-          <Pressable>
-            <Icon name='edit' size={20} />
+          <Pressable style={{borderBottomWidth:1}}>
+            <Icon name="pencil-outline" type='ionicon' size={18} />
           </Pressable>
-          {/* <Title
-            style={[
-              Styles.padding24,
-              Styles.fontBold,
-              Styles.fontSize14,
-              Styles.textCenter,
-              {
-                color: theme.colors.primaryLight,
-              },
-            ]}>
-            View
-          </Title> */}
         </View>
       </Pressable>
     );
   };
 
-  if (isLoading) {
-    return (
-      <View
-        style={[
-          Styles.flex1,
-          Styles.flexJustifyCenter,
-          Styles.flexAlignCenter,
-        ]}>
-        <ActivityIndicator size="large" color={theme.colors.primary} />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View
+  //       style={[
+  //         Styles.flex1,
+  //         Styles.flexJustifyCenter,
+  //         Styles.flexAlignCenter,
+  //       ]}>
+  //       <ActivityIndicator size="large" color={theme.colors.primary} />
+  //     </View>
+  //   );
+  // }
 
-  if (listData.length == 0) {
+  if (listData.length === 0) {
     <NoItems
       icon="format-list-bulleted"
       text="No records found for your query"
@@ -237,56 +205,51 @@ function Activity({route, navigation}) {
   }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={{
-          padding: 12,
-          paddingVertical: 20,
-          alignItems: 'center',
-          flexDirection: 'row',
-          borderBottomWidth: 1,
-          borderColor: '#d3d3d3',
-          backgroundColor: '#fff',
-        }}>
-        <Icon name="arrow-back-outline" type="ionicon" color="#000" />
-        <Text
+      <Header title="Activity Roles" navigation={navigation} />
+      {isLoading ? (
+        <View
           style={[
-            Styles.fontBold,
-            Styles.fontSize20,
-            Styles.primaryColor,
-            {marginLeft: 20},
-          ]}>
-          Activity Roles
-        </Text>
-      </TouchableOpacity>
+            Styles.flex1,
+            Styles.flexJustifyCenter,
+            Styles.flexAlignCenter,
+          ]}
+        >
+          <ActivityIndicator size="small" color={theme.colors.primary} />
+        </View>
+      )
+      : listData.length > 0 ?
+       <View style={[Styles.flex1, Styles.flexColumn, Styles.backgroundColor]}>
       <Search
-        query={route?.params ? route?.params?.role : ''}
         data={listData}
         setData={setListSearchData}
-        filterFunction={[
-          'company_name',
-          'departmentname',
-          'designationname',
-          'approve_status',
-          'firstname',
-          'group_name',
-          'mobile_no',
-          'password',
-          'user_name',
-        ]}
+        filterFunction={['activityRoleName', 'display']}
       />
-      <FlatList
-        data={listSearchData}
-        renderItem={({item}) => RenderItems(item)}
-        keyExtractor={item => item.id}
-      />
+      {listSearchData.length > 0 ? (
+        <View style={{paddingBottom:100}} >
+          <FlatList
+            data={listSearchData}
+            renderItem={({item}) => RenderItems(item)}
+            keyExtractor={item => item.id}
+          />
+        </View>
+      ) : (
+        <NoItems
+          icon="format-list-bulleted"
+          text="No records found for your query"
+        />
+      )}
+      </View>
+      :
+      <NoItems
+          icon="format-list-bulleted"
+          text="No records found for your query"
+        />
+      }
 
       <TouchableOpacity
         style={styles.floatingButton}
         onPress={() => {
-        navigation.navigate('AddActivity')
+          navigation.navigate('AddActivity');
         }}>
         <Icon name="add" size={24} color="#fff" />
       </TouchableOpacity>

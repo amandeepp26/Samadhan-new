@@ -19,9 +19,19 @@ import ApprovedUser from '../screens/admin/Users/ApprovedUsers';
 import PendingUsers from '../screens/admin/Users/PendingUsers';
 import Activity from '../screens/admin/activity/Activity';
 import AddActivity from '../screens/admin/activity/AddActivity';
+import ApiMaster from '../screens/admin/apimaster/ApiMaster';
+import AddApiMaster from '../screens/admin/apimaster/AddApiMaster';
+import Services from '../screens/admin/Services/Services';
+import AddService from '../screens/admin/Services/AddService';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import UnitofSales from '../screens/admin/unitofsales/UnitofSales';
+import AddUnitofSales from '../screens/admin/unitofsales/AddUnitofSales';
+import Category from '../screens/admin/category/Category';
+import AddCategory from '../screens/admin/category/Addcategory';
 
 // CustomDrawerContent component
-function CustomDrawerContent({navigation,loginUser, ...rest}) {
+function CustomDrawerContent({navigation,loginUser,name,role, ...rest}) {
+  console.warn('name---->',name)
   return (
     <DrawerContentScrollView {...rest}>
       <View style={{}}>
@@ -59,10 +69,10 @@ function CustomDrawerContent({navigation,loginUser, ...rest}) {
                   Styles.fontSize20,
                   Styles.primaryColor,
                 ]}>
-                Hey Abdul
+                Hey {name}
               </Text>
               <Text style={[Styles.fontSize14, Styles.textColorDark]}>
-                Admin
+                {role}
               </Text>
             </View>
           </View>
@@ -286,28 +296,41 @@ function CustomDrawerContent({navigation,loginUser, ...rest}) {
 }
 
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function DrawerNavigation({loginUser}) {
-  return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerShown: false,
-        }}
-        drawerContent={props => (
-          <CustomDrawerContent {...props} loginUser={loginUser} />
-        )}>
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Menu" component={MenuItems} />
-        <Drawer.Screen name="Approved" component={ApprovedUser} />
-        <Drawer.Screen name="Pending" component={PendingUsers} />
-        <Drawer.Screen name="Activity" component={Activity} />
-        <Drawer.Screen name="AddActivity" component={AddActivity} />
+  const [isStackVisible, setIsStackVisible] = React.useState(false);
+  const [name, setName] = React.useState(''); // Initialize name state
+  const [role, setRole] = React.useState(''); // Initialize name state
+  React.useEffect(() => {
+    checkUserLoggedIn();
+  }, []);
 
-        {/* <Drawer.Screen name="Notifications" component={Login} /> */}
-      </Drawer.Navigator>
-    </NavigationContainer>
+  const checkUserLoggedIn = async () => {
+    try {
+      const userData = await AsyncStorage.getItem('user');
+      if (userData) {
+        setIsStackVisible(true);
+      }
+      const userName = await AsyncStorage.getItem('userName'); // Retrieve userName
+      setName(userName); // Set the retrieved userName to the name state
+      const userRole = await AsyncStorage.getItem('userRole'); // Retrieve userName
+      setRole(userRole); // Set the retrieved userName to the name state
+    } catch (error) {
+      console.error('Error checking user login status:', error);
+    }
+  };
+  return (
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}
+      drawerContent={props => (
+        <CustomDrawerContent {...props} loginUser={loginUser} name={name} role={role} />
+      )}>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+    </Drawer.Navigator>
   );
 }
 

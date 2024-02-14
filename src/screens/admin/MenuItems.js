@@ -13,11 +13,10 @@ import {Styles} from '../../styles/styles';
 import { theme } from '../../theme/apptheme';
 
 function MenuItems({route, navigation}) {
-  const data = route.params.data;
+  const data = route.params?.data;
 
   const [selectedItem, setSelectedItem] = React.useState(route.params?.item || null);
 
-  console.warn('item is---->',route.params.item)
   useEffect(()=>{
     handleMenuItemPress(route.params.item);
   },[route.params])
@@ -76,22 +75,24 @@ function MenuItems({route, navigation}) {
             flex: 1,
             backgroundColor: 'white',
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
             flexWrap: 'wrap',
             paddingTop: 10,
           }}>
           {selectedItem?.items?.map((nestedItem, nestedIndex) => (
-            <View
+            <Pressable
+            onPress={()=>navigation.navigate(nestedItem.title)}
               key={nestedIndex}
               style={{
-                width: '30%',
+                width: '32%',
                 marginBottom: 12,
                 marginTop: 15,
                 alignItems: 'center',
               }}>
               <Image
+              resizeMode='contain'
                 src={nestedItem.icon}
-                style={{width: '36%', height: 43, borderRadius: 8}}
+                style={{width: '43%', height: 37, }}
               />
               <Text
                 style={[
@@ -101,7 +102,7 @@ function MenuItems({route, navigation}) {
                 ]}>
                 {nestedItem.title}
               </Text>
-            </View>
+            </Pressable>
           ))}
         </View>
       </View>

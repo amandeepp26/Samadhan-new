@@ -8,10 +8,18 @@ import { ActivityIndicator, Title } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import Provider from "../../api/Provider";
 import { useEffect, useState } from "react";
+import { projectLoginTypes } from "../../utils/credentials";
 
 function HomeScreen({ loginUser}) {
 
   const navigation =useNavigation();
+  const [snackbarText, setSnackbarText] = useState('');
+  const [snackbarColor, setSnackbarColor] = useState(theme.colors.success);
+  const [userRoleName, setUserRoleName] = useState('');
+  const [userName, setUserName] = useState('');
+  const [userRoleID, setUserRoleID] = useState('');
+   const [profileIcon, setProfileIcon] = useState(null);
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState('');
   const [menuData,setMenuData] = useState([]);
   const [showAll, setShowAll] = useState(false);
   const [userCountData,setUserCountData] = useState([]);
@@ -20,6 +28,8 @@ function HomeScreen({ loginUser}) {
   const itemsToShow = showAll ? menuData : menuData.slice(0, 7);
   useEffect(()=>{
     getMenuList();
+    GetUserData();
+    GetUserDetails();
     GetUserCount();
   },[])
 
@@ -60,6 +70,127 @@ function HomeScreen({ loginUser}) {
        });
   }
 
+
+    const GetUserData = async () => {
+      const login = await AsyncStorage.getItem('loggedIn');
+      if (login !== null) {
+        const loginData = JSON.parse(login);
+        if (loginData.isLogin) {
+          // setIsLoggedIn(true);
+        }
+      }
+
+      const userData = await AsyncStorage.getItem('user');
+      if (userData !== null) {
+        // setSingleLoad(1);
+        const userDataParsed = JSON.parse(userData);
+        GetUserProfileIcon(userDataParsed.UserID);
+        roleID = userDataParsed.RoleID;
+        userID = userDataParsed.UserID;
+        groupRefNo = userDataParsed.Sess_group_refno;
+        groupRefExtraNo = userDataParsed.Sess_group_refno_extra_1;
+        designID = userDataParsed.Sess_designation_refno;
+        companyAdminGroupID = userDataParsed.Sess_CompanyAdmin_group_refno;
+        locationType = userDataParsed.Sess_locationtype_refno;
+        companyID = userDataParsed.Sess_company_refno;
+        branchID = userDataParsed.Sess_branch_refno;
+
+        if (
+          (userDataParsed.RoleID == projectLoginTypes.DEF_DEALER_GROUP_REFNO ||
+            userDataParsed.RoleID ==
+              projectLoginTypes.DEF_CONTRACTOR_GROUP_REFNO ||
+            userDataParsed.RoleID ==
+              projectLoginTypes.DEF_ARCHITECTCONSULTANT_GROUP_REFNO) &&
+          userDataParsed.Sess_company_refno == 0
+        ) {
+          redirectToProfileFlag = 1;
+        } else {
+          redirectToProfileFlag = 0;
+        }
+
+        if (
+          userDataParsed.RoleID == 3 &&
+          userDataParsed.Sess_profile_address == 0
+        ) {
+          profileAddressFlag = 1;
+        } else {
+          profileAddressFlag = 0;
+        }
+
+        let roleName = '';
+        switch (roleID) {
+          case '1':
+            roleName = 'Super Admin';
+            break;
+          case '2':
+            roleName = 'Admin';
+            break;
+          case '3':
+            roleName = 'General User';
+            break;
+          case '4':
+            roleName = 'Dealer';
+            break;
+          case '5':
+            roleName = 'Contractor';
+            break;
+          case '7':
+            if (
+              designID ==
+              projectFixedDesignations.DEF_MARKETINGEXECUTIVE_DESIGNATION_REFNO
+            ) {
+              roleName = 'Marketing Executive';
+            } else if (
+              groupRefExtraNo == projectLoginTypes.DEF_MENUFACTURER_GROUP_REFNO
+            ) {
+              roleName = 'Menufacturer Incharge';
+            } else if (
+              designID ==
+              projectFixedDesignations.DEF_PROJECTSUPERVISOR_DESIGNATION_REFNO
+            ) {
+              roleName = 'Supervisor';
+            } else if (
+              designID ==
+              projectFixedDesignations.DEF_BRANCHADMIN_DESIGNATION_REFNO
+            ) {
+              roleName = 'Branch Admin';
+            } else {
+              roleName = 'General Employee';
+            }
+            break;
+          case '8':
+            roleName = 'Client';
+            break;
+          case '9':
+            roleName = 'Architect And Consultant (PMC)';
+            break;
+          case '10':
+            roleName = 'Project Supervisor';
+            break;
+          case '11':
+            roleName = 'Contractor Branch Admin';
+            break;
+          case '12':
+            roleName = 'Dealer Branch Admin';
+            break;
+          case '13':
+            roleName = 'Supplier';
+            break;
+          case '14':
+            roleName = 'Vendor';
+            break;
+        }
+        setUserRoleID(roleID);
+        setUserRoleName(roleName);
+        AsyncStorage.setItem('userRole',roleName)
+        GetUserCount(userID, groupRefNo);
+        if (roleID == 3) {
+          FillUserRoles();
+        } else if (roleID == 7) {
+          // FetchManufactoringData();
+        }
+      }
+    };
   // Get user cound
     const GetUserCount = async () => {
     const data = JSON.parse(await AsyncStorage.getItem('user'));
@@ -121,6 +252,93 @@ function HomeScreen({ loginUser}) {
           setIsLoading(false);
         });
     };
+
+      const GetUserDetails = async () => {
+        const data = JSON.parse(await AsyncStorage.getItem('user'));
+        let params = {
+          data: {
+            user_refno: data.UserID,
+          },
+        };
+        Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
+          .then(response => {
+            if (response.data && response.data.code === 200) {
+              console.warn(
+                'userdetails------->',
+                response.data.data.Sess_FName,
+              );
+              setUserName(response.data.data.Sess_FName);
+              AsyncStorage.setItem('userName', response.data.data.Sess_FName);
+              const user = {
+                UserID: user_refno,
+                FullName:
+                  response.data.data.Sess_FName === ''
+                    ? response.data.data.Sess_Username
+                    : '',
+                RoleID: response.data.data.Sess_group_refno,
+                RoleName: response.data.data.Sess_Username,
+                Sess_FName: response.data.data.Sess_FName,
+                Sess_MobileNo: response.data.data.Sess_MobileNo,
+                Sess_Username: response.data.data.Sess_Username,
+                Sess_role_refno: response.data.data.Sess_role_refno,
+                Sess_group_refno: response.data.data.Sess_group_refno,
+                Sess_designation_refno:
+                  response.data.data.Sess_designation_refno,
+                Sess_locationtype_refno:
+                  response.data.data.Sess_locationtype_refno,
+                Sess_group_refno_extra_1:
+                  response.data.data.Sess_group_refno_extra_1,
+                Sess_User_All_GroupRefnos:
+                  response.data.data.Sess_User_All_GroupRefnos,
+                Sess_branch_refno: response.data.data.Sess_branch_refno,
+                Sess_company_refno: response.data.data.Sess_company_refno,
+                Sess_CompanyAdmin_UserRefno:
+                  response.data.data.Sess_CompanyAdmin_UserRefno,
+                Sess_CompanyAdmin_group_refno:
+                  response.data.data.Sess_CompanyAdmin_group_refno,
+                Sess_RegionalOffice_Branch_Refno:
+                  response.data.data.Sess_RegionalOffice_Branch_Refno,
+                Sess_menu_refno_list: response.data.data.Sess_menu_refno_list,
+                Sess_empe_refno: response.data.data.Sess_empe_refno,
+                Sess_profile_address: response.data.data.Sess_profile_address,
+              };
+              AsyncStorage.setItem('user', JSON.stringify(user));
+              console.warn('user is-------->',user);
+            } else {
+              setSnackbarColor(theme.colors.error);
+              setSnackbarText(communication.InvalidUserNotExists);
+              setIsSnackbarVisible(true);
+            }
+          })
+          .catch(e => {
+            setSnackbarColor(theme.colors.error);
+            setSnackbarText(e.message);
+            setIsSnackbarVisible(true);
+          });
+      };
+
+      const GetUserProfileIcon = user_refno => {
+        let params = {
+          data: {
+            user_refno: user_refno,
+          },
+        };
+        Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
+          .then(response => {
+            if (response.data && response.data.code === 200) {
+              if (response.data.data.Sess_photo != '') {
+                setProfileIcon(response.data.data.Sess_photo);
+              } else {
+                setProfileIcon(null);
+              }
+            }
+          })
+          .catch(e => {
+            setSnackbarColor(theme.colors.error);
+            setSnackbarText(e.message);
+            setIsSnackbarVisible(true);
+          });
+      };
   return (
     <SafeAreaView style={[{flex: 1, backgroundColor: '#f7f7f8'}]}>
       {/* Header */}
@@ -128,7 +346,11 @@ function HomeScreen({ loginUser}) {
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
+              src={
+                profileIcon
+                  ? profileIcon
+                  : 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'
+              }
               style={{width: 50, height: 50, borderRadius: 50}}
             />
             <View
@@ -154,9 +376,9 @@ function HomeScreen({ loginUser}) {
           <View style={Styles.marginHorizontal12}>
             <Text
               style={[Styles.fontBold, Styles.fontSize20, Styles.primaryColor]}>
-              Hey Abdul
+              Hey {userName}
             </Text>
-            <Text>Admin</Text>
+            <Text>{userRoleName}</Text>
           </View>
         </View>
         <Icon name="notifications" type="ionicon" size={27} color={'#FFDB58'} />
@@ -232,7 +454,7 @@ function HomeScreen({ loginUser}) {
                   paddingVertical: 10,
                 }}>
                 {userCountData?.map((item, index) => (
-                  <View style={{alignItems: 'center'}}>
+                  <Pressable onPress={()=>navigation.navigate('Approved',{role:item.roleName})} style={{alignItems: 'center'}}>
                     <View
                       style={{
                         backgroundColor: theme.colors.primaryLight,
@@ -260,7 +482,7 @@ function HomeScreen({ loginUser}) {
                       {' '}
                       {item.roleName}
                     </Text>
-                  </View>
+                  </Pressable>
                 ))}
               </View>
             )}
@@ -323,7 +545,7 @@ function HomeScreen({ loginUser}) {
                 </Text>
               </Pressable>
               <Pressable
-                onPress={() => navigation.navigate('Activity')}
+                onPress={() => navigation.navigate('Declined')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -547,7 +769,7 @@ function HomeScreen({ loginUser}) {
                       source={{
                         uri: item.icon,
                       }}
-                      style={{width: '42%', height: 35, borderRadius: 8}}
+                      style={{width: '43%', height: 37, borderRadius: 8}}
                     />
                     <Text
                       style={[

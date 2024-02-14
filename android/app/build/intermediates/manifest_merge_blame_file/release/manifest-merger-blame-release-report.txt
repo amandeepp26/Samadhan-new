@@ -67,33 +67,50 @@
 40        </activity>
 41
 42        <provider
-42-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-43            android:name="androidx.startup.InitializationProvider"
-43-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-44            android:authorities="com.samadhan.androidx-startup"
-44-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-45            android:exported="false" >
-45-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-46            <meta-data
-46-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-47                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-47-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-48                android:value="androidx.startup" />
-48-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-49            <meta-data
-49-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
-50                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-50-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
-51                android:value="androidx.startup" />
-51-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
-52        </provider>
-53
-54        <meta-data
-54-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:12:9-14:37
-55            android:name="com.facebook.soloader.enabled"
-55-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:13:13-57
-56            android:value="false" />
-56-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:14:13-34
-57    </application>
-58
-59</manifest>
+42-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-16:20
+43            android:name="com.imagepicker.ImagePickerProvider"
+43-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-63
+44            android:authorities="com.samadhan.imagepickerprovider"
+44-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-71
+45            android:exported="false"
+45-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-37
+46            android:grantUriPermissions="true" >
+46-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-47
+47            <meta-data
+47-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-15:70
+48                android:name="android.support.FILE_PROVIDER_PATHS"
+48-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:17-67
+49                android:resource="@xml/imagepicker_provider_paths" />
+49-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:17-67
+50        </provider>
+51        <provider
+51-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+52            android:name="androidx.startup.InitializationProvider"
+52-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+53            android:authorities="com.samadhan.androidx-startup"
+53-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+54            android:exported="false" >
+54-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+55            <meta-data
+55-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+56                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+56-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+57                android:value="androidx.startup" />
+57-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+58            <meta-data
+58-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+59                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+59-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+60                android:value="androidx.startup" />
+60-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+61        </provider>
+62
+63        <meta-data
+63-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:12:9-14:37
+64            android:name="com.facebook.soloader.enabled"
+64-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:13:13-57
+65            android:value="false" />
+65-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:14:13-34
+66    </application>
+67
+68</manifest>

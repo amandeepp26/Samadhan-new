@@ -37,7 +37,9 @@ com.samadhan.app-main-35 /Users/aman/Documents/Apps/Samadhan/android/app/src/mai
 com.samadhan.app-release-36 /Users/aman/Documents/Apps/Samadhan/android/app/src/release/res
 com.samadhan.app-packaged_res-37 /Users/aman/Documents/Apps/Samadhan/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/packaged_res/release
 com.samadhan.app-packaged_res-38 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-gesture-handler/android/build/intermediates/packaged_res/release
-com.samadhan.app-packaged_res-39 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-reanimated/android/build/intermediates/packaged_res/release
-com.samadhan.app-packaged_res-40 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/release
-com.samadhan.app-packaged_res-41 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-screens/android/build/intermediates/packaged_res/release
-com.samadhan.app-packaged_res-42 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-vector-icons/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-39 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-40 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-reanimated/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-41 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-42 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-screens/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-43 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-svg/android/build/intermediates/packaged_res/release
+com.samadhan.app-packaged_res-44 /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-vector-icons/android/build/intermediates/packaged_res/release

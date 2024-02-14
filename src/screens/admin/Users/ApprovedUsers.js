@@ -20,6 +20,7 @@ import Provider from '../../../api/Provider';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { color } from 'react-native-elements/dist/helpers';
 import Search from '../../../components/Search';
+import Header from '../../../components/Header';
 
 function ApprovedUser({route, navigation}) {
 //   const data = route.params.data;
@@ -215,8 +216,10 @@ const DATA = [
    );
  };
 
-    if(isLoading){
-        return(
+  return (
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
+      <Header title="Approved Users" navigation={navigation} />
+       {isLoading ? (
         <View
           style={[
             Styles.flex1,
@@ -224,43 +227,11 @@ const DATA = [
             Styles.flexAlignCenter,
           ]}
         >
-          <ActivityIndicator size="large" color={theme.colors.primary} />
+          <ActivityIndicator size="small" color={theme.colors.primary} />
         </View>
       )
-    }
-
-    if(listData.length ==0){
-        <NoItems
-          icon="format-list-bulleted"
-          text="No records found for your query"
-        />;
-    }
-  return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={{
-          padding: 12,
-          paddingVertical: 20,
-          alignItems: 'center',
-          flexDirection: 'row',
-          borderBottomWidth: 1,
-          borderColor: '#d3d3d3',
-          backgroundColor: '#fff',
-        }}>
-        <Icon name="arrow-back-outline" type="ionicon" color="#000" />
-        <Text
-          style={[
-            Styles.fontBold,
-            Styles.fontSize20,
-            Styles.primaryColor,
-            {marginLeft: 20},
-          ]}>
-          Approved Users
-        </Text>
-      </TouchableOpacity>
+      : listData.length > 0 ?
+       <View style={[Styles.flex1, Styles.flexColumn, Styles.backgroundColor]}>
         <Search
           query={route?.params ? route?.params?.role : ''}
           data={listData}
@@ -277,11 +248,26 @@ const DATA = [
             'user_name',
           ]}
         />
+        {listSearchData.length > 0 ?
         <FlatList
           data={listSearchData}
           renderItem={({item}) => RenderItems(item)}
           keyExtractor={item => item.id}
         />
+        :
+      <NoItems
+          icon="format-list-bulleted"
+          text="No records found for your query"
+        />
+
+      }
+       </View>
+      :
+      <NoItems
+          icon="format-list-bulleted"
+          text="No records found for your query"
+        />
+      }
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}

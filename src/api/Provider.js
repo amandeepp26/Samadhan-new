@@ -5,7 +5,7 @@ const BASE_OLD = 'https://dfsolutions.in/api';
 let BASE_ = 'https://samadhanerp.com/api';
 
 // 1=development, 2=testkit
-BASE_ = '1';
+BASE_ = '2';
 
 if (BASE_ === '1') {
   BASE_ = 'https://samadhanerp.com/api';
