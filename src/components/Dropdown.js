@@ -20,7 +20,7 @@ export default Dropdown = ({
   return (
     <View
       style={[
-        Styles.borderRadius2,
+        Styles.borderRadius16,
         Styles.marginTop0,
         {
           borderWidth: 1,

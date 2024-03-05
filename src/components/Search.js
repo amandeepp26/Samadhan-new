@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Searchbar} from 'react-native-paper';
 import { Styles } from '../styles/styles';
+import { View } from 'react-native';
 
 const Search = ({query, data, setData, filterFunction}) => {
   const [searchQuery, setSearchQuery] = useState(query ? query : '');
@@ -80,6 +81,7 @@ const Search = ({query, data, setData, filterFunction}) => {
         {
           borderWidth: 1,
           borderColor: '#d3d3d3',
+          width:'90%',
           backgroundColor: '#fff',
           color: '#000',
           alignSelf: 'center',

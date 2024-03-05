@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View, LogBox, RefreshControl } from "react-native";
-import { FAB, List, Snackbar } from "react-native-paper";
+import { ActivityIndicator, View, LogBox, RefreshControl,TouchableOpacity, SafeAreaView } from "react-native";
+import { FAB, List, Snackbar, Title } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Provider from "../../../api/Provider";
 import Header from "../../../components/Header";
@@ -79,7 +79,7 @@ const WorkLocationScreen = ({ navigation }) => {
     FetchData();
   }, []);
 
-  const RenderItems = (data) => {
+  const RenderItems = (data,rowMap) => {
     return (
       <View
         style={[
@@ -99,7 +99,7 @@ const WorkLocationScreen = ({ navigation }) => {
             },
           ]}
           description={'Display: ' + (data.item.display ? 'Yes' : 'No')}
-          descriptionStyle={[{fontSize:14}]}
+          descriptionStyle={[{fontSize: 14}]}
           left={() => (
             <View
               style={{
@@ -116,6 +116,41 @@ const WorkLocationScreen = ({ navigation }) => {
               />
             </View>
           )}
+          right={() => (
+            <TouchableOpacity
+              onPress={() => EditCallback(data, rowMap)}
+              style={{
+                // flex: 1,
+                top: 10,
+                right: 10,
+                justifyContent: 'center',
+                alignSelf: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}>
+                <Icon
+                  name="pencil-outline"
+                  type="ionicon"
+                  color={theme.colors.primary}
+                  size={20}
+                />
+              </View>
+              {/* <Title
+                style={[
+                  Styles.fontSize11,
+                  {
+                    color: theme.colors.primaryLight,
+                    top: -5,
+                  },
+                ]}>
+                Edit
+              </Title> */}
+            </TouchableOpacity>
+          )}
         />
       </View>
     );
@@ -129,7 +164,7 @@ const WorkLocationScreen = ({ navigation }) => {
   };
 
   const EditCallback = (data, rowMap) => {
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     navigation.navigate("AddWorkLocationScreen", {
       type: "edit",
       fetchData: FetchData,
@@ -143,6 +178,7 @@ const WorkLocationScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Work Location" />
       {isLoading ? (
@@ -151,8 +187,7 @@ const WorkLocationScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -160,7 +195,7 @@ const WorkLocationScreen = ({ navigation }) => {
           <Search
             data={listData}
             setData={setListSearchData}
-            filterFunction={["workLocationName", "display"]}
+            filterFunction={['workLocationName', 'display']}
           />
           {listSearchData.length > 0 ? (
             <SwipeListView
@@ -181,10 +216,10 @@ const WorkLocationScreen = ({ navigation }) => {
               useFlatList={true}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={(data,rowMap) => RenderItems(data,rowMap)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -203,20 +238,21 @@ const WorkLocationScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

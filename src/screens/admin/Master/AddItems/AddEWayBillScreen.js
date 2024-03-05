@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 import { Card, Checkbox, HelperText, Snackbar, TextInput } from "react-native-paper";
 import Provider from "../../../../api/Provider";
@@ -175,6 +175,8 @@ const AddEWayBillScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title='Add E-Way Bill' navigation={navigation} />
       <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} contentInsetAdjustmentBehavior="automatic" keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" nestedScrollEnabled>
@@ -238,6 +240,7 @@ const AddEWayBillScreen = ({ route, navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

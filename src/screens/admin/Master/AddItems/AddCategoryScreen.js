@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View,TextInput, SafeAreaView} from 'react-native';
 import {
   Card,
   Checkbox,
@@ -7,7 +7,6 @@ import {
   Snackbar,
   Subheading,
   Text,
-  TextInput,
 } from 'react-native-paper';
 import Provider from '../../../../api/Provider';
 import Dropdown from '../../../../components/Dropdown';
@@ -17,6 +16,7 @@ import {APIConverter} from '../../../../utils/apiconverter';
 import {communication} from '../../../../utils/communication';
 import DFButton from '../../../../components/Button';
 import ButtonComponent from '../../../../components/Button';
+import Header from '../../../../components/Header';
 
 const AddCategoryScreen = ({route, navigation}) => {
   //#region Variables
@@ -321,7 +321,9 @@ const AddCategoryScreen = ({route, navigation}) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
+      <Header navigation={navigation} title="Add Category" />
       <ScrollView
         style={[Styles.flex1, Styles.backgroundColor, {marginBottom: 64}]}
         keyboardShouldPersistTaps="handled">
@@ -347,13 +349,15 @@ const AddCategoryScreen = ({route, navigation}) => {
             {communication.InvalidServiceName}
           </HelperText>
           <TextInput
-            mode="outlined"
-            label="Category Name"
+            underlineColor="transparent"
+            placeholderTextColor={theme.colors.textColorDark}
+            style={[Styles.textinput, {marginTop: 5, width: '100%'}]}
+            dense
+            placeholder="Category Name"
             value={name}
             returnKeyType="next"
             onSubmitEditing={() => ref_input2.current.focus()}
             onChangeText={onNameChanged}
-            style={{backgroundColor: 'white'}}
             error={error}
           />
           <HelperText type="error" visible={error}>
@@ -361,13 +365,15 @@ const AddCategoryScreen = ({route, navigation}) => {
           </HelperText>
           <TextInput
             ref={ref_input2}
-            mode="outlined"
-            label="HSN / SAC Code"
+            underlineColor="transparent"
+            placeholderTextColor={theme.colors.textColorDark}
+            style={[Styles.textinput, {marginTop: 5, width: '100%'}]}
+            dense
+            placeholder="HSN / SAC Code"
             value={hsn}
             returnKeyType="next"
             onSubmitEditing={() => ref_input3.current.focus()}
             onChangeText={onHSNChanged}
-            style={{backgroundColor: 'white'}}
             error={hsnError}
           />
           <HelperText type="error" visible={hsnError}>
@@ -375,14 +381,16 @@ const AddCategoryScreen = ({route, navigation}) => {
           </HelperText>
           <TextInput
             ref={ref_input3}
-            mode="outlined"
-            label="GST Rate"
+            underlineColor="transparent"
+            placeholderTextColor={theme.colors.textColorDark}
+            style={[Styles.textinput, {marginTop: 5,width:'100%'}]}
+            dense
+            placeholder="GST Rate"
             maxLength={15}
             value={gst}
             returnKeyType="done"
             keyboardType="decimal-pad"
             onChangeText={onGSTChanged}
-            style={{backgroundColor: 'white'}}
             error={gstError}
           />
           <HelperText type="error" visible={gstError}>
@@ -461,6 +469,7 @@ const AddCategoryScreen = ({route, navigation}) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

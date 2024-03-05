@@ -4,8 +4,14 @@ import {
   View,
   LogBox,
   RefreshControl,
+  TouchableOpacity,
+  Text,
   ScrollView,
-} from "react-native";
+  Pressable,
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+} from 'react-native';
 import { FAB, List, Snackbar, Title } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -35,6 +41,8 @@ const EWayBillScreen = ({ navigation }) => {
   const [selectedStateName, setSelectedStateName] = useState("");
   const [selectedInStateLimit, setSelectedInStateLimit] = useState("");
   const [selectedInterStateLimit, setSelectedInterStateLimit] = useState("");
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const refRBSheet = useRef();
 
@@ -89,6 +97,15 @@ const EWayBillScreen = ({ navigation }) => {
     FetchData();
   }, []);
 
+  const showPopup = user => {
+    setSelectedUser(user);
+    setIsPopupVisible(true);
+  };
+
+  const hidePopup = () => {
+    setIsPopupVisible(false);
+    setSelectedUser(null);
+  };
   const RenderItems = (data) => {
     return (
       <View
@@ -97,36 +114,46 @@ const EWayBillScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
           title={data.item.state_name}
-          titleStyle={{ fontSize: 18 }}
+          titleStyle={{fontSize: 18}}
           description={
-            "Display: " + (data.item.view_status === "1" ? "Yes" : "No")
+            'Display: ' + (data.item.view_status === '1' ? 'Yes' : 'No')
           }
           left={() => (
             <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={30}
-              color={theme.colors.textSecondary}
+              style={{marginVertical: 5, marginRight: 10}}
+              size={25}
+              color={theme.colors.primary}
               name="newspaper-variant"
             />
           )}
           onPress={() => {
-            refRBSheet.current.open();
+            showPopup(data);
             setSelectedStateName(data.item.state_name);
             setSelectedInStateLimit(data.item.in_state_limit);
             setSelectedInterStateLimit(data.item.inter_state_limit);
           }}
           right={() => (
-            <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={30}
-              color={theme.colors.textSecondary}
-              name="eye"
-            />
+            <View>
+              <Pressable
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  borderBottomWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}
+                onPress={() => EditCallback(data)}>
+                <Icon
+                  name="pencil-outline"
+                  type="ionicon"
+                  color={theme.colors.primary}
+                  size={18}
+                />
+              </Pressable>
+            </View>
           )}
         />
       </View>
@@ -141,7 +168,7 @@ const EWayBillScreen = ({ navigation }) => {
   };
 
   const EditCallback = (data, rowMap) => {
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     navigation.navigate("AddEWayBillScreen", {
       type: "edit",
       fetchData: FetchData,
@@ -157,6 +184,7 @@ const EWayBillScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="E-Way Bill" />
       {isLoading ? (
@@ -165,8 +193,7 @@ const EWayBillScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -175,11 +202,11 @@ const EWayBillScreen = ({ navigation }) => {
             data={listData}
             setData={setListSearchData}
             filterFunction={[
-              "state_name",
-              "in_state_limit",
-              "inter_state_limit",
-              "view_status",
-              "display",
+              'state_name',
+              'in_state_limit',
+              'inter_state_limit',
+              'view_status',
+              'display',
             ]}
           />
           {listSearchData?.length > 0 ? (
@@ -201,10 +228,10 @@ const EWayBillScreen = ({ navigation }) => {
               useFlatList={true}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={data => RenderItems(data)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -223,49 +250,157 @@ const EWayBillScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        dragFromTopOnly={true}
-        height={260}
-        animationType="fade"
-        customStyles={{
-          wrapper: { backgroundColor: "rgba(0,0,0,0.5)" },
-          draggableIcon: { backgroundColor: "#000" },
-        }}
-      >
-        <View>
-          <Title style={[Styles.paddingHorizontal16]}>
-            {selectedStateName}
-          </Title>
-          <ScrollView>
-            <List.Item
-              title="In State Limit"
-              description={selectedInStateLimit}
-            />
-            <List.Item
-              title="Inter State Limit"
-              description={selectedInterStateLimit}
-            />
-          </ScrollView>
+
+      {selectedUser && (
+        <View style={styles.popupContainer}>
+          <View style={styles.popupContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
+              <Icon name="close" size={24} color="#fff" />
+            </TouchableOpacity>
+            <Title
+              style={[Styles.fontBold, Styles.fontSize18, Styles.textCenter]}>
+              {selectedStateName}
+            </Title>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+               Inter State Limit
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '50%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {selectedInterStateLimit}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                In State Limit
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '72%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {selectedInStateLimit}
+              </Text>
+            </View>
+          </View>
         </View>
-      </RBSheet>
+      )}
+      
     </View>
+    </SafeAreaView>
   );
 };
 
 export default EWayBillScreen;
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#d5d5d5',
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  closeButton: {
+    position: 'absolute', // Position the close button absolutely within the container
+    top: -32, // Adjust the top distance as needed
+    right: 0, // Adjust the right distance as needed
+    backgroundColor: 'red', // Background color for the close button
+    borderRadius: 20, // Adjust the border radius to make the button circular
+    // padding: 2, // Add padding for better touch area
+  },
+  popupContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  popupContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '95%',
+  },
+  popupButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  popupButton: {
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: '#fff',
+    borderRadius: 5,
+  },
+
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3, // Add elevation for shadow effect
+  },
+});

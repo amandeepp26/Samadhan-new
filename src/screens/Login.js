@@ -63,7 +63,7 @@ const Login = ({route, navigation, loginUser}) => {
   //#endregion
 
   //#region Api calling
-  const StoreUserData = async user => {
+  const StoreUserData = async (user,navigation) => {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(user));
       loginUser();
@@ -111,8 +111,8 @@ const Login = ({route, navigation, loginUser}) => {
     };
     Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
       .then(response => {
-        console.log('user detail---->',response.data.data)
         if (response.data && response.data.code === 200) {
+          AsyncStorage.setItem('userRole', response.data.data.Sess_group_name);
           const user = {
             UserID: response.data.data.Sess_UserRefno,
             FullName:
@@ -121,6 +121,7 @@ const Login = ({route, navigation, loginUser}) => {
                 : response.data.data.Sess_FName,
             RoleID: response.data.data.Sess_group_refno,
             RoleName: response.data.data.Sess_Username,
+            Sess_role: response.data.data.Sess_group_name,
             Sess_FName: response.data.data.Sess_FName,
             Sess_MobileNo: response.data.data.Sess_MobileNo,
             Sess_Username: response.data.data.Sess_Username,
@@ -145,7 +146,7 @@ const Login = ({route, navigation, loginUser}) => {
             Sess_empe_refno: response.data.data.Sess_empe_refno,
             Sess_profile_address: response.data.data.Sess_profile_address,
           };
-
+          AsyncStorage.setItem('userRole', response.data.data.Sess_group_name);
           StoreUserData(user, navigation);
         } else {
           setSnackbarText(communication.InvalidUserNotExists);

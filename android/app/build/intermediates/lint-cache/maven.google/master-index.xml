@@ -34,6 +34,7 @@
   <androidx.compose.foundation/>
   <androidx.compose.material/>
   <androidx.compose.material3/>
+  <androidx.compose.material3.adaptive/>
   <androidx.compose.runtime/>
   <androidx.compose.ui/>
   <androidx.concurrent/>
@@ -71,6 +72,7 @@
   <androidx.leanback/>
   <androidx.legacy/>
   <androidx.lifecycle/>
+  <androidx.lint/>
   <androidx.loader/>
   <androidx.localbroadcastmanager/>
   <androidx.media/>

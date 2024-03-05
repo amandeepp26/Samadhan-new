@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { Card, Checkbox, HelperText, Snackbar, Subheading, Text, TextInput } from "react-native-paper";
 import Provider from "../../../../api/Provider";
 import Dropdown from "../../../../components/Dropdown";
@@ -445,6 +445,7 @@ const AddProductScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title="Add Products" navigation={navigation} />
       <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled">
@@ -500,6 +501,7 @@ const AddProductScreen = ({ route, navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,0 +1,31 @@
+{
+  "pageSize": "A4",
+  "pageMargins": [40, 200, 40, 90],
+  "header": [
+    {
+      "image": "header",
+      "fit": [595, 180]
+    }
+  ],
+  "content": [
+    {
+      "style": "tableExample",
+      "table": {
+        "body": [
+          ["Column 1", "Column 2", "Column 3"],
+          ["One value goes here", "Another one here", "OK?"]
+        ]
+      }
+    }
+  ],
+  "footer": [
+    {
+      "image": "footer",
+      "fit": [595, 600]
+    }
+  ],
+  "images": {
+    "header": "",
+    "footer": ""
+  }
+}

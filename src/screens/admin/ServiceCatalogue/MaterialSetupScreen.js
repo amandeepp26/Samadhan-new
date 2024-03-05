@@ -4,8 +4,15 @@ import {
   View,
   LogBox,
   RefreshControl,
+  TouchableOpacity,
+  Text,
   ScrollView,
-} from "react-native";
+  Pressable,
+  StyleSheet,
+  Image,
+  StatusBar,
+  SafeAreaView,
+} from 'react-native';
 import { FAB, List, Snackbar, Title } from "react-native-paper";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { SwipeListView } from "react-native-swipe-list-view";
@@ -38,6 +45,8 @@ const MaterialSetupScreen = ({ navigation }) => {
   const [categoryName, setCategoryName] = useState("");
   const [productName, setProductName] = useState("");
   const [subtotal, setSubtotal] = useState("");
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const refRBSheet = useRef();
   //#endregion
@@ -90,6 +99,16 @@ const MaterialSetupScreen = ({ navigation }) => {
     FetchData();
   }, []);
 
+        const showPopup = user => {
+          setSelectedUser(user);
+          setIsPopupVisible(true);
+        };
+
+        const hidePopup = () => {
+          setIsPopupVisible(false);
+          setSelectedUser(null);
+        };
+
   const RenderItems = (data) => {
     return (
       <View
@@ -98,23 +117,30 @@ const MaterialSetupScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
           title={data.item.designTypeName}
-          titleStyle={{ fontSize: 18 }}
-          description={"Display: " + (data.item.display ? "Yes" : "No")}
+          titleStyle={{fontSize: 18}}
+          description={'Display: ' + (data.item.display ? 'Yes' : 'No')}
           left={() => (
-            <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={25}
-              color={theme.colors.textSecondary}
-              name="brush"
-            />
+            <View
+              style={{
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 50,
+                backgroundColor: '#f5f5f5',
+                borderRadius: 50,
+              }}>
+              <Image
+                source={require('../../../../assets/material-setup.png')}
+                style={{width: 30, height: 30}}
+              />
+            </View>
           )}
           onPress={() => {
-            refRBSheet.current.open();
+            showPopup(data);
             setSelectedDesignTypeName(data.item.designTypeName);
             setServiceName(data.item.serviceName);
             setCategoryName(data.item.categoryName);
@@ -122,12 +148,23 @@ const MaterialSetupScreen = ({ navigation }) => {
             setSubtotal(data.item.materialCost);
           }}
           right={() => (
-            <Icon
-              style={{ marginVertical: 5, marginRight: 12 }}
-              size={25}
-              color={theme.colors.textSecondary}
-              name="eye"
-            />
+            <View>
+              <Pressable
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  borderBottomWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}
+                onPress={() => EditCallback(data)}>
+                <Icon
+                  name="pencil-outline"
+                  type="ionicon"
+                  color={theme.colors.primary}
+                  size={18}
+                />
+              </Pressable>
+            </View>
           )}
         />
       </View>
@@ -143,7 +180,7 @@ const MaterialSetupScreen = ({ navigation }) => {
 
   const EditCallback = (data, rowMap) => {
     console.log('edit data:', data);
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     let params = {
       data: {
         Sess_UserRefno: "2",
@@ -189,6 +226,7 @@ const MaterialSetupScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Material Setup" />
       {isLoading ? (
@@ -197,8 +235,7 @@ const MaterialSetupScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -207,18 +244,18 @@ const MaterialSetupScreen = ({ navigation }) => {
             data={listData}
             setData={setListSearchData}
             filterFunction={[
-              "serviceName",
-              "categoryName",
-              "productName",
-              "designTypeName",
-              "materialCost",
-              "lengthfoot",
-              "lengthinches",
-              "widthheightfoot",
-              "widthheightinches",
-              "totalfoot",
-              "productList",
-              "display",
+              'serviceName',
+              'categoryName',
+              'productName',
+              'designTypeName',
+              'materialCost',
+              'lengthfoot',
+              'lengthinches',
+              'widthheightfoot',
+              'widthheightinches',
+              'totalfoot',
+              'productList',
+              'display',
             ]}
           />
           {listSearchData?.length > 0 ? (
@@ -239,10 +276,10 @@ const MaterialSetupScreen = ({ navigation }) => {
               data={listSearchData}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={data => RenderItems(data)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -261,19 +298,128 @@ const MaterialSetupScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
+      {selectedUser && (
+        <View style={styles.popupContainer}>
+          <View style={styles.popupContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
+              <Icon name="close" size={24} color="#fff" />
+            </TouchableOpacity>
+            <Title
+              style={[Styles.fontBold, Styles.fontSize18, Styles.textCenter]}>
+              {selectedDesignTypeName}
+            </Title>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Service Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '72%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {serviceName}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Category Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '72%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {categoryName}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Product Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '50%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {productName}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Material Cost (per Sq.Ft)
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '50%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {subtotal}
+              </Text>
+            </View>
+          </View>
+        </View>
+      )}
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
@@ -282,11 +428,10 @@ const MaterialSetupScreen = ({ navigation }) => {
         height={380}
         animationType="fade"
         customStyles={{
-          wrapper: { backgroundColor: "rgba(0,0,0,0.5)" },
-          draggableIcon: { backgroundColor: "#000" },
-        }}
-      >
-        <View style={{ paddingBottom: 64 }}>
+          wrapper: {backgroundColor: 'rgba(0,0,0,0.5)'},
+          draggableIcon: {backgroundColor: '#000'},
+        }}>
+        <View style={{paddingBottom: 64}}>
           <Title style={[Styles.paddingHorizontal16]}>
             {selectedDesignTypeName}
           </Title>
@@ -302,7 +447,80 @@ const MaterialSetupScreen = ({ navigation }) => {
         </View>
       </RBSheet>
     </View>
+    </SafeAreaView>
   );
 };
 
 export default MaterialSetupScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#d5d5d5',
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  closeButton: {
+    position: 'absolute', // Position the close button absolutely within the container
+    top: -32, // Adjust the top distance as needed
+    right: 0, // Adjust the right distance as needed
+    backgroundColor: 'red', // Background color for the close button
+    borderRadius: 20, // Adjust the border radius to make the button circular
+    // padding: 2, // Add padding for better touch area
+  },
+  popupContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  popupContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '95%',
+  },
+  popupButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  popupButton: {
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: '#fff',
+    borderRadius: 5,
+  },
+
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3, // Add elevation for shadow effect
+  },
+});

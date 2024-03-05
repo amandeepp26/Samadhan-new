@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   Card,
   Checkbox,
@@ -165,6 +165,7 @@ const AddMassOfZincCoating = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Add Mass of Zinc Coating" />
       <ScrollView
@@ -232,6 +233,7 @@ const AddMassOfZincCoating = ({ route, navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

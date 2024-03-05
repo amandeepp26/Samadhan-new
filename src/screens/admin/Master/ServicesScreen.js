@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View, LogBox, RefreshControl } from "react-native";
+import { ActivityIndicator, View, LogBox, RefreshControl, SafeAreaView } from "react-native";
 import { FAB, List, Snackbar } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Provider from "../../../api/Provider";
@@ -127,6 +127,7 @@ const ServicesScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Services" />
       {isLoading ? (
@@ -135,8 +136,7 @@ const ServicesScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -144,7 +144,7 @@ const ServicesScreen = ({ navigation }) => {
           <Search
             data={listData}
             setData={setListSearchData}
-            filterFunction={["serviceName", "display"]}
+            filterFunction={['serviceName', 'display']}
           />
           {listSearchData?.length > 0 ? (
             <SwipeListView
@@ -164,7 +164,7 @@ const ServicesScreen = ({ navigation }) => {
               data={listSearchData}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
+              renderItem={data => RenderItems(data)}
               renderHiddenItem={(data, rowMap) =>
                 RenderHiddenItems(data, rowMap, [EditCallback])
               }
@@ -186,20 +186,21 @@ const ServicesScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { ScrollView, View } from "react-native";
-import { Card, Checkbox, HelperText, Snackbar, TextInput } from "react-native-paper";
+import {ScrollView, View, TextInput, SafeAreaView} from 'react-native';
+import { Card, Checkbox, HelperText, Snackbar,  } from "react-native-paper";
 import Provider from "../../../../api/Provider";
 import { Styles } from "../../../../styles/styles";
 import { theme } from "../../../../theme/apptheme";
 import { communication } from "../../../../utils/communication";
 import DFButton from "../../../../components/Button";  
 import ButtonComponent from "../../../../components/Button";
+import Header from "../../../../components/Header";
 
 
 const AddActivityRolesScreen = ({ route, navigation }) => {
@@ -104,20 +105,33 @@ const AddActivityRolesScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
-      <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled">
+      <Header navigation={navigation} title="Add Activity" />
+      <ScrollView
+        style={[Styles.flex1, Styles.backgroundColor, {marginBottom: 64}]}
+        keyboardShouldPersistTaps="handled">
         <View style={[Styles.padding16]}>
-          <TextInput mode="outlined" label="Activity Name" value={activityName} onChangeText={onActivityNameChanged} style={{ backgroundColor: "white" }} error={activityNameError} />
+          <TextInput
+            underlineColor="transparent"
+            placeholderTextColor={theme.colors.textColorDark}
+            style={[Styles.textinput,{width:'95%'}]}
+            dense
+            placeholder="Activity Name"
+            value={activityName}
+            onChangeText={onActivityNameChanged}
+            error={activityNameError}
+          />
           <HelperText type="error" visible={activityNameError}>
             {communication.InvalidActivityName}
           </HelperText>
-          <View style={{ width: 160 }}>
+          <View style={{width: 160}}>
             <Checkbox.Item
               label="Display"
               color={theme.colors.primary}
               position="leading"
-              labelStyle={{ textAlign: "left", paddingLeft: 8 }}
-              status={checked ? "checked" : "unchecked"}
+              labelStyle={{textAlign: 'left', paddingLeft: 8}}
+              status={checked ? 'checked' : 'unchecked'}
               onPress={() => {
                 setChecked(!checked);
               }}
@@ -125,15 +139,32 @@ const AddActivityRolesScreen = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <View style={[Styles.backgroundColor, Styles.width100per, Styles.marginTop32, Styles.padding16, { position: "absolute", bottom: 0, elevation: 3 }]}>
+      <View
+        style={[
+          Styles.backgroundColor,
+          Styles.width100per,
+          Styles.marginTop32,
+          Styles.padding16,
+          {position: 'absolute', bottom: 0, elevation: 3},
+        ]}>
         <Card.Content>
-          <ButtonComponent mode="contained" onPress={ValidateActivityName} text="SAVE" loader={isButtonLoading} />
+          <ButtonComponent
+            mode="contained"
+            onPress={ValidateActivityName}
+            text="SAVE"
+            loader={isButtonLoading}
+          />
         </Card.Content>
       </View>
-      <Snackbar visible={snackbarVisible} onDismiss={() => setSnackbarVisible(false)} duration={3000} style={{ backgroundColor: theme.colors.error }}>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+        style={{backgroundColor: theme.colors.error}}>
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

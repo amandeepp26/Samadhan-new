@@ -1,6 +1,6 @@
 import React, {useEffect, useId, useRef} from 'react';
 import FormData from 'form-data';
-import {Image, Platform, ScrollView, View} from 'react-native';
+import {Image, Platform, SafeAreaView, ScrollView, View} from 'react-native';
 import {
   Card,
   Checkbox,
@@ -542,6 +542,7 @@ const AddDesignTypeScreen = ({route, navigation}) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title='Add Design Type' navigation={navigation} />
       <ScrollView
@@ -676,6 +677,7 @@ const AddDesignTypeScreen = ({route, navigation}) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

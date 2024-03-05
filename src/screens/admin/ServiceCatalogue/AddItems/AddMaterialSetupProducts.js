@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { Checkbox, Title } from "react-native-paper";
 import Provider from "../../../../api/Provider";
 import Dropdown from "../../../../components/Dropdown";
@@ -111,6 +111,7 @@ const AddMaterialSetupProducts = ({ arrProductData }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <View style={[Styles.flexRow, Styles.padding16]}>
         <View style={[Styles.paddingStart0, Styles.paddingEnd8, Styles.flex1]}>
@@ -156,6 +157,7 @@ const AddMaterialSetupProducts = ({ arrProductData }) => {
         })}
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 

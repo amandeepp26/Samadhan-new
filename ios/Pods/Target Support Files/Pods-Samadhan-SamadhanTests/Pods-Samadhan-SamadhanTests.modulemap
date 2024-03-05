@@ -1,0 +1,6 @@
+module Pods_Samadhan_SamadhanTests {
+  umbrella header "Pods-Samadhan-SamadhanTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

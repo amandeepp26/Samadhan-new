@@ -59,6 +59,61 @@ import MaterialSetupScreen from './src/screens/admin/ServiceCatalogue/MaterialSe
 import AddMaterialSetupScreen from './src/screens/admin/ServiceCatalogue/AddItems/AddMaterialSetupScreen';
 import PostNewDesignScreen from './src/screens/admin/ServiceCatalogue/PostNewDesignScreen';
 import AddPostNewDesignScreen from './src/screens/admin/ServiceCatalogue/AddItems/AddPostNewDesignScreen';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { theme } from './src/theme/apptheme';
+import GeneralUserDrawer from './src/navigations/GeneralUserDrawer';
+import ImageGalleryScreen from './src/screens/GeneralUser/EstimateAndEnquiries/ImageGalleryScreen';
+import YourEstimationsScreen from './src/screens/GeneralUser/EstimateAndEnquiries/YourEstimationsScreen';
+import MaterialCalculatorScreen from './src/screens/Common/MaterialCalculator/MaterialCalculatorScreen';
+import Design from './src/screens/Design Your Dream/Categories';
+import ImageGalleryWorkLocationScreen from './src/screens/GeneralUser/EstimateAndEnquiries/ImageGalleryWorkLocationScreen';
+import UserProfile from './src/screens/Common/Profile Update/UserProfile';
+import EstimationPreviewScreen from './src/screens/GeneralUser/EstimateAndEnquiries/EstimationPreviewScreen';
+import GetEstimationScreen from './src/screens/GeneralUser/EstimateAndEnquiries/GetEstimationScreen';
+import DesignyourdreamForm from './src/screens/Design Your Dream/Form';
+import DealerDrawer from './src/navigations/DealerDrawer';
+import DealerBuyerCategoryScreen from './src/screens/Dealer/Brand/BuyerCategoryScreen';
+import DealerBrandMasterScreen from './src/screens/Dealer/Brand/BrandMasterScreen';
+import DealerBrandSetupScreen from './src/screens/Dealer/Brand/BrandSetupScreen';
+import AddDealerBuyerCategoryScreen from './src/screens/Dealer/Brand/AddItem/AddBuyerCategoryScreen';
+import AddDealerBrandSetupScreen from './src/screens/Dealer/Brand/AddItem/AddBrandSetupScreen';
+import AddDealerBrandMasterScreen from './src/screens/Dealer/Brand/AddItem/AddBrandMasterScreen';
+import DealerBasicDetailsScreen from './src/screens/Dealer/CompanyProfile/BasicDetailsScreen';
+import DealerMyServicesScreen from './src/screens/Dealer/CompanyProfile/MyServicesScreen';
+import DealerPresentationScreen from './src/screens/Dealer/CompanyProfile/PresentationScreen';
+import AddDealerMyServicesScreen from './src/screens/Dealer/CompanyProfile/AddItem/AddMyServicesScreen';
+import AddDealerDepartmentScreen from './src/screens/Dealer/Organization/AddItem/AddDepartmentScreen';
+import AddDealerDesignationScreen from './src/screens/Dealer/Organization/AddItem/AddDesignationScreen';
+import SearchEmployee from './src/screens/Common/Employee/AddItems/SearchEmployee';
+import AddEmployee from './src/screens/Common/Employee/AddItems/AddEmployee';
+import EmployeeListScreen from './src/screens/Common/Employee/EmployeeList';
+import RateCardSetup from './src/screens/Contractor/RateCard/RateCardSetup';
+import AddRateCard from './src/screens/Contractor/RateCard/AddRateCard';
+import SendRateCard from './src/screens/Contractor/RateCard/SendRateCard/sendRateCard';
+import AddSendRateCard from './src/screens/Contractor/RateCard/SendRateCard/AddSendRateCard';
+import BudgetSetup from './src/screens/Common/PocketDairy/Setting/BudgetSetup';
+import EmployeeAttendanceReport from './src/screens/Common/EmployeeAttendance/EmployeeAttendanceReport';
+import DesignWiseScreen from './src/screens/Contractor/QuotationAndEstimation/DesignWiseScreen';
+import QuotationWiseScreen from './src/screens/Contractor/QuotationAndEstimation/QuotationWiseScreen';
+import EnquiryWise from './src/screens/Contractor/Enquiries/Enquiry_Wise';
+import ConsultantBoq from './src/screens/Contractor/Enquiries/Consultant_Boq';
+import ProjectYetStart from './src/screens/Contractor/Projects/Yet to Start';
+import OnGoingProject from './src/screens/Contractor/Projects/On Going';
+import OnGoingProjectDetails from './src/screens/Contractor/Projects/On Going/Details';
+import ActivityRolesScreen from './src/screens/admin/Master/ActivityRolesScreen';
+import AddActivityRolesScreen from './src/screens/admin/Master/AddItems/AddActivityRolesScreen';
+import AddServicesScreen from './src/screens/admin/Master/AddItems/AddServicesScreen';
+import UnitOfSalesScreen from './src/screens/admin/Master/UnitOfSalesScreen';
+import AddCategoryScreen from './src/screens/admin/Master/AddItems/AddCategoryScreen';
+import AttendanceListScreen from './src/screens/Common/EmployeeAttendance/AttendanceList';
+import MarkAttendanceScreen from './src/screens/Common/EmployeeAttendance/MarkAttendance';
+import AdminAttendanceReport from './src/screens/Common/EmployeeAttendance/AdminAttendanceReport';
+import SingleEmployeeAttendanceReport from './src/screens/Common/EmployeeAttendance/SingleEmployeeAttendanceSalaryReport';
+import DailyActivityReport from './src/screens/Marketing/EmployeeActivity/DailyActivityReport';
+import ActivityReport from './src/screens/Marketing/EmployeeActivity/ActivityReport';
+import CustomerList from './src/screens/Marketing/EmployeeActivity/CustomerList';
+import AddExpensesList from './src/screens/Common/PocketDairy/AddExpensesList';
+import AddCompany from './src/screens/Common/PocketDairy/AddItems/AddCompany';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -76,6 +131,7 @@ function AuthStack() {
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = React.useState(false);
   const [appReady, setAppReady] = React.useState(false);
+  const [userRole, setUserRole] = React.useState('');
 
   React.useEffect(() => {
     // Check if the user is logged in during app startup
@@ -87,6 +143,17 @@ function App() {
       setAppReady(true);
     }, 1000);
   }, []);
+
+  React.useEffect(()=>{
+    checkuserData();
+  },[isUserLoggedIn,appReady]);
+
+  const checkuserData = async () => {
+   const userRole = await AsyncStorage.getItem('userRole')
+    if (userRole) {
+      setUserRole(userRole);
+    }
+  };
 
   const checkUserLoggedIn = async () => {
     try {
@@ -100,7 +167,10 @@ function App() {
     }
   };
 
-  const loginUser = () => {
+  const loginUser = async () => {
+    // const user = await AsyncStorage.getItem('user');
+    const userRole = await AsyncStorage.getItem('userRole');
+    console.warn('user is---->', userRole);
     setIsUserLoggedIn(!isUserLoggedIn);
   };
 
@@ -110,169 +180,388 @@ function App() {
 
   return (
     <>
-      {!isUserLoggedIn ? (
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              gestureEnabled: true,
-            }}>
-            <>
-              <Stack.Screen
-                name="Login"
-                component={props => <Login {...props} loginUser={loginUser} />}
-              />
-              <Stack.Screen
-                name="Signup"
-                component={Signup}
-                options={{headerShown: false}}
-              />
-              <Stack.Screen
-                name="ForgetPassword"
-                component={Forgetpassword}
-                options={{headerShown: false}}
-              />
-            </>
-          </Stack.Navigator>
-        </NavigationContainer>
-      ) : (
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              gestureEnabled: true,
-            }}>
-            <>
-              <Stack.Screen name="Home" component={DrawerNavigation} />
-              <Stack.Screen name="Menu" component={MenuItems} />
-              <Stack.Screen name="Approved" component={ApprovedUser} />
-              <Stack.Screen name="Pending" component={PendingUsers} />
-              <Stack.Screen name="Declined" component={DeclinedUserScreen} />
-              <Stack.Screen name="Activity" component={Activity} />
-              <Stack.Screen name="AddActivity" component={AddActivity} />
-              <Stack.Screen name="ApiMaster" component={ApiMaster} />
-              <Stack.Screen name="AddApiMaster" component={AddApiMaster} />
-              <Stack.Screen name="Service" component={Services} />
-              <Stack.Screen name="AddService" component={AddService} />
-              <Stack.Screen name="Unit of Sales" component={UnitofSales} />
-              <Stack.Screen name="AddUnitofSales" component={AddUnitofSales} />
-              <Stack.Screen name="Category" component={Category} />
-              <Stack.Screen name="AddCategory" component={AddCategory} />
-              <Stack.Screen name="Products" component={ProductScreen} />
-              <Stack.Screen
-                name="AddProductScreen"
-                component={AddProductScreen}
-              />
-              <Stack.Screen
-                name="Service Product"
-                component={ServiceProductScreen}
-              />
-              <Stack.Screen
-                name="AddServiceProductScreen"
-                component={AddServiceProductScreen}
-              />
-              <Stack.Screen name="Department" component={DepartmentScreen} />
-              <Stack.Screen
-                name="AddDepartmentScreen"
-                component={AddDepartmentScreen}
-              />
-              <Stack.Screen
-                name="Location Type"
-                component={LocationTypeScreen}
-              />
-              <Stack.Screen
-                name="AddLocationTypeScreen"
-                component={AddLocationTypeScreen}
-              />
-              <Stack.Screen name="Designation" component={DesignationScreen} />
-              <Stack.Screen
-                name="AddDesignationScreen"
-                component={AddDesignationScreen}
-              />
-              <Stack.Screen name="E-Way Bill" component={EWayBillScreen} />
-              <Stack.Screen
-                name="AddEWayBillScreen"
-                component={AddEWayBillScreen}
-              />
-              <Stack.Screen name="Setup" component={SetupScreen} />
-              <Stack.Screen name="AddSetupScreen" component={AddSetupScreen} />
-              <Stack.Screen
-                name="Category Name"
-                component={CategoryNameScreen}
-              />
-              <Stack.Screen
-                name="AddCategoryNameScreen"
-                component={AddCategoryNameScreen}
-              />
-              <Stack.Screen
-                name="Sub Category Name"
-                component={SubCategoryNameScreen}
-              />
-              <Stack.Screen
-                name="AddSubCategoryNameScreen"
-                component={AddSubCategoryNameScreen}
-              />
-              <Stack.Screen
-                name="Brand Conversion Value"
-                component={ABrandConversationValue}
-              />
-              <Stack.Screen
-                name="AddBrandConversationValue"
-                component={AddBrandConversationValue}
-              />
-              <Stack.Screen name="Width of GP Coil" component={WidthOfGpCoil} />
-              <Stack.Screen
-                name="AddWidthOfGpCoil"
-                component={AddWidthOfGpCoil}
-              />
-              <Stack.Screen
-                name="Mass of Zinc Coating"
-                component={MassOfZincCoating}
-              />
-              <Stack.Screen
-                name="AddMassOfZincCoating"
-                component={AddMassOfZincCoating}
-              />
-              <Stack.Screen name="Work Floor" component={WorkFloorScreen} />
-              <Stack.Screen
-                name="AddWorkFloorScreen"
-                component={AddWorkFloorScreen}
-              />
-              <Stack.Screen
-                name="Work Location"
-                component={WorkLocationScreen}
-              />
-              <Stack.Screen
-                name="AddWorkLocationScreen"
-                component={AddWorkLocationScreen}
-              />
-              <Stack.Screen name="Design Type" component={DesignTypeScreen} />
-              <Stack.Screen
-                name="AddDesignTypeScreen"
-                component={AddDesignTypeScreen}
-              />
+      <PaperProvider theme={theme}>
+        {!isUserLoggedIn ? (
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                gestureEnabled: true,
+              }}>
+              <>
+                <Stack.Screen
+                  name="Login"
+                  component={props => (
+                    <Login {...props} loginUser={loginUser} />
+                  )}
+                />
+                <Stack.Screen
+                  name="Signup"
+                  component={Signup}
+                  options={{headerShown: false}}
+                />
+                <Stack.Screen
+                  name="ForgetPassword"
+                  component={Forgetpassword}
+                  options={{headerShown: false}}
+                />
+              </>
+            </Stack.Navigator>
+          </NavigationContainer>
+        ) : (
+          <NavigationContainer>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                gestureEnabled: true,
+              }}>
+              <>
+                {userRole === 'App Admin' || userRole === 'Admin' ? (
+                  <Stack.Screen
+                    name="Home"
+                    component={props => (
+                      <DrawerNavigation {...props} loginUser={loginUser} />
+                    )}
+                  />
+                ) : userRole === 'General User' ? (
+                  <>
+                    <Stack.Screen
+                      name="Home"
+                      component={props => (
+                        <GeneralUserDrawer {...props} loginUser={loginUser} />
+                      )}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen
+                      name="HomeScreen"
+                      component={props => (
+                        <DealerDrawer {...props} loginUser={loginUser} />
+                      )}
+                    />
+                  </>
+                )}
+                {/* <Stack.Screen
+                  name="Home"
+                  component={props => (
+                    <DrawerNavigation {...props} loginUser={loginUser} />
+                  )}
+                /> */}
+                <Stack.Screen
+                  name="Add Department"
+                  component={AddDealerDepartmentScreen}
+                />
+                <Stack.Screen
+                  name="Create New / List"
+                  component={EmployeeListScreen}
+                />
+                <Stack.Screen
+                  name="Attendance Edit"
+                  component={EmployeeAttendanceReport}
+                />
+                <Stack.Screen
+                  name="EmployeeAttendanceReport"
+                  component={EmployeeAttendanceReport}
+                />
+                <Stack.Screen
+                  name="MarkAttendanceScreen"
+                  component={MarkAttendanceScreen}
+                />
+                <Stack.Screen
+                  name="SingleEmployeeReport"
+                  component={SingleEmployeeAttendanceReport}
+                />
+                <Stack.Screen
+                  name="Daily Activity Report"
+                  component={DailyActivityReport}
+                />
+                <Stack.Screen
+                  name="Overall Activity Report"
+                  component={ActivityReport}
+                />
+                <Stack.Screen
+                  name="Attendance Report"
+                  component={AdminAttendanceReport}
+                />
+                <Stack.Screen
+                  name="Branch wise"
+                  component={AdminAttendanceReport}
+                />
+                <Stack.Screen name="My Budgets" component={BudgetSetup} />
+                <Stack.Screen
+                  name="Rate Card Setup"
+                  component={RateCardSetup}
+                />
+                <Stack.Screen name="AddRateCard" component={AddRateCard} />
+                <Stack.Screen name="Send Rate Card" component={SendRateCard} />
+                <Stack.Screen
+                  name="AddSendRateCard"
+                  component={AddSendRateCard}
+                />
 
-              <Stack.Screen
-                name="Materials Setup"
-                component={MaterialSetupScreen}
-              />
-              <Stack.Screen
-                name="AddMaterialSetupScreen"
-                component={AddMaterialSetupScreen}
-              />
-              <Stack.Screen
-                name="Post New Design"
-                component={PostNewDesignScreen}
-              />
-              <Stack.Screen
-                name="AddPostNewDesignScreen"
-                component={AddPostNewDesignScreen}
-              />
-            </>
-          </Stack.Navigator>
-        </NavigationContainer>
-        // <DrawerNavigation loginUser={loginUser} />
-      )}
+                <Stack.Screen
+                  name="SearchEmployee"
+                  component={SearchEmployee}
+                />
+                <Stack.Screen name="AddEmployee" component={AddEmployee} />
+                <Stack.Screen
+                  name="Add Designation"
+                  component={AddDealerDesignationScreen}
+                />
+                <Stack.Screen
+                  name="Buyer Category"
+                  component={DealerBuyerCategoryScreen}
+                />
+                <Stack.Screen
+                  name="AddDealerBuyerCategoryScreen"
+                  component={AddDealerBuyerCategoryScreen}
+                />
+                <Stack.Screen
+                  name="Brand Master"
+                  component={DealerBrandMasterScreen}
+                />
+                <Stack.Screen
+                  name="AddDealerBrandMasterScreen"
+                  component={AddDealerBrandMasterScreen}
+                />
+                <Stack.Screen
+                  name="Brand Setup"
+                  component={DealerBrandSetupScreen}
+                />
+                <Stack.Screen
+                  name="AddDealerBrandSetupScreen"
+                  component={AddDealerBrandSetupScreen}
+                />
+                <Stack.Screen
+                  name="Basic Details"
+                  component={DealerBasicDetailsScreen}
+                />
+                <Stack.Screen
+                  name="My Services"
+                  component={DealerMyServicesScreen}
+                />
+                <Stack.Screen
+                  name="AddDealerMyServicesScreen"
+                  component={AddDealerMyServicesScreen}
+                />
+                <Stack.Screen
+                  name="Presentation"
+                  component={DealerPresentationScreen}
+                />
+                <Stack.Screen
+                  name="Image Gallery"
+                  component={ImageGalleryScreen}
+                />
+                <Stack.Screen name="Design Wise" component={DesignWiseScreen} />
+                <Stack.Screen
+                  name="Quotation Wise"
+                  component={QuotationWiseScreen}
+                />
+                <Stack.Screen
+                  name="App User Enquiry Wise"
+                  component={EnquiryWise}
+                />
+                <Stack.Screen
+                  name="Architect & Consultant-Boq"
+                  component={ConsultantBoq}
+                />
+                <Stack.Screen name="Yet to start" component={ProjectYetStart} />
+                <Stack.Screen name="On going" component={OnGoingProject} />
+
+                <Stack.Screen
+                  name="On Going Project Details"
+                  component={OnGoingProjectDetails}
+                />
+                <Stack.Screen
+                  name="My Estimations"
+                  component={YourEstimationsScreen}
+                />
+                <Stack.Screen
+                  name="MaterialCalculatorScreen"
+                  component={MaterialCalculatorScreen}
+                />
+                <Stack.Screen
+                  name="DesignYourDreamCategories"
+                  component={Design}
+                />
+                <Stack.Screen
+                  name="ImageGalleryWorkLocationScreen"
+                  component={ImageGalleryWorkLocationScreen}
+                />
+                <Stack.Screen name="UserProfile" component={UserProfile} />
+                <Stack.Screen
+                  name="EstimationPreviewScreen"
+                  component={EstimationPreviewScreen}
+                />
+                <Stack.Screen
+                  name="GetEstimationScreen"
+                  component={GetEstimationScreen}
+                />
+                <Stack.Screen
+                  name="DesignYourDreamForm"
+                  component={DesignyourdreamForm}
+                />
+                <Stack.Screen name="Menu" component={MenuItems} />
+                <Stack.Screen name="Approved" component={ApprovedUser} />
+                <Stack.Screen name="Pending" component={PendingUsers} />
+                <Stack.Screen name="Declined" component={DeclinedUserScreen} />
+                <Stack.Screen name="Activity" component={ActivityRolesScreen} />
+                <Stack.Screen
+                  name="AddActivityRolesScreen"
+                  component={AddActivityRolesScreen}
+                />
+                <Stack.Screen name="ApiMaster" component={ApiMaster} />
+                <Stack.Screen name="AddApiMaster" component={AddApiMaster} />
+                <Stack.Screen name="Service" component={Services} />
+                <Stack.Screen name="AddService" component={AddServicesScreen} />
+                <Stack.Screen
+                  name="Unit of Sales"
+                  component={UnitOfSalesScreen}
+                />
+                <Stack.Screen
+                  name="AddUnitofSales"
+                  component={AddUnitofSales}
+                />
+                <Stack.Screen name="Category" component={Category} />
+                <Stack.Screen
+                  name="AddCategoryScreen"
+                  component={AddCategoryScreen}
+                />
+                <Stack.Screen name="Products" component={ProductScreen} />
+                <Stack.Screen
+                  name="AddProductScreen"
+                  component={AddProductScreen}
+                />
+                <Stack.Screen
+                  name="Service Product"
+                  component={ServiceProductScreen}
+                />
+                <Stack.Screen
+                  name="AddServiceProductScreen"
+                  component={AddServiceProductScreen}
+                />
+                <Stack.Screen name="Department" component={DepartmentScreen} />
+                <Stack.Screen
+                  name="AddDepartmentScreen"
+                  component={AddDepartmentScreen}
+                />
+                <Stack.Screen
+                  name="Location Type"
+                  component={LocationTypeScreen}
+                />
+                <Stack.Screen
+                  name="AddLocationTypeScreen"
+                  component={AddLocationTypeScreen}
+                />
+                <Stack.Screen
+                  name="Designation"
+                  component={DesignationScreen}
+                />
+                <Stack.Screen
+                  name="AddDesignationScreen"
+                  component={AddDesignationScreen}
+                />
+                <Stack.Screen name="E-Way Bill" component={EWayBillScreen} />
+                <Stack.Screen
+                  name="AddEWayBillScreen"
+                  component={AddEWayBillScreen}
+                />
+                <Stack.Screen name="Setup" component={SetupScreen} />
+                <Stack.Screen
+                  name="AddSetupScreen"
+                  component={AddSetupScreen}
+                />
+                <Stack.Screen
+                  name="Category Name"
+                  component={CategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="AddCategoryNameScreen"
+                  component={AddCategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="Sub Category Name"
+                  component={SubCategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="AddSubCategoryNameScreen"
+                  component={AddSubCategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="Brand Conversion Value"
+                  component={ABrandConversationValue}
+                />
+                <Stack.Screen
+                  name="AddBrandConversationValue"
+                  component={AddBrandConversationValue}
+                />
+                <Stack.Screen
+                  name="Width of GP Coil"
+                  component={WidthOfGpCoil}
+                />
+                <Stack.Screen
+                  name="AddWidthOfGpCoil"
+                  component={AddWidthOfGpCoil}
+                />
+                <Stack.Screen
+                  name="Mass of Zinc Coating"
+                  component={MassOfZincCoating}
+                />
+                <Stack.Screen
+                  name="AddMassOfZincCoating"
+                  component={AddMassOfZincCoating}
+                />
+                <Stack.Screen name="Work Floor" component={WorkFloorScreen} />
+                <Stack.Screen
+                  name="AddWorkFloorScreen"
+                  component={AddWorkFloorScreen}
+                />
+                <Stack.Screen
+                  name="Work Location"
+                  component={WorkLocationScreen}
+                />
+                <Stack.Screen
+                  name="AddWorkLocationScreen"
+                  component={AddWorkLocationScreen}
+                />
+                <Stack.Screen name="Design Type" component={DesignTypeScreen} />
+                <Stack.Screen
+                  name="AddDesignTypeScreen"
+                  component={AddDesignTypeScreen}
+                />
+
+                <Stack.Screen
+                  name="Materials Setup"
+                  component={MaterialSetupScreen}
+                />
+                <Stack.Screen
+                  name="AddMaterialSetupScreen"
+                  component={AddMaterialSetupScreen}
+                />
+                <Stack.Screen
+                  name="Post New Design"
+                  component={PostNewDesignScreen}
+                />
+                <Stack.Screen
+                  name="AddPostNewDesignScreen"
+                  component={AddPostNewDesignScreen}
+                />
+                <Stack.Screen name="CustomerList" component={CustomerList} />
+                <Stack.Screen
+                  name="AddExpensesList"
+                  component={AddExpensesList}
+                />
+                <Stack.Screen
+                  name="AddCompany"
+                  component={AddCompany}
+                />
+              </>
+            </Stack.Navigator>
+          </NavigationContainer>
+          // <DrawerNavigation loginUser={loginUser} />
+        )}
+      </PaperProvider>
     </>
   );
 }

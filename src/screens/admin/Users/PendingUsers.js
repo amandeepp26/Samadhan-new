@@ -29,6 +29,7 @@ import {color} from 'react-native-elements/dist/helpers';
 import Search from '../../../components/Search';
 import { communication } from '../../../utils/communication';
 import ButtonComponent from '../../../components/Button';
+import Header from '../../../components/Header';
 
 function PendingUsers({route, navigation}) {
   //   const data = route.params.data;
@@ -288,30 +289,7 @@ function PendingUsers({route, navigation}) {
   }
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-        style={{
-          padding: 12,
-          paddingVertical: 20,
-          alignItems: 'center',
-          flexDirection: 'row',
-          borderBottomWidth: 1,
-          borderColor: '#d3d3d3',
-          backgroundColor: '#fff',
-        }}>
-        <Icon name="arrow-back-outline" type="ionicon" color="#000" />
-        <Text
-          style={[
-            Styles.fontBold,
-            Styles.fontSize20,
-            Styles.primaryColor,
-            {marginLeft: 20},
-          ]}>
-          Pending Users
-        </Text>
-      </TouchableOpacity>
+      <Header navigation={navigation} title="Pending Users" />
       <Search
         query={route?.params ? route?.params?.role : ''}
         data={listData}
@@ -336,10 +314,10 @@ function PendingUsers({route, navigation}) {
       {/* Popup component */}
       {selectedUser && (
         <View style={styles.popupContainer}>
-          <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
-            <Icon name="close" size={24} color="#fff" />
-          </TouchableOpacity>
           <View style={styles.popupContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
+              <Icon name="close" type='ionicon' size={24} color="#fff" />
+            </TouchableOpacity>
             <Title
               style={[Styles.fontBold, Styles.fontSize18, Styles.textCenter]}>
               {selectedUser.firstname}
@@ -466,11 +444,11 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: 'absolute', // Position the close button absolutely within the container
-    top: 10, // Adjust the top distance as needed
-    right: 10, // Adjust the right distance as needed
+    top: -32, // Adjust the top distance as needed
+    right: 0, // Adjust the right distance as needed
     backgroundColor: 'red', // Background color for the close button
     borderRadius: 20, // Adjust the border radius to make the button circular
-    padding: 5, // Add padding for better touch area
+    // padding: 2, // Add padding for better touch area
   },
   popupContainer: {
     position: 'absolute',
@@ -499,9 +477,17 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderRadius: 5,
   },
-  closeButton: {
+
+  floatingButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    bottom: 20,
+    right: 20,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3, // Add elevation for shadow effect
   },
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
 import { Card, Checkbox, HelperText, Snackbar, TextInput } from "react-native-paper";
 import Provider from "../../../../api/Provider";
@@ -8,6 +8,7 @@ import { theme } from "../../../../theme/apptheme";
 import { communication } from "../../../../utils/communication";
 import DFButton from "../../../../components/Button";
 import ButtonComponent from "../../../../components/Button";
+import Header from "../../../../components/Header";
 
 const AddSetupScreen = ({ route, navigation }) => {
     //#region Variables
@@ -130,7 +131,9 @@ const AddSetupScreen = ({ route, navigation }) => {
     //#endregion
 
     return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
         <View style={[Styles.flex1]}>
+            <Header navigation={navigation} title="Add Setup" />
             <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} contentInsetAdjustmentBehavior="automatic" keyboardDismissMode="on-drag" keyboardShouldPersistTaps="handled" nestedScrollEnabled>
                 <View style={[Styles.padding16]}>
 
@@ -159,10 +162,12 @@ const AddSetupScreen = ({ route, navigation }) => {
                     <ButtonComponent mode="contained" onPress={validate} text="SAVE" loader={isButtonLoading} />
                 </Card.Content>
             </View>
+            
             <Snackbar visible={snackbarVisible} onDismiss={() => setSnackbarVisible(false)} duration={3000} style={{ backgroundColor: theme.colors.error }}>
                 {snackbarText}
             </Snackbar>
         </View>
+        </SafeAreaView>
     );
 };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, LogBox, ScrollView, View } from "react-native";
+import { FlatList, LogBox, SafeAreaView, ScrollView, View } from "react-native";
 import { Styles } from "../../../../styles/styles";
 import { useEffect, useRef, useState } from "react";
 import { theme } from "../../../../theme/apptheme";
@@ -252,6 +252,7 @@ const AddLocationTypeScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title="Add Location Type" navigation={navigation} />
       <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled" nestedScrollEnabled={true}>
@@ -415,6 +416,7 @@ const AddLocationTypeScreen = ({ route, navigation }) => {
         </View>
       </RBSheet>
     </View>
+    </SafeAreaView>
   );
 };
 

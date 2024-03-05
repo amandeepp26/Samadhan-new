@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Pressable} from 'react-native';
 import {
   createDrawerNavigator,
@@ -6,7 +6,6 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import HomeScreen from '../screens/admin/Home';
 import Login from '../screens/Login';
 import { Image } from 'react-native';
 import { theme } from '../theme/apptheme';
@@ -28,10 +27,12 @@ import UnitofSales from '../screens/admin/unitofsales/UnitofSales';
 import AddUnitofSales from '../screens/admin/unitofsales/AddUnitofSales';
 import Category from '../screens/admin/category/Category';
 import AddCategory from '../screens/admin/category/Addcategory';
+import HomeScreen from '../screens/admin/Home';
+import Provider from '../api/Provider';
+
 
 // CustomDrawerContent component
-function CustomDrawerContent({navigation,loginUser,name,role, ...rest}) {
-  console.warn('name---->',name)
+function CustomDrawerContent({navigation,loginUser,name,role,data,profileIcon, ...rest}) {
   return (
     <DrawerContentScrollView {...rest}>
       <View style={{}}>
@@ -39,7 +40,11 @@ function CustomDrawerContent({navigation,loginUser,name,role, ...rest}) {
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <View>
               <Image
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D"
+                src={
+                  profileIcon
+                    ? profileIcon
+                    : 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'
+                }
                 style={{width: 100, height: 100, borderRadius: 50}}
               />
               <View
@@ -69,7 +74,7 @@ function CustomDrawerContent({navigation,loginUser,name,role, ...rest}) {
                   Styles.fontSize20,
                   Styles.primaryColor,
                 ]}>
-                Hey {name}
+                {name}
               </Text>
               <Text style={[Styles.fontSize14, Styles.textColorDark]}>
                 {role}
@@ -85,187 +90,56 @@ function CustomDrawerContent({navigation,loginUser,name,role, ...rest}) {
             marginHorizontal: 10,
             paddingVertical: 7,
           }}>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-              color: '#000',
-            }}>
-              <View style={{marginBottom:10}}>
-            <Icon name="grid-outline" type="ionicon" size={22} />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-              <Text
-                style={[
-                  Styles.fontSize14,
-                  // Styles.marginHorizontal12,
-                  {
-                    color: '#000',
-                    fontWeight: '500',
-                  },
-                ]}>
-                Dashboard
-              </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-            
-              <View style={{marginBottom:10}} >
-            <Icon name="person-circle-outline" size={22} type="ionicon" />
-          </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              User Profile
-            </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-
-              <View style={{marginBottom:10}} >
-            <Icon name="person-circle-outline" size={22} type="ionicon" />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              Control User Access
-            </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-            
-              <View style={{marginBottom:10}} >
-            <Icon name="create-outline" size={22} type="ionicon" />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              Pocket Diary
-            </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-
-              <View style={{marginBottom:10}} >
-            <Icon name="people-outline" size={22} type="ionicon" />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              Refer and win
-            </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-              <View style={{marginBottom:10}} >
-            <Icon name="headset-outline" size={22} type="ionicon" />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              Help and Support
-            </Text>
-            </View>
-          </Pressable>
-          <Pressable
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 7,
-              marginTop: 10,
-              alignItems: 'center',
-              paddingHorizontal: 10,
-            }}>
-              <View style={{marginBottom:10}} >
-            <Icon name="chatbox-ellipses-outline" size={22} type="ionicon" />
-            </View>
-            <View style={{borderBottomWidth: 1, width: '85%',
-                    borderColor: '#d5d5d5',marginHorizontal:12,paddingBottom:10}}>
-            <Text
-              style={[
-                Styles.fontSize14,
-                {
-                  fontWeight: '500',
-                  color: '#000',
-                },
-              ]}>
-              Enquiry and status
-            </Text>
-            </View>
-          </Pressable>
+          {data.map((item, index) => (
+            <Pressable
+              onPress={() => {
+                if (item.items) {
+                  navigation.navigate('Menu', {
+                    data: item.items,
+                    title: item.title,
+                  });
+                } else {
+                  navigation.navigate(item.title);
+                }
+              }}
+              style={{
+                flexDirection: 'row',
+                paddingVertical: 7,
+                marginTop: 10,
+                alignItems: 'center',
+                paddingHorizontal: 10,
+                color: '#000',
+                borderBottomWidth: 1,
+                borderColor: '#d5d5d5',
+              }}>
+              <Image
+                resizeMode="contain"
+                source={{
+                  uri: item.icon
+                    ? item.icon
+                    : 'https://cdn-icons-png.flaticon.com/512/2951/2951372.png',
+                }}
+                style={{width: 35, height: 30, borderRadius: 8}}
+              />
+              <View
+                style={{
+                  width: '85%',
+                  marginHorizontal: 12,
+                }}>
+                <Text
+                  style={[
+                    Styles.fontSize14,
+                    // Styles.marginHorizontal12,
+                    {
+                      color: '#000',
+                      fontWeight: '500',
+                    },
+                  ]}>
+                  {item.title}
+                </Text>
+              </View>
+            </Pressable>
+          ))}
 
           <View style={{alignItems: 'center'}}>
             <ButtonComponent
@@ -302,13 +176,23 @@ export default function DrawerNavigation({loginUser}) {
   const [isStackVisible, setIsStackVisible] = React.useState(false);
   const [name, setName] = React.useState(''); // Initialize name state
   const [role, setRole] = React.useState(''); // Initialize name state
+  const userDetails = React.useState(null);
+  const [menuLoading, setMenuLoading] = useState(true);
+  const [menuData, setMenuData] = useState([]);
+  const [profileIcon, setProfileIcon] = useState(null);
+
   React.useEffect(() => {
     checkUserLoggedIn();
+    getMenuList();
   }, []);
 
   const checkUserLoggedIn = async () => {
     try {
       const userData = await AsyncStorage.getItem('user');
+      const ud = JSON.parse(userData); 
+      userDetails[1](ud);
+      const pic = await AsyncStorage.getItem('profilePic');
+      setProfileIcon(pic);
       if (userData) {
         setIsStackVisible(true);
       }
@@ -320,6 +204,43 @@ export default function DrawerNavigation({loginUser}) {
       console.error('Error checking user login status:', error);
     }
   };
+
+    const getMenuList = async () => {
+      const data = JSON.parse(await AsyncStorage.getItem('user'));
+      Sess_UserRefno = data.UserID;
+      Sess_group_refno = data.Sess_group_refno;
+      Sess_group_refno_extra_1 = data.Sess_group_refno_extra_1;
+      Sess_locationtype_refno = data.Sess_locationtype_refno;
+      Sess_menu_refno_list = data.Sess_menu_refno_list;
+      const params = {
+        data: {
+          Sess_UserRefno: Sess_UserRefno,
+          Sess_group_refno: Sess_group_refno,
+          Sess_group_refno_extra_1: Sess_group_refno_extra_1,
+          Sess_locationtype_refno: Sess_locationtype_refno,
+          Sess_menu_refno_list: Sess_menu_refno_list,
+        },
+      };
+      console.log('params--->', params);
+      Provider.createDFCommon(Provider.API_URLS.get_leftside_menulist, params)
+        .then(response => {
+          if (response.data && response.data.code === 200) {
+            setMenuData(response.data.data);
+          } else if (response.data.code === 304) {
+            //  setSnackbarText(communication.AlreadyExists);
+            //  setIsSnackbarVisible(true);
+          } else {
+            //  setSnackbarText(communication.NoData);
+            //  setIsSnackbarVisible(true);
+          }
+          setMenuLoading(false);
+        })
+        .catch(e => {
+          //  setSnackbarText(e.message);
+          //  setIsSnackbarVisible(true);
+          setMenuLoading(false);
+        });
+    };
   return (
     <Drawer.Navigator
       initialRouteName="Home"
@@ -327,9 +248,22 @@ export default function DrawerNavigation({loginUser}) {
         headerShown: false,
       }}
       drawerContent={props => (
-        <CustomDrawerContent {...props} loginUser={loginUser} name={name} role={role} />
+        <CustomDrawerContent
+          {...props}
+          loginUser={loginUser}
+          name={name}
+          role={role}
+          data={menuData}
+          profileIcon={profileIcon}
+        />
       )}>
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen
+        name="Home"
+        component={props => (
+          <HomeScreen {...props} loginUser={loginUser} />
+        )}
+        initialParams={{userDetails: userDetails}}
+      />
     </Drawer.Navigator>
   );
 }

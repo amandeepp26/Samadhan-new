@@ -1,6 +1,6 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
-import { Card, Checkbox, HelperText, Snackbar, TextInput } from "react-native-paper";
+import {ScrollView, View, TextInput, SafeAreaView} from 'react-native';
+import { Card, Checkbox, HelperText, Snackbar,  } from "react-native-paper";
 import Provider from "../../../../api/Provider";
 import { Styles } from "../../../../styles/styles";
 import { theme } from "../../../../theme/apptheme";
@@ -105,21 +105,33 @@ const AddDepartmentScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title="Add Department" navigation={navigation} />
-      <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        style={[Styles.flex1, Styles.backgroundColor, {marginBottom: 64}]}
+        keyboardShouldPersistTaps="handled">
         <View style={[Styles.padding16]}>
-          <TextInput mode="outlined" label="Department Name" value={departmentName} onChangeText={onDepartmentNameChanged} style={{ backgroundColor: "white" }} error={departmentNameError} />
+          <TextInput
+            underlineColor="transparent"
+            placeholderTextColor={theme.colors.textColorDark}
+            style={[Styles.textinput, {marginTop: 5, width: '95%'}]}
+            dense
+            placeholder="Department Name"
+            value={departmentName}
+            onChangeText={onDepartmentNameChanged}
+            error={departmentNameError}
+          />
           <HelperText type="error" visible={departmentNameError}>
             {communication.InvalidDepartmentName}
           </HelperText>
-          <View style={{ width: 160 }}>
+          <View style={{width: 160}}>
             <Checkbox.Item
               label="Display"
               position="leading"
-              labelStyle={{ textAlign: "left", paddingLeft: 8 }}
+              labelStyle={{textAlign: 'left', paddingLeft: 8}}
               color={theme.colors.primary}
-              status={checked ? "checked" : "unchecked"}
+              status={checked ? 'checked' : 'unchecked'}
               onPress={() => {
                 setChecked(!checked);
               }}
@@ -127,15 +139,32 @@ const AddDepartmentScreen = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <View style={[Styles.backgroundColor, Styles.width100per, Styles.marginTop32, Styles.padding16, { position: "absolute", bottom: 0, elevation: 3 }]}>
+      <View
+        style={[
+          Styles.backgroundColor,
+          Styles.width100per,
+          Styles.marginTop32,
+          Styles.padding16,
+          {position: 'absolute', bottom: 0, elevation: 3},
+        ]}>
         <Card.Content>
-           <ButtonComponent mode="contained" onPress={ValidateDepartmentName} text="SAVE" loader={isButtonLoading} />
+          <ButtonComponent
+            mode="contained"
+            onPress={ValidateDepartmentName}
+            text="SAVE"
+            loader={isButtonLoading}
+          />
         </Card.Content>
       </View>
-      <Snackbar visible={snackbarVisible} onDismiss={() => setSnackbarVisible(false)} duration={3000} style={{ backgroundColor: theme.colors.error }}>
+      <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={3000}
+        style={{backgroundColor: theme.colors.error}}>
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

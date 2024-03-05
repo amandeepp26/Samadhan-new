@@ -19,6 +19,7 @@ import {
   ActivityIndicator,
   Button,
   Divider,
+  FAB,
   Snackbar,
   Subheading,
   Title,
@@ -111,6 +112,32 @@ function Category({route, navigation}) {
     FetchData();
   }, []);
 
+    const AddCallback = () => {
+      navigation.navigate('AddCategoryScreen', {
+        type: 'add',
+        fetchData: FetchData,
+      });
+    };
+
+    const EditCallback = (data, rowMap) => {
+      rowMap[data.item.key].closeRow();
+      navigation.navigate('AddCategoryScreen', {
+        type: 'edit',
+        fetchData: FetchData,
+        data: {
+          id: data.item.id,
+          activityRoleName: data.item.activityRoleName,
+          serviceName: data.item.serviceName,
+          unitName: data.item.unitName,
+          unitOfSalesID: data.item.unitOfSalesID,
+          categoryName: data.item.categoryName,
+          hsnsacCode: data.item.hsnsacCode,
+          gstRate: data.item.gstRate,
+          display: data.item.display,
+        },
+      });
+    };
+    
   const showPopup = user => {
     setSelectedUser(user);
     setIsPopupVisible(true);
@@ -259,13 +286,16 @@ function Category({route, navigation}) {
         />
       )}
 
-      <TouchableOpacity
-        style={styles.floatingButton}
-        onPress={() => {
-          //   navigation.navigate('AddCategory', {type: 'add'});
-        }}>
-        <Icon name="add" size={24} color="#fff" />
-      </TouchableOpacity>
+      <FAB
+        style={[
+          Styles.margin16,
+          Styles.primaryBgColor,
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
+        ]}
+        icon="plus"
+        color="white"
+        onPress={AddCallback}
+      />
       {selectedUser && (
         <View style={styles.popupContainer}>
           <View style={styles.popupContent}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ScrollView, View, Dimensions, TouchableOpacity, Image } from "react-native";
+import { ScrollView, View, Dimensions, TouchableOpacity, Image, SafeAreaView } from "react-native";
 import { Card, Checkbox, DataTable, Headline, HelperText, IconButton, Snackbar, Subheading, Text, TextInput, Title, Button } from "react-native-paper";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Provider from "../../../../api/Provider";
@@ -749,6 +749,7 @@ const AddMaterialSetupScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Add Material Setup" />
       <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled">
@@ -1127,6 +1128,7 @@ const AddMaterialSetupScreen = ({ route, navigation }) => {
       </RBSheet>
 
     </View>
+    </SafeAreaView>
   );
 };
 

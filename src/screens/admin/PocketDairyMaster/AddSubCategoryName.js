@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { Card, Checkbox, HelperText, Snackbar, TextInput,Subheading } from "react-native-paper";
 import Provider from "../../../api/Provider";
 import { Styles } from "../../../styles/styles";
@@ -9,6 +9,7 @@ import { APIConverter } from "../../../utils/apiconverter";
 import { communication } from "../../../utils/communication";
 import DFButton from "../../../components/Button";
 import ButtonComponent from "../../../components/Button";
+import Header from "../../../components/Header";
 
 let userID = 0, groupID = 0;
 const AddSubCategoryNameScreen = ({ route, navigation }) => {
@@ -345,7 +346,9 @@ const AddSubCategoryNameScreen = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
+      <Header navigation={navigation} title="Add Sub Category" />
       <ScrollView style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]} keyboardShouldPersistTaps="handled">
         <View style={[Styles.padding16]}>
           {/* Entry Type changes */}
@@ -418,6 +421,7 @@ const AddSubCategoryNameScreen = ({ route, navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

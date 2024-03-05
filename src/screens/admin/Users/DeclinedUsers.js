@@ -30,6 +30,7 @@ import Search from '../../../components/Search';
 import {communication} from '../../../utils/communication';
 import ButtonComponent from '../../../components/Button';
 import Header from '../../../components/Header';
+import NoItems from '../../../components/NoItems';
 
 function DeclinedUsers({route, navigation}) {
   //   const data = route.params.data;

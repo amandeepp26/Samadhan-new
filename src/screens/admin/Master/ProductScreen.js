@@ -5,6 +5,12 @@ import {
   LogBox,
   RefreshControl,
   ScrollView,
+  Pressable,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Text,
+  SafeAreaView,
 } from "react-native";
 import { FAB, List, Snackbar, Title } from "react-native-paper";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -39,7 +45,8 @@ const ProductScreen = ({ navigation }) => {
   const [activityRoleName, setActivityRoleName] = useState("");
   const [categoryName, setCategoryName] = useState("");
   const [productCode, setProductCode] = useState("");
-
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const refRBSheet = useRef();
   //#endregion
 
@@ -104,7 +111,7 @@ const ProductScreen = ({ navigation }) => {
   };
 
   const EditCallback = (data, rowMap) => {
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     navigation.navigate("AddProductScreen", {
       type: "edit",
       fetchData: FetchData,
@@ -121,7 +128,17 @@ const ProductScreen = ({ navigation }) => {
     });
   };
 
-  const RenderItems = (data) => {
+    const showPopup = user => {
+      setSelectedUser(user);
+      setIsPopupVisible(true);
+    };
+
+    const hidePopup = () => {
+      setIsPopupVisible(false);
+      setSelectedUser(null);
+    };
+
+  const RenderItems = (data,rowMap) => {
     return (
       <View
         style={[
@@ -129,23 +146,22 @@ const ProductScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
           title={data.item.productName}
-          titleStyle={{ fontSize: 18 }}
-          description={"Display: " + (data.item.display ? "Yes" : "No")}
+          titleStyle={{fontSize: 18}}
+          description={'Display: ' + (data.item.display ? 'Yes' : 'No')}
           left={() => (
             <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={30}
-              color={theme.colors.textSecondary}
+              style={{marginVertical: 5, marginRight: 10}}
+              size={20}
+              color={theme.colors.primary}
               name="barcode-scan"
             />
           )}
           onPress={() => {
-            refRBSheet.current.open();
+            showPopup(data);
             setSelectedProductName(data.item.productName);
             setActivityRoleName(data.item.activityRoleName);
             setCategoryName(data.item.categoryName);
@@ -153,12 +169,23 @@ const ProductScreen = ({ navigation }) => {
             setProductCode(data.item.productCode);
           }}
           right={() => (
-            <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={30}
-              color={theme.colors.textSecondary}
-              name="eye"
-            />
+            <View>
+            <Pressable
+              style={{
+                marginLeft: 10,
+                marginTop:10,
+                borderBottomWidth: 1,
+                borderColor: theme.colors.primary,
+              }}
+              onPress={() => EditCallback(data)}>
+              <Icon
+                name="pencil-outline"
+                type="ionicon"
+                color={theme.colors.primary}
+                size={18}
+              />
+            </Pressable>
+            </View>
           )}
         />
       </View>
@@ -167,6 +194,7 @@ const ProductScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Product" />
       {isLoading ? (
@@ -175,8 +203,7 @@ const ProductScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -185,17 +212,17 @@ const ProductScreen = ({ navigation }) => {
             data={listData}
             setData={setListSearchData}
             filterFunction={[
-              "activityRoleName",
-              "categoryName",
-              "gstRate",
-              "hsnsacCode",
-              "productCode",
-              "productName",
-              "display",
-              "serviceName",
-              "unitName",
-              "unitOfSalesID",
-              "unitId",
+              'activityRoleName',
+              'categoryName',
+              'gstRate',
+              'hsnsacCode',
+              'productCode',
+              'productName',
+              'display',
+              'serviceName',
+              'unitName',
+              'unitOfSalesID',
+              'unitId',
             ]}
           />
           {listSearchData?.length ? (
@@ -216,10 +243,10 @@ const ProductScreen = ({ navigation }) => {
               data={listSearchData}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={(data, rowMap) => RenderItems(data, rowMap)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -238,48 +265,201 @@ const ProductScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
+      {selectedUser && (
+        <View style={styles.popupContainer}>
+          <View style={styles.popupContent}>
+            <TouchableOpacity style={styles.closeButton} onPress={hidePopup}>
+              <Icon name="close" size={24} color="#fff" />
+            </TouchableOpacity>
+            <Title
+              style={[Styles.fontBold, Styles.fontSize18, Styles.textCenter]}>
+              {selectedProductName}
+            </Title>
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Product Code
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '55%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {productCode}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Activity Role Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '50%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {activityRoleName}
+              </Text>
+            </View>
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Service Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '72%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {serviceName}
+              </Text>
+            </View>
+
+            <View style={styles.row}>
+              <Text
+                style={[
+                  Styles.textDark,
+                  {fontWeight: '500'},
+                  Styles.fontSize14,
+                ]}
+                selectable={true}>
+                Category Name
+              </Text>
+              <Text
+                style={[
+                  Styles.fontSize14,
+                  {
+                    color: theme.colors.primaryLight,
+                    width: '55%',
+                    textAlign: 'right',
+                  },
+                ]}
+                selectable={true}>
+                {categoryName}
+              </Text>
+            </View>
+          </View>
+        </View>
+      )}
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        dragFromTopOnly={true}
-        height={400}
-        animationType="fade"
-        customStyles={{
-          wrapper: { backgroundColor: "rgba(0,0,0,0.5)" },
-          draggableIcon: { backgroundColor: "#000" },
-        }}
-      >
-        <View>
-          <Title style={[Styles.paddingHorizontal16]}>
-            {selectedProductName}
-          </Title>
-          <ScrollView>
-            <List.Item title="Product Code" description={productCode} />
-            <List.Item
-              title="Activity Role Name"
-              description={activityRoleName}
-            />
-            <List.Item title="Service Name" description={serviceName} />
-            <List.Item title="Category Name" description={categoryName} />
-          </ScrollView>
-        </View>
-      </RBSheet>
+      
     </View>
+    </SafeAreaView>
   );
 };
 
 export default ProductScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  row: {
+    flexDirection: 'row',
+    paddingVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderColor: '#d5d5d5',
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  closeButton: {
+    position: 'absolute', // Position the close button absolutely within the container
+    top: -32, // Adjust the top distance as needed
+    right: 0, // Adjust the right distance as needed
+    backgroundColor: 'red', // Background color for the close button
+    borderRadius: 20, // Adjust the border radius to make the button circular
+    // padding: 2, // Add padding for better touch area
+  },
+  popupContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  popupContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: '95%',
+  },
+  popupButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  popupButton: {
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: '#fff',
+    borderRadius: 5,
+  },
+
+  floatingButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 3, // Add elevation for shadow effect
+  },
+});

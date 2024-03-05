@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import FormData from 'form-data';
-import {Image, ScrollView, View} from 'react-native';
+import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 import {
   Card,
   Checkbox,
@@ -596,6 +596,8 @@ const AddPostNewDesignScreen = ({route, navigation}) => {
   //#endregion
 
   return (
+
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title="Add Post New Design" navigation={navigation} />
       <ScrollView
@@ -731,6 +733,7 @@ const AddPostNewDesignScreen = ({route, navigation}) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

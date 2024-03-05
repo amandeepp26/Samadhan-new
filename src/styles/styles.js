@@ -4,11 +4,11 @@ import {theme} from '../theme/apptheme';
 export const Styles = StyleSheet.create({
   textinput: {
     borderRadius: 10,
-    height:40,
+    height:50,
     backgroundColor: '#ffff',
     color:'#000',
     width: '90%',
-    fontSize: 13,
+    fontSize: 14,
     alignSelf: 'center',
     shadowColor: theme.colors.textDark,
     shadowOffset: {
@@ -17,6 +17,7 @@ export const Styles = StyleSheet.create({
     },
     shadowOpacity: 0.03,
     shadowRadius: 1,
+    fontWeight:'600',
     borderWidth: 1,
     borderColor: '#d0d0d0',
     elevation: 1,

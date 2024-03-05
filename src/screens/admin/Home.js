@@ -70,6 +70,9 @@ function HomeScreen({ loginUser}) {
        });
   }
 
+  useEffect(() => {
+    AsyncStorage.setItem('profilePic', profileIcon);
+  }, []);
 
     const GetUserData = async () => {
       const login = await AsyncStorage.getItem('loggedIn');
@@ -182,7 +185,7 @@ function HomeScreen({ loginUser}) {
         }
         setUserRoleID(roleID);
         setUserRoleName(roleName);
-        AsyncStorage.setItem('userRole',roleName)
+        // AsyncStorage.setItem('userRole',roleName)
         GetUserCount(userID, groupRefNo);
         if (roleID == 3) {
           FillUserRoles();
@@ -328,6 +331,7 @@ function HomeScreen({ loginUser}) {
             if (response.data && response.data.code === 200) {
               if (response.data.data.Sess_photo != '') {
                 setProfileIcon(response.data.data.Sess_photo);
+                AsyncStorage.setItem('profilePic', response.data.data.Sess_photo);
               } else {
                 setProfileIcon(null);
               }
@@ -342,7 +346,7 @@ function HomeScreen({ loginUser}) {
   return (
     <SafeAreaView style={[{flex: 1, backgroundColor: '#f7f7f8'}]}>
       {/* Header */}
-      <View style={style.header}>
+      <View style={[style.header, Styles.BottomShadow]}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <Image
@@ -376,12 +380,33 @@ function HomeScreen({ loginUser}) {
           <View style={Styles.marginHorizontal12}>
             <Text
               style={[Styles.fontBold, Styles.fontSize20, Styles.primaryColor]}>
-              Hey {userName}
+              {userName}
             </Text>
             <Text>{userRoleName}</Text>
           </View>
         </View>
-        <Icon name="notifications" type="ionicon" size={27} color={'#FFDB58'} />
+        <View style={[Styles.flexRow, Styles.SpaceEvenly]}>
+          <Icon
+            name="notifications"
+            type="ionicon"
+            size={27}
+            color={'#FFDB58'}
+          />
+          <TouchableOpacity
+            onPress={() => {
+              AsyncStorage.removeItem('user'),
+                AsyncStorage.removeItem('profilePic');
+              loginUser();
+            }}
+            style={{marginLeft: 10}}>
+            <Icon
+              name="log-out-outline"
+              type="ionicon"
+              size={27}
+              color={'#000'}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <ScrollView>
         {/* Body */}
@@ -454,7 +479,11 @@ function HomeScreen({ loginUser}) {
                   paddingVertical: 10,
                 }}>
                 {userCountData?.map((item, index) => (
-                  <Pressable onPress={()=>navigation.navigate('Approved',{role:item.roleName})} style={{alignItems: 'center'}}>
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate('Approved', {role: item.roleName})
+                    }
+                    style={{alignItems: 'center'}}>
                     <View
                       style={{
                         backgroundColor: theme.colors.primaryLight,

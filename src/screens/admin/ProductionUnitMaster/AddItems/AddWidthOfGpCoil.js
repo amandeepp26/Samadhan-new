@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   Card,
   Checkbox,
@@ -182,6 +182,7 @@ const AddWidthOfGpCoil = ({ route, navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header title="Add Width of GP Coil" navigation={navigation} />
       <ScrollView
@@ -256,6 +257,7 @@ const AddWidthOfGpCoil = ({ route, navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

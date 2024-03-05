@@ -6,6 +6,7 @@ import {
     RefreshControl,
     ScrollView,
     Text,
+    SafeAreaView,
 } from "react-native";
 import {
     List,
@@ -275,6 +276,7 @@ const UserActivityScreen = ({ navigation, route }) => {
     //#endregion
 
     return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
         <View style={[Styles.flex1]}>
             <Header navigation={navigation} title="USER ACTIVITY" />
             <ScrollView style={[Styles.flex1, Styles.backgroundColor]} keyboardShouldPersistTaps="handled">
@@ -377,6 +379,7 @@ const UserActivityScreen = ({ navigation, route }) => {
             </Snackbar>
 
         </View>
+    </SafeAreaView>
     );
 };
 

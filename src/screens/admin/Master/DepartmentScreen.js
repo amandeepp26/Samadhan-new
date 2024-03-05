@@ -1,5 +1,17 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View, LogBox, RefreshControl } from "react-native";
+import {
+  ActivityIndicator,
+  View,
+  LogBox,
+  RefreshControl,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+} from 'react-native';
 import { FAB, List, Snackbar } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Provider from "../../../api/Provider";
@@ -25,6 +37,8 @@ const DepartmentScreen = ({ navigation }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarText, setSnackbarText] = useState("");
   const [snackbarColor, setSnackbarColor] = useState(theme.colors.success);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   //#endregion
 
   //#region Functions
@@ -84,20 +98,38 @@ const DepartmentScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
           title={data.item.departmentName}
-          titleStyle={{ fontSize: 18 }}
-          description={"Display: " + (data.item.display ? "Yes" : "No")}
+          titleStyle={{fontSize: 18}}
+          description={'Display: ' + (data.item.display ? 'Yes' : 'No')}
           left={() => (
             <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
-              size={30}
-              color={theme.colors.textSecondary}
+              style={{marginVertical: 5, marginRight: 10}}
+              size={25}
+              color={theme.colors.primary}
               name="account-group"
             />
+          )}
+          right={() => (
+            <View>
+              <Pressable
+                style={{
+                  marginLeft: 10,
+                  marginTop: 10,
+                  borderBottomWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}
+                onPress={() => EditCallback(data)}>
+                <Icon
+                  name="pencil-outline"
+                  type="ionicon"
+                  color={theme.colors.primary}
+                  size={18}
+                />
+              </Pressable>
+            </View>
           )}
         />
       </View>
@@ -112,7 +144,7 @@ const DepartmentScreen = ({ navigation }) => {
   };
 
   const EditCallback = (data, rowMap) => {
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     navigation.navigate("AddDepartmentScreen", {
       type: "edit",
       fetchData: FetchData,
@@ -125,7 +157,18 @@ const DepartmentScreen = ({ navigation }) => {
   };
   //#endregion
 
+        const showPopup = user => {
+          setSelectedUser(user);
+          setIsPopupVisible(true);
+        };
+
+        const hidePopup = () => {
+          setIsPopupVisible(false);
+          setSelectedUser(null);
+        };
+
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Department" />
       {isLoading ? (
@@ -134,8 +177,7 @@ const DepartmentScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -143,7 +185,7 @@ const DepartmentScreen = ({ navigation }) => {
           <Search
             data={listData}
             setData={setListSearchData}
-            filterFunction={["departmentName", "display"]}
+            filterFunction={['departmentName', 'display']}
           />
           {listSearchData?.length > 0 ? (
             <SwipeListView
@@ -164,10 +206,10 @@ const DepartmentScreen = ({ navigation }) => {
               useFlatList={true}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={(data,rowMap) => RenderItems(data,rowMap)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -186,20 +228,21 @@ const DepartmentScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

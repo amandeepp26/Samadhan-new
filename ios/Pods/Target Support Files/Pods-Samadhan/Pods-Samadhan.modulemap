@@ -1,0 +1,6 @@
+module Pods_Samadhan {
+  umbrella header "Pods-Samadhan-umbrella.h"
+
+  export *
+  module * { export * }
+}

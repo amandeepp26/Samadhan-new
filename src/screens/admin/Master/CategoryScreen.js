@@ -5,6 +5,7 @@ import {
   LogBox,
   RefreshControl,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { FAB, List, Snackbar, Title } from "react-native-paper";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -178,6 +179,7 @@ const CategoryScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Category" />
       {isLoading ? (
@@ -186,8 +188,7 @@ const CategoryScreen = ({ navigation }) => {
             Styles.flex1,
             Styles.flexJustifyCenter,
             Styles.flexAlignCenter,
-          ]}
-        >
+          ]}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </View>
       ) : listData.length > 0 ? (
@@ -196,12 +197,12 @@ const CategoryScreen = ({ navigation }) => {
             data={listData}
             setData={setListSearchData}
             filterFunction={[
-              "activityRoleName",
-              "categoryName",
-              "display",
-              "gstRate",
-              "hsnsacCode",
-              "serviceName",
+              'activityRoleName',
+              'categoryName',
+              'display',
+              'gstRate',
+              'hsnsacCode',
+              'serviceName',
               // ! how'll do to this?
               // "unitName[0]",
             ]}
@@ -224,7 +225,7 @@ const CategoryScreen = ({ navigation }) => {
               data={listSearchData}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
+              renderItem={data => RenderItems(data)}
               renderHiddenItem={(data, rowMap) =>
                 RenderHiddenItems(data, rowMap, [EditCallback])
               }
@@ -246,17 +247,17 @@ const CategoryScreen = ({ navigation }) => {
         style={[
           Styles.margin16,
           Styles.primaryBgColor,
-          { position: "absolute", right: 16, bottom: 16 },
+          {position: 'absolute', borderRadius: 50, right: 16, bottom: 16},
         ]}
         icon="plus"
+        color="white"
         onPress={AddCallback}
       />
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
         duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
+        style={{backgroundColor: snackbarColor}}>
         {snackbarText}
       </Snackbar>
       <RBSheet
@@ -267,10 +268,9 @@ const CategoryScreen = ({ navigation }) => {
         height={420}
         animationType="fade"
         customStyles={{
-          wrapper: { backgroundColor: "rgba(0,0,0,0.5)" },
-          draggableIcon: { backgroundColor: "#000" },
-        }}
-      >
+          wrapper: {backgroundColor: 'rgba(0,0,0,0.5)'},
+          draggableIcon: {backgroundColor: '#000'},
+        }}>
         <View>
           <Title style={[Styles.paddingHorizontal16]}>
             {selectedCategoryName}
@@ -288,6 +288,7 @@ const CategoryScreen = ({ navigation }) => {
         </View>
       </RBSheet>
     </View>
+    </SafeAreaView>
   );
 };
 

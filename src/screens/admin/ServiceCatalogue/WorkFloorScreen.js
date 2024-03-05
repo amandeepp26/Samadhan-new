@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, View, LogBox, RefreshControl, Image } from "react-native";
-import { FAB, List, Snackbar } from "react-native-paper";
+import { ActivityIndicator, View, LogBox, RefreshControl, Image, Pressable, TouchableOpacity, SafeAreaView } from "react-native";
+import { FAB, List, Snackbar, Title } from "react-native-paper";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Provider from "../../../api/Provider";
 import Header from "../../../components/Header";
@@ -76,7 +76,7 @@ const WorkFloorScreen = ({ navigation }) => {
     FetchData();
   }, []);
 
-  const RenderItems = (data) => {
+  const RenderItems = (data,rowMap) => {
     return (
       <View
         style={[
@@ -84,40 +84,68 @@ const WorkFloorScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
           title={data.item.workFloorName}
           titleStyle={[
-                Styles.fontSize16,
-                {
-                  fontWeight: '700',
-                  color: '#000',
-                },
-              ]}
-          description={"Display: " + (data.item.display ? "Yes" : "No")}
+            Styles.fontSize16,
+            {
+              fontWeight: '700',
+              color: '#000',
+            },
+          ]}
+          description={'Display: ' + (data.item.display ? 'Yes' : 'No')}
           left={() => (
-             <View
-          style={{
-            width: 50,
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 50,
-            backgroundColor: '#f5f5f5',
-            borderRadius: 50,
-          }}>
-          <Image
-            source={require('../../../../assets/workfloor.png')}
-            style={{width: 30, height: 30}}
-          />
-        </View>
-            // <Icon
-            //   style={{ marginVertical: 12, marginRight: 12 }}
-            //   size={30}
-            //   color={theme.colors.textSecondary}
-            //   name="floor-plan"
-            // />
+            <View
+              style={{
+                width: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 50,
+                backgroundColor: '#f5f5f5',
+                borderRadius: 50,
+              }}>
+              <Image
+                source={require('../../../../assets/workfloor.png')}
+                style={{width: 30, height: 30}}
+              />
+            </View>
+          )}
+          right={() => (
+            <TouchableOpacity
+              onPress={() => EditCallback(data, rowMap)}
+              style={{
+                flex: 1,
+                top: 10,
+                left: 20,
+                justifyContent: 'center',
+                alignSelf: 'center',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}>
+                <Icon
+                  name="pencil-outline"
+                  type="ionicon"
+                  color={theme.colors.primary}
+                  size={20}
+                />
+              </View>
+              <Title
+                style={[
+                  Styles.fontSize11,
+                  {
+                    color: theme.colors.primaryLight,
+                    top: -5,
+                  },
+                ]}>
+                View
+              </Title>
+            </TouchableOpacity>
           )}
         />
       </View>
@@ -132,7 +160,7 @@ const WorkFloorScreen = ({ navigation }) => {
   };
 
   const EditCallback = (data, rowMap) => {
-    rowMap[data.item.key].closeRow();
+    // rowMap[data.item.key].closeRow();
     navigation.navigate("AddWorkFloorScreen", {
       type: "edit",
       fetchData: FetchData,
@@ -146,6 +174,7 @@ const WorkFloorScreen = ({ navigation }) => {
   //#endregion
 
   return (
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Work Floor" />
       {isLoading ? (
@@ -184,10 +213,10 @@ const WorkFloorScreen = ({ navigation }) => {
               useFlatList={true}
               disableRightSwipe={true}
               rightOpenValue={-72}
-              renderItem={(data) => RenderItems(data)}
-              renderHiddenItem={(data, rowMap) =>
-                RenderHiddenItems(data, rowMap, [EditCallback])
-              }
+              renderItem={(data,rowMap) => RenderItems(data,rowMap)}
+              // renderHiddenItem={(data, rowMap) =>
+              //   RenderHiddenItems(data, rowMap, [EditCallback])
+              // }
             />
           ) : (
             <NoItems
@@ -221,6 +250,7 @@ const WorkFloorScreen = ({ navigation }) => {
         {snackbarText}
       </Snackbar>
     </View>
+    </SafeAreaView>
   );
 };
 

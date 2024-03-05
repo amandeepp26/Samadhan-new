@@ -5,6 +5,7 @@ import {
   LogBox,
   RefreshControl,
   ScrollView,
+  SafeAreaView,
 } from "react-native";
 import { List, Snackbar, Title } from "react-native-paper";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -146,6 +147,8 @@ const ApiMaster = ({ navigation }) => {
   //#endregion
 
   return (
+    
+    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
     <View style={[Styles.flex1]}>
       <Header navigation={navigation} title="Api Master" />
       {isLoading ? (
@@ -233,6 +236,7 @@ const ApiMaster = ({ navigation }) => {
         </View>
       </RBSheet>
     </View>
+    </SafeAreaView>
   );
 };
 
