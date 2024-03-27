@@ -10,6 +10,7 @@ import Provider from "../../../../api/Provider";
 import { Button, Snackbar } from "react-native-paper";
 import { communication } from "../../../../utils/communication";
 import { theme } from "../../../../theme/apptheme";
+import Header from "../../../../components/Header";
 
 let userID = 0, compayID = 0, branchID = 0;
 let Sess_company_refno = 0;
@@ -147,19 +148,19 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
 
   return (
     <View style={[Styles.flex1, Styles.backgroundColor]}>
-
+      <Header title={'Add Employee'} navigation={navigation} />
 
       <ScrollView keyboardShouldPersistTaps="handled">
-        <View style={[Styles.flex1, Styles.padding16, { background: "#fff" }]}>
+        <View style={[Styles.flex1, Styles.padding16, {background: '#fff'}]}>
           <FormInput
             label="Company Name"
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 company_name: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 company_name: false,
               }));
@@ -170,13 +171,13 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           <FormInput
             label="Contact Person"
             value={state.contact_person}
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 contact_person: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 contact_person: false,
               }));
@@ -186,13 +187,13 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           <FormInput
             label="Designation"
             value={state.designation}
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 designation: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 designation: false,
               }));
@@ -201,49 +202,49 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           />
           <FormInput
             label="Mobile Number"
-            onChangeText={(text) => {
+            onChangeText={text => {
               if (text.length < 11)
-                setState((state) => ({
+                setState(state => ({
                   ...state,
                   mobile_no: text,
                 }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 mobile_no: false,
               }));
             }}
-            keyboardType={"phone-pad"}
+            keyboardType={'phone-pad'}
             value={state.mobile_no}
             error={error.mobile_no}
           />
           <FormInput
             value={state.phone_no}
             label="Telephone Number"
-            onChangeText={(text) => {
+            onChangeText={text => {
               if (text.length < 11)
-                setState((state) => ({
+                setState(state => ({
                   ...state,
                   phone_no: text,
                 }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 phone_no: false,
               }));
             }}
             error={error.phone_no}
-            keyboardType={"phone-pad"}
+            keyboardType={'phone-pad'}
           />
           <FormInput
             label="Email ID"
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 email_id: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 email_id: false,
               }));
@@ -253,13 +254,13 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           />
           <FormInput
             label="Address 1 "
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 address: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 address: false,
               }));
@@ -270,20 +271,21 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           <FormInput
             label="State"
             type="dropdown"
-            data={states.map((obj) => obj.state_name)}
-            onChangeText={(text) => {
-              setState((state) => ({
+            data={states.map(obj => obj.state_name)}
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
-                state_refno: states.find((item) => item.state_name === text).state_refno,
-                district_refno: "",
+                state_refno: states.find(item => item.state_name === text)
+                  .state_refno,
+                district_refno: '',
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 state_refno: false,
               }));
               fetchDistricts(
-                states.find((item) => item.state_name === text).state_refno
+                states.find(item => item.state_name === text).state_refno,
               );
             }}
             value={state.state_refno}
@@ -292,14 +294,16 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           <FormInput
             label="City"
             type="dropdown"
-            data={districts.map((obj) => obj.district_name)}
-            onChangeText={(text) => {
-              setState((state) => ({
+            data={districts.map(obj => obj.district_name)}
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
-                district_refno: districts.find((item) => item.district_name === text).district_refno,
+                district_refno: districts.find(
+                  item => item.district_name === text,
+                ).district_refno,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 district_refno: false,
               }));
@@ -309,13 +313,13 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           />
           <FormInput
             label="Pincode"
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
                 pincode: text,
               }));
 
-              setError((state) => ({
+              setError(state => ({
                 ...state,
                 pincode: false,
               }));
@@ -327,10 +331,10 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
           <FormInput
             label="Display"
             type="check-box"
-            onChangeText={(text) => {
-              setState((state) => ({
+            onChangeText={text => {
+              setState(state => ({
                 ...state,
-                view_status: state.view_status === "0" ? "1" : "0",
+                view_status: state.view_status === '0' ? '1' : '0',
               }));
             }}
             value={state.view_status}
@@ -341,8 +345,7 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
             mode="contained"
             loading={isButtonLoading}
             disabled={isButtonLoading}
-            style={{ width: "100%", alignSelf: "center" }}
-          >
+            style={{width: '100%', alignSelf: 'center'}}>
             Submit
           </Button>
         </View>
@@ -350,12 +353,10 @@ const EmployeeCustomerForm = ({ navigation, route }) => {
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
-        style={{ backgroundColor: theme.colors.error }}
-      >
+        style={{backgroundColor: theme.colors.error}}>
         {snackbarText}
       </Snackbar>
     </View>
-
   );
 };
 

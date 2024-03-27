@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, LogBox } from "react-native";
+import { StyleSheet, Text, View, LogBox, ScrollView, Image, Pressable } from "react-native";
 import React from "react";
 import Provider from "../../api/Provider";
 import { useIsFocused } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import CreateSCCards from "../../components/SCCards";
 import { Styles } from "../../styles/styles";
 import { Modal, Portal, Button } from "react-native-paper";
 import Header from "../../components/Header";
+import { theme } from "../../theme/apptheme";
 
 let userID = null;
 LogBox.ignoreLogs([
@@ -109,26 +110,75 @@ const Design = ({ route, navigation }) => {
       </Portal>
 
       <Header navigation={navigation} title="Design Your Dream" />
+      <ScrollView>
       <View
         style={[Styles.flexRow,Styles.marginTop8, Styles.paddingHorizontal16, Styles.flexWrap]}>
         {categories.map(obj => {
           return (
-            <View
-              style={[Styles.width50per, Styles.padding4, Styles.paddingTop8]}
-              key={obj.propertytype_refno}>
-              <CreateSCCards
-                image={obj.propertytype_image}
-                title={obj.propertytype_name}
-                cardClick={() => {
+            <Pressable
+              onPress={() => {
+                setSelectedProperty(obj);
+                setModalOpen(true);
+              }}
+              style={{
+                height: 200,
+                width: '100%',
+                marginTop: 15,
+                alignSelf: 'center',
+              }}>
+              <Image
+                resizeMode="cover"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: 12,
+                }}
+                source={{
+                  uri: obj.propertytype_image,
+                }}
+              />
+              <Pressable
+                onPress={() => {
                   setSelectedProperty(obj);
                   setModalOpen(true);
                 }}
-                id={obj.propertytype_refno}
-              />
-            </View>
+                style={{
+                  backgroundColor: 'white',
+                  width: '60%',
+                  position: 'absolute',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  bottom: 10,
+                  paddingVertical: 7,
+                  borderRadius: 10,
+                }}>
+                <Text
+                  style={[
+                    Styles.fontSize16,
+                    Styles.fontBold,
+                    {color: theme.colors.primary},
+                  ]}>
+                  {obj.propertytype_name}
+                </Text>
+              </Pressable>
+            </Pressable>
+            // <View
+            //   style={[Styles.width50per, Styles.padding4, Styles.paddingTop8]}
+            //   key={obj.propertytype_refno}>
+            //   <CreateSCCards
+            //     image={obj.propertytype_image}
+            //     title={obj.propertytype_name}
+            //     cardClick={() => {
+            //       setSelectedProperty(obj);
+            //       setModalOpen(true);
+            //     }}
+            //     id={obj.propertytype_refno}
+            //   />
+            // </View>
           );
         })}
       </View>
+      </ScrollView>
     </>
   );
 };

@@ -42,7 +42,7 @@ const DealerBuyerCategoryScreen = ({ navigation }) => {
       companyAdminID = parsedUserData.Sess_CompanyAdmin_UserRefno;
       console.warn('userid--->', parsedUserData);
       dealerID = parsedUserData.UserID;
-      if (parsedUserData.Sess_if_create_brand == 1) {
+      if (parsedUserData.Sess_if_create_brand === 1) {
         setShouldShow(true);
         FetchData();
       } else {
@@ -52,7 +52,6 @@ const DealerBuyerCategoryScreen = ({ navigation }) => {
   };
   const FetchData = (from) => {
 
-    console.warn('hyyyy->', response.data);
     if (from === "add" || from === "update") {
       setSnackbarText(
         "Item " + (from === "add" ? "added" : "updated") + " successfully"

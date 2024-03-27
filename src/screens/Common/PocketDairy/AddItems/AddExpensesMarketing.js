@@ -48,6 +48,7 @@ import * as Contacts from "react-native-contacts";
 import * as DocumentPicker from "react-native-document-picker";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Geocoder from "react-native-geocoding";
+import Header from "../../../../components/Header";
 let userID = 0,
   groupID = 0,
   groupExtra = 0,
@@ -4667,6 +4668,7 @@ const AddExpensesMarketing = ({ route, navigation }) => {
 
   return (
     <View style={[Styles.flex1]}>
+      <Header navigation={navigation} title={'Add Expense'} />
       <ScrollView
         style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]}
         keyboardShouldPersistTaps="handled"

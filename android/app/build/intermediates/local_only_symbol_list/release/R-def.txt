@@ -4,6 +4,10 @@ drawable assets_addemployee
 drawable assets_api
 drawable assets_category
 drawable assets_defaulticon
+drawable assets_dreamfour
+drawable assets_dreamone
+drawable assets_dreamthree
+drawable assets_dreamtwo
 drawable assets_estimate
 drawable assets_eye
 drawable assets_gallery

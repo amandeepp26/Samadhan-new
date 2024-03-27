@@ -481,7 +481,7 @@ function HomeScreen({ loginUser}) {
                 {userCountData?.map((item, index) => (
                   <Pressable
                     onPress={() =>
-                      navigation.navigate('Approved', {role: item.roleName})
+                      navigation.navigate('ApprovedUserScreen', {role: item.roleName})
                     }
                     style={{alignItems: 'center'}}>
                     <View
@@ -526,7 +526,7 @@ function HomeScreen({ loginUser}) {
                 marginVertical: 15,
               }}>
               <Pressable
-                onPress={() => navigation.navigate('Approved')}
+                onPress={() => navigation.navigate('ApprovedUserScreen')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -550,7 +550,7 @@ function HomeScreen({ loginUser}) {
                 </Text>
               </Pressable>
               <Pressable
-                onPress={() => navigation.navigate('Pending')}
+                onPress={() => navigation.navigate('PendingUserScreen')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,
@@ -574,7 +574,7 @@ function HomeScreen({ loginUser}) {
                 </Text>
               </Pressable>
               <Pressable
-                onPress={() => navigation.navigate('Declined')}
+                onPress={() => navigation.navigate('DeclinedUserScreen')}
                 style={{
                   alignItems: 'center',
                   borderWidth: 1,

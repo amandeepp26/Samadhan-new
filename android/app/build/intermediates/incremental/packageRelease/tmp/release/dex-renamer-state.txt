@@ -1,7 +1,10 @@
-#Sat Mar 02 18:04:41 IST 2024
+#Sun Mar 24 14:08:45 IST 2024
+base.2=/Users/aman/Documents/Apps/Samadhan/android/app/build/intermediates/dex/release/mergeDexRelease/classes3.dex
+path.2=classes3.dex
 base.1=/Users/aman/Documents/Apps/Samadhan/android/app/build/intermediates/dex/release/mergeDexRelease/classes2.dex
 path.1=classes2.dex
 base.0=/Users/aman/Documents/Apps/Samadhan/android/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
+renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
 path.0=classes.dex

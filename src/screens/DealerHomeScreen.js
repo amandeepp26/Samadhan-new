@@ -15,6 +15,7 @@ import {
   Pressable,
   SafeAreaView,
   Dimensions,
+  Linking,
 } from 'react-native';
 import {
   ActivityIndicator,
@@ -283,7 +284,7 @@ useEffect(() => {
       .then(response => {
         if (response.data && response.data.code === 200) {
           if (response.data.data) {
-            //response.data.data = APIConverter(response.data.data);
+            // response.data.data = APIConverter(response.data.data);
             setImageGalleryData(response.data.data);
           }
         } else {
@@ -312,27 +313,27 @@ useEffect(() => {
     )
       .then(response => {
         if (response.data && response.data.code === 200) {
-          if (response.data.data) {
-            response.data.data = APIConverter(response.data.data);
-            const categoryImageData = [];
-            const sliderImageData = [];
-            const sliderImageZoomData = [];
-            response.data.data.map(data => {
-              categoryImageData.push({
-                image: data.designImage,
-                text: data.categoryName,
-              });
-              sliderImageData.push({
-                img: data.designImage,
-              });
-              sliderImageZoomData.push({
-                url: data.designImage,
-              });
-            });
-            setCatalogueCategoryImages(categoryImageData);
-            setCatalogueImages(sliderImageData);
-            setCatalogueImagesZoom(sliderImageZoomData);
-          }
+         if (response && response.length > 0) {
+           const categoryImageData = [];
+           const sliderImageData = [];
+           const sliderImageZoomData = [];
+           response.forEach(data => {
+             categoryImageData.push({
+               image: data.design_image_url,
+               text: data.designtype_name,
+             });
+             sliderImageData.push({
+               img: data.design_image_url,
+             });
+             sliderImageZoomData.push({
+               url: data.design_image_url,
+             });
+           });
+           setCatalogueCategoryImages(categoryImageData);
+           setCatalogueImages(sliderImageData);
+           setCatalogueImagesZoom(sliderImageZoomData);
+         }
+
         }
         setIsLoading(false);
       })
@@ -391,7 +392,7 @@ useEffect(() => {
           _user_count = usr_data;
           setUserCountData(usr_data);
         }
-        setIsLoading(false);
+        // setIsLoading(false);
       })
       .catch(e => {
         setIsLoading(false);
@@ -554,30 +555,60 @@ useEffect(() => {
     }
   };
 
+    const openAppSettings = () => {
+      Linking.openSettings();
+    };
+    
+   const requestLocationPermission = async () => {
+     try {
+       if (Platform.OS === 'android') {
+         const granted = await PermissionsAndroid.request(
+           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+           {
+             title: 'Location Permission',
+             message: 'This app requires access to your location.',
+             buttonNeutral: 'Ask Me Later',
+             buttonNegative: 'Cancel',
+             buttonPositive: 'OK',
+           },
+         );
+         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+           setLocationGranted(true);
+           // Permission granted, proceed with obtaining location
+           getLocation();
+         } else if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+           // Permission denied permanently, guide user to app settings
+           Alert.alert(
+             'Permission Denied',
+             'Please enable location permission from app settings to use this feature.',
+             [
+               {
+                 text: 'Cancel',
+                 onPress: () => console.log('Cancel Pressed'),
+                 style: 'cancel',
+               },
+               {text: 'Open Settings', onPress: openAppSettings},
+             ],
+           );
+         } else {
+           setLocationGranted(false);
+           setErrorMsg('Permission to access location was denied');
+         }
+       } else {
+         // For iOS, location permission is granted by default
+         setLocationGranted(true);
+         // Proceed with obtaining location
+         getLocation();
+       }
+     } catch (err) {
+       console.warn(err);
+     }
+   };
   // employee activity functions --start
   Geocoder.init('AIzaSyB_SCxCebFiFojXQFe_odsJQhbIrpO4Jwc');
   const getLocation = async log_text => {
-    let locationPermissionStatus;
-    if (Platform.OS === 'ios') {
-      const permissionResult = await request(
-        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-      );
-      locationPermissionStatus = permissionResult === 'granted';
-    } else if (Platform.OS === 'android') {
-      const permissionResult = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      );
-      locationPermissionStatus =
-        permissionResult === PermissionsAndroid.RESULTS.GRANTED;
-    }
-    // let {status} = await Geolocation.requestForegroundPermissionsAsync();
-    if (!locationPermissionStatus) {
-      setLocationGranted(false);
-      setErrorMsg('Permission to access location was denied');
-      return;
-    }
     // const address = await Geolocation.reverseGeocodeAsync(locationGps?.coords);
-
+    if(locationGranted){
     Geolocation.getCurrentPosition(
       async locationGps => {
         if (locationGps) {
@@ -679,6 +710,27 @@ useEffect(() => {
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
+    }
+    else{
+      requestLocationPermission();
+    }
+  };
+
+  const promptToEnableLocationFromSettings = async () => {
+    const message =
+      'Location permission is required for the app to function properly. Please enable location permissions from the app settings.';
+    const settingsUrl = Platform.select({
+      ios: 'app-settings:',
+      android: 'com.samadhan', // Replace with your app's package name
+    });
+
+    // Prompt the user to open the app settings
+    try {
+      await Linking.openSettings();
+      // You can provide additional feedback to the user if needed
+    } catch (error) {
+      console.error('Unable to open app settings:', error);
+    }
   };
 
   React.useEffect(() => {}, [
@@ -1010,7 +1062,6 @@ useEffect(() => {
     Provider.createDFCommon(Provider.API_URLS.UserFromRefNo, params)
       .then(response => {
         if (response.data && response.data.code === 200) {
-          console.warn('user detail----->', response.data.data);
           setUserName(response.data.data.Sess_FName);
           AsyncStorage.setItem('userName', response.data.data.Sess_FName);
           const user = {
@@ -3538,7 +3589,7 @@ useEffect(() => {
                       Styles.paddingHorizontal16,
                       Styles.flexWrap,
                     ]}>
-                    {imageGalleryData.map((k, i) => {
+                    {imageGalleryData?.map((k, i) => {
                       return (
                         <View
                           key={i}

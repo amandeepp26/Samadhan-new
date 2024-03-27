@@ -114,6 +114,26 @@ import ActivityReport from './src/screens/Marketing/EmployeeActivity/ActivityRep
 import CustomerList from './src/screens/Marketing/EmployeeActivity/CustomerList';
 import AddExpensesList from './src/screens/Common/PocketDairy/AddExpensesList';
 import AddCompany from './src/screens/Common/PocketDairy/AddItems/AddCompany';
+import MyServicesScreen from './src/screens/Common/CompanyProfile/MyServicesScreen';
+import DealerProductScreen from './src/screens/Dealer/Product/ProductScreen';
+import BranchListScreen from './src/screens/Common/Organization/BranchScreen';
+import BankListScreen from './src/screens/Common/Organization/BankScreen';
+import TransportationScreen from './src/screens/Common/Organization/TransportationScreen';
+import ClientScreen from './src/screens/Common/Client/ClientScreen';
+import ProductPriceList from './src/screens/Dealer/PriceList/ProductPriceList';
+import PocketDiaryScreen from './src/screens/PocketDiaryScreen';
+import GMyContactsScreen from './src/screens/Common/PocketDairy/Setting/GMyContacts';
+import AddSourceList from './src/screens/Common/PocketDairy/AddSourceList';
+import VerifyCompanySource from './src/screens/Common/PocketDairy/VerifyCompanySource';
+import VerifyCompanyExpense from './src/screens/Common/PocketDairy/VerifyCompanyExpense';
+import PocketDiaryInbox from './src/screens/Common/PocketDairy/Setting/PocketDiaryInbox';
+import Dashboard from './src/screens/Marketing/Dashboard';
+import GeneralUserHomeScreen from './src/screens/Home';
+import MarketingDrawer from './src/navigations/MarketingDrawer';
+import LogoutActivityForm from './src/screens/Marketing/EmployeeActivity/forms/LogoutActivity';
+import EmployeeCustomerForm from './src/screens/Marketing/EmployeeActivity/forms/EmployeeCustomerForm';
+import EditCompanyForm from './src/screens/Marketing/EmployeeActivity/forms/EditCompany';
+import AddExpensesMarketing from './src/screens/Common/PocketDairy/AddItems/AddExpensesMarketing';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -232,13 +252,26 @@ function App() {
                       )}
                     />
                   </>
+                ) : userRole === 'Dealer' ? (
+                  <>
+                    <Stack.Screen
+                      name="Home"
+                      component={props => (
+                        <DealerDrawer {...props} loginUser={loginUser} />
+                      )}
+                    />
+                  </>
                 ) : (
                   <>
                     <Stack.Screen
                       name="HomeScreen"
+                      // component={GeneralUserHomeScreen}
                       component={props => (
-                        <DealerDrawer {...props} loginUser={loginUser} />
+                        <MarketingDrawer {...props} loginUser={loginUser} />
                       )}
+                      // component={props => (
+                      //   <DealerDrawer {...props} loginUser={loginUser} />
+                      // )}
                     />
                   </>
                 )}
@@ -253,9 +286,10 @@ function App() {
                   component={AddDealerDepartmentScreen}
                 />
                 <Stack.Screen
-                  name="Create New / List"
+                  name="EmployeeListScreen"
                   component={EmployeeListScreen}
                 />
+                <Stack.Screen name="Client" component={ClientScreen} />
                 <Stack.Screen
                   name="Attendance Edit"
                   component={EmployeeAttendanceReport}
@@ -273,12 +307,36 @@ function App() {
                   component={SingleEmployeeAttendanceReport}
                 />
                 <Stack.Screen
+                  name="EmployeeCustomerForm"
+                  component={EmployeeCustomerForm}
+                />
+                <Stack.Screen
+                  name="EditCompanyForm"
+                  component={EditCompanyForm}
+                />
+                <Stack.Screen
+                  name="DailyActivityReport"
+                  component={DailyActivityReport}
+                />
+                <Stack.Screen
                   name="Daily Activity Report"
                   component={DailyActivityReport}
                 />
                 <Stack.Screen
+                  name="ActivityReport"
+                  component={ActivityReport}
+                />
+                <Stack.Screen
+                  name="AddExpensesMarketing"
+                  component={AddExpensesMarketing}
+                />
+                <Stack.Screen
                   name="Overall Activity Report"
                   component={ActivityReport}
+                />
+                <Stack.Screen
+                  name="LogoutActivityForm"
+                  component={LogoutActivityForm}
                 />
                 <Stack.Screen
                   name="Attendance Report"
@@ -310,7 +368,7 @@ function App() {
                   component={AddDealerDesignationScreen}
                 />
                 <Stack.Screen
-                  name="Buyer Category"
+                  name="DealerBuyerCategoryScreen"
                   component={DealerBuyerCategoryScreen}
                 />
                 <Stack.Screen
@@ -318,7 +376,23 @@ function App() {
                   component={AddDealerBuyerCategoryScreen}
                 />
                 <Stack.Screen
-                  name="Brand Master"
+                  name="DealerProductScreen"
+                  component={DealerProductScreen}
+                />
+                <Stack.Screen
+                  name="CommonDepartmentScreen"
+                  component={DepartmentScreen}
+                />
+                <Stack.Screen
+                  name="ProductPriceList"
+                  component={ProductPriceList}
+                />
+                <Stack.Screen
+                  name="PocketDiaryScreen"
+                  component={PocketDiaryScreen}
+                />
+                <Stack.Screen
+                  name="DealerBrandMasterScreen"
                   component={DealerBrandMasterScreen}
                 />
                 <Stack.Screen
@@ -326,7 +400,7 @@ function App() {
                   component={AddDealerBrandMasterScreen}
                 />
                 <Stack.Screen
-                  name="Brand Setup"
+                  name="DealerBrandSetupScreen"
                   component={DealerBrandSetupScreen}
                 />
                 <Stack.Screen
@@ -340,6 +414,10 @@ function App() {
                 <Stack.Screen
                   name="My Services"
                   component={DealerMyServicesScreen}
+                />
+                <Stack.Screen
+                  name="MyServicesScreen"
+                  component={MyServicesScreen}
                 />
                 <Stack.Screen
                   name="AddDealerMyServicesScreen"
@@ -403,51 +481,66 @@ function App() {
                   component={DesignyourdreamForm}
                 />
                 <Stack.Screen name="Menu" component={MenuItems} />
-                <Stack.Screen name="Approved" component={ApprovedUser} />
-                <Stack.Screen name="Pending" component={PendingUsers} />
-                <Stack.Screen name="Declined" component={DeclinedUserScreen} />
-                <Stack.Screen name="Activity" component={ActivityRolesScreen} />
+                <Stack.Screen
+                  name="ApprovedUserScreen"
+                  component={ApprovedUser}
+                />
+                <Stack.Screen
+                  name="PendingUserScreen"
+                  component={PendingUsers}
+                />
+                <Stack.Screen
+                  name="DeclinedUserScreen"
+                  component={DeclinedUserScreen}
+                />
+                <Stack.Screen
+                  name="ActivityRolesScreen"
+                  component={ActivityRolesScreen}
+                />
                 <Stack.Screen
                   name="AddActivityRolesScreen"
                   component={AddActivityRolesScreen}
                 />
                 <Stack.Screen name="ApiMaster" component={ApiMaster} />
                 <Stack.Screen name="AddApiMaster" component={AddApiMaster} />
-                <Stack.Screen name="Service" component={Services} />
+                <Stack.Screen name="ServicesScreen" component={Services} />
                 <Stack.Screen name="AddService" component={AddServicesScreen} />
                 <Stack.Screen
-                  name="Unit of Sales"
+                  name="UnitOfSalesScreen"
                   component={UnitOfSalesScreen}
                 />
                 <Stack.Screen
                   name="AddUnitofSales"
                   component={AddUnitofSales}
                 />
-                <Stack.Screen name="Category" component={Category} />
+                <Stack.Screen name="CategoryScreen" component={Category} />
                 <Stack.Screen
                   name="AddCategoryScreen"
                   component={AddCategoryScreen}
                 />
-                <Stack.Screen name="Products" component={ProductScreen} />
+                <Stack.Screen name="ProductScreen" component={ProductScreen} />
                 <Stack.Screen
                   name="AddProductScreen"
                   component={AddProductScreen}
                 />
                 <Stack.Screen
-                  name="Service Product"
+                  name="ServiceProductScreen"
                   component={ServiceProductScreen}
                 />
                 <Stack.Screen
                   name="AddServiceProductScreen"
                   component={AddServiceProductScreen}
                 />
-                <Stack.Screen name="Department" component={DepartmentScreen} />
+                <Stack.Screen
+                  name="DepartmentScreen"
+                  component={DepartmentScreen}
+                />
                 <Stack.Screen
                   name="AddDepartmentScreen"
                   component={AddDepartmentScreen}
                 />
                 <Stack.Screen
-                  name="Location Type"
+                  name="LocationTypeScreen"
                   component={LocationTypeScreen}
                 />
                 <Stack.Screen
@@ -455,25 +548,49 @@ function App() {
                   component={AddLocationTypeScreen}
                 />
                 <Stack.Screen
-                  name="Designation"
+                  name="CommonDesignationScreen"
                   component={DesignationScreen}
+                />
+                <Stack.Screen
+                  name="DesignationScreen"
+                  component={DesignationScreen}
+                />
+
+                <Stack.Screen
+                  name="BranchListScreen"
+                  component={BranchListScreen}
+                />
+                <Stack.Screen
+                  name="BankListScreen"
+                  component={BankListScreen}
+                />
+                <Stack.Screen
+                  name="TransportationScreen"
+                  component={TransportationScreen}
                 />
                 <Stack.Screen
                   name="AddDesignationScreen"
                   component={AddDesignationScreen}
                 />
-                <Stack.Screen name="E-Way Bill" component={EWayBillScreen} />
+                <Stack.Screen
+                  name="EWayBillScreen"
+                  component={EWayBillScreen}
+                />
                 <Stack.Screen
                   name="AddEWayBillScreen"
                   component={AddEWayBillScreen}
                 />
-                <Stack.Screen name="Setup" component={SetupScreen} />
+                <Stack.Screen name="SetupScreen" component={SetupScreen} />
                 <Stack.Screen
                   name="AddSetupScreen"
                   component={AddSetupScreen}
                 />
                 <Stack.Screen
-                  name="Category Name"
+                  name="CategoryNameScreen"
+                  component={CategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="GCategoryNameScreen"
                   component={CategoryNameScreen}
                 />
                 <Stack.Screen
@@ -481,58 +598,82 @@ function App() {
                   component={AddCategoryNameScreen}
                 />
                 <Stack.Screen
-                  name="Sub Category Name"
+                  name="SubCategoryNameScreen"
+                  component={SubCategoryNameScreen}
+                />
+                <Stack.Screen
+                  name="GMyContactsScreen"
+                  component={GMyContactsScreen}
+                />
+                <Stack.Screen
+                  name="GSubCategoryNameScreen"
                   component={SubCategoryNameScreen}
                 />
                 <Stack.Screen
                   name="AddSubCategoryNameScreen"
                   component={AddSubCategoryNameScreen}
                 />
+                <Stack.Screen name="AddSourceList" component={AddSourceList} />
                 <Stack.Screen
-                  name="Brand Conversion Value"
+                  name="VerifyCompanySource"
+                  component={VerifyCompanySource}
+                />
+                <Stack.Screen
+                  name="VerifyCompanyExpense"
+                  component={VerifyCompanyExpense}
+                />
+                <Stack.Screen
+                  name="PocketDiaryInbox"
+                  component={PocketDiaryInbox}
+                />
+                <Stack.Screen
+                  name="ABrandConversationValue"
                   component={ABrandConversationValue}
                 />
                 <Stack.Screen
                   name="AddBrandConversationValue"
                   component={AddBrandConversationValue}
                 />
-                <Stack.Screen
-                  name="Width of GP Coil"
-                  component={WidthOfGpCoil}
-                />
+                <Stack.Screen name="WidthOfGpCoil" component={WidthOfGpCoil} />
                 <Stack.Screen
                   name="AddWidthOfGpCoil"
                   component={AddWidthOfGpCoil}
                 />
                 <Stack.Screen
-                  name="Mass of Zinc Coating"
+                  name="MassOfZincCoating"
                   component={MassOfZincCoating}
                 />
                 <Stack.Screen
                   name="AddMassOfZincCoating"
                   component={AddMassOfZincCoating}
                 />
-                <Stack.Screen name="Work Floor" component={WorkFloorScreen} />
+                <Stack.Screen
+                  name="WorkFloorScreen"
+                  component={WorkFloorScreen}
+                />
                 <Stack.Screen
                   name="AddWorkFloorScreen"
                   component={AddWorkFloorScreen}
                 />
                 <Stack.Screen
-                  name="Work Location"
+                  name="WorkLocationScreen"
                   component={WorkLocationScreen}
                 />
                 <Stack.Screen
                   name="AddWorkLocationScreen"
                   component={AddWorkLocationScreen}
                 />
-                <Stack.Screen name="Design Type" component={DesignTypeScreen} />
+                <Stack.Screen
+                  name="DesignTypeScreen"
+                  component={DesignTypeScreen}
+                />
                 <Stack.Screen
                   name="AddDesignTypeScreen"
                   component={AddDesignTypeScreen}
                 />
 
                 <Stack.Screen
-                  name="Materials Setup"
+                  name="MaterialSetupScreen"
                   component={MaterialSetupScreen}
                 />
                 <Stack.Screen
@@ -540,7 +681,7 @@ function App() {
                   component={AddMaterialSetupScreen}
                 />
                 <Stack.Screen
-                  name="Post New Design"
+                  name="PostNewDesignScreen"
                   component={PostNewDesignScreen}
                 />
                 <Stack.Screen
@@ -552,10 +693,7 @@ function App() {
                   name="AddExpensesList"
                   component={AddExpensesList}
                 />
-                <Stack.Screen
-                  name="AddCompany"
-                  component={AddCompany}
-                />
+                <Stack.Screen name="AddCompany" component={AddCompany} />
               </>
             </Stack.Navigator>
           </NavigationContainer>

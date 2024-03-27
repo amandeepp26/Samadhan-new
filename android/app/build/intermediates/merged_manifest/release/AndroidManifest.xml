@@ -9,6 +9,10 @@
         android:targetSdkVersion="34" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <permission
         android:name="com.samadhan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
@@ -47,6 +51,15 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/imagepicker_provider_paths" />
+        </provider>
+        <provider
+            android:name="cl.json.RNShareFileProvider"
+            android:authorities="com.samadhan.rnshare.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/share_download_paths" />
         </provider>
 
         <activity

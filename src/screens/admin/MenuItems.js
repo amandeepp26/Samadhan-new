@@ -59,7 +59,7 @@ function MenuItems({route, navigation}) {
                 onPress={() => {
                   if(item.items)
                   {handleMenuItemPress(item)}
-                  else{navigation.navigate(item.title)}
+                  else{navigation.navigate(item.navigation)}
                 }}
                 style={{
                   padding: 15,
@@ -93,7 +93,7 @@ function MenuItems({route, navigation}) {
             }}>
             {selectedItem?.items?.map((nestedItem, nestedIndex) => (
               <Pressable
-                onPress={() => navigation.navigate(nestedItem.title)}
+                onPress={() => navigation.navigate(nestedItem.navigation)}
                 key={nestedIndex}
                 style={{
                   width: '32%',

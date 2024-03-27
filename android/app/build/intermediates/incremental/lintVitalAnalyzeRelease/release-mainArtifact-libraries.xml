@@ -211,6 +211,19 @@
       jars="/Users/aman/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.8.21/67f57e154437cd9e6e9cf368394b95814836ff88/kotlin-stdlib-jdk8-1.8.21.jar"
       resolved="org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21"/>
   <library
+      name="/Users/aman/Documents/Apps/Samadhan/android@@:react-native-fs::release"
+      jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-fs/android/build/.transforms/6ad2000dc98edf6729979de4e39c61b3/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-fs/android/build/.transforms/6ad2000dc98edf6729979de4e39c61b3/transformed/out/jars/libs/R.jar"
+      resolved="Samadhan:react-native-fs:unspecified"
+      folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-fs/android/build/.transforms/6ad2000dc98edf6729979de4e39c61b3/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
       name="com.facebook.react:hermes-android:0.73.2:release@aar"
       jars="/Users/aman/.gradle/caches/transforms-3/c3865feddf800e19aecc3340bf485827/transformed/jetified-hermes-android-0.73.2-release/jars/classes.jar"
       resolved="com.facebook.react:hermes-android:0.73.2"
@@ -250,6 +263,19 @@
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
   <library
+      name="/Users/aman/Documents/Apps/Samadhan/android@@:react-native-contacts::release"
+      jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-contacts/android/build/.transforms/c0d664640b35f764dddfba9f068bb5b5/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-contacts/android/build/.transforms/c0d664640b35f764dddfba9f068bb5b5/transformed/out/jars/libs/R.jar"
+      resolved="Samadhan:react-native-contacts:unspecified"
+      folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-contacts/android/build/.transforms/c0d664640b35f764dddfba9f068bb5b5/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
       name="/Users/aman/Documents/Apps/Samadhan/android@@:react-native-document-picker::release"
       jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-document-picker/android/build/.transforms/7baf9bf2ec2999ef085023067d38f289/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-document-picker/android/build/.transforms/7baf9bf2ec2999ef085023067d38f289/transformed/out/jars/libs/R.jar"
       resolved="Samadhan:react-native-document-picker:unspecified"
@@ -280,6 +306,19 @@
       jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-gesture-handler/android/build/.transforms/e140b783dacc190ce01b846f96c9ec4e/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-gesture-handler/android/build/.transforms/e140b783dacc190ce01b846f96c9ec4e/transformed/out/jars/libs/R.jar"
       resolved="Samadhan:react-native-gesture-handler:unspecified"
       folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-gesture-handler/android/build/.transforms/e140b783dacc190ce01b846f96c9ec4e/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
+      name="/Users/aman/Documents/Apps/Samadhan/android@@:react-native-html-to-pdf::release"
+      jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-html-to-pdf/android/build/.transforms/1bef23d5c97ebf1a5f8b0f9ec417ad49/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-html-to-pdf/android/build/.transforms/1bef23d5c97ebf1a5f8b0f9ec417ad49/transformed/out/jars/libs/R.jar"
+      resolved="Samadhan:react-native-html-to-pdf:unspecified"
+      folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-html-to-pdf/android/build/.transforms/1bef23d5c97ebf1a5f8b0f9ec417ad49/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -345,6 +384,19 @@
       jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-safe-area-context/android/build/.transforms/4b04b9734fe9cf697c9e604554d66852/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-safe-area-context/android/build/.transforms/4b04b9734fe9cf697c9e604554d66852/transformed/out/jars/libs/R.jar"
       resolved="Samadhan:react-native-safe-area-context:unspecified"
       folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-safe-area-context/android/build/.transforms/4b04b9734fe9cf697c9e604554d66852/transformed/out"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
+      name="/Users/aman/Documents/Apps/Samadhan/android@@:react-native-share::release"
+      jars="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/.transforms/94d45366466fc99f145b73260f65d972/transformed/out/jars/classes.jar:/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/.transforms/94d45366466fc99f145b73260f65d972/transformed/out/jars/libs/R.jar"
+      resolved="Samadhan:react-native-share:unspecified"
+      folder="/Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/.transforms/94d45366466fc99f145b73260f65d972/transformed/out"
       manifest="AndroidManifest.xml"
       resFolder="res"
       assetsFolder="assets"
@@ -1157,6 +1209,27 @@
       symbolFile="R.txt"
       externalAnnotations="annotations.zip"
       proguardRules="proguard.txt"/>
+  <library
+      name="com.tom-roush:pdfbox-android:1.8.10.3@aar"
+      jars="/Users/aman/.gradle/caches/transforms-3/5ecae1506674fea202e68bc0db50a098/transformed/jetified-pdfbox-android-1.8.10.3/jars/classes.jar"
+      resolved="com.tom-roush:pdfbox-android:1.8.10.3"
+      folder="/Users/aman/.gradle/caches/transforms-3/5ecae1506674fea202e68bc0db50a098/transformed/jetified-pdfbox-android-1.8.10.3"
+      manifest="AndroidManifest.xml"
+      resFolder="res"
+      assetsFolder="assets"
+      lintJar="lint.jar"
+      publicResources="public.txt"
+      symbolFile="R.txt"
+      externalAnnotations="annotations.zip"
+      proguardRules="proguard.txt"/>
+  <library
+      name="org.bouncycastle:bcpkix-jdk15to18:1.68@jar"
+      jars="/Users/aman/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15to18/1.68/f8a3b0a62642ceaca476845241952e559fc8965c/bcpkix-jdk15to18-1.68.jar"
+      resolved="org.bouncycastle:bcpkix-jdk15to18:1.68"/>
+  <library
+      name="org.bouncycastle:bcprov-jdk15to18:1.68@jar"
+      jars="/Users/aman/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15to18/1.68/a569e1ca1fc09ccd2dad64dae1830ea81a309989/bcprov-jdk15to18-1.68.jar"
+      resolved="org.bouncycastle:bcprov-jdk15to18:1.68"/>
   <library
       name="com.google.errorprone:error_prone_annotations:2.15.0@jar"
       jars="/Users/aman/.gradle/caches/modules-2/files-2.1/com.google.errorprone/error_prone_annotations/2.15.0/38c8485a652f808c8c149150da4e5c2b0bd17f9a/error_prone_annotations-2.15.0.jar"

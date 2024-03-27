@@ -1,8 +1,8 @@
 import {View, Text} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 // import * as Location from "expo-location";
 import Geolocation from 'react-native-geolocation-service';
-import {Button, TextInput} from 'react-native-paper';
+import {Button, Snackbar, TextInput} from 'react-native-paper';
 import {Modal, Platform, PermissionsAndroid} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +11,7 @@ import moment from 'moment';
 import {Styles} from '../../styles/styles';
 import FormInput from './EmployeeActivity/common/Input';
 import Geocoder from 'react-native-geocoding';
+import { theme } from '../../theme/apptheme';
 let Sess_UserRefno = 0;
 let Sess_company_refno = 0;
 let Sess_branch_refno = 0;
@@ -31,6 +32,8 @@ const Dashboard = () => {
   const [lastTracked, setLastTracked] = React.useState();
   const [liveLocation, setLiveLocation] = React.useState();
   const [errorMsg, setErrorMsg] = React.useState();
+  const [isSnackbarVisible, setIsSnackbarVisible] = useState('');const [snackbarText, setSnackbarText] = useState('');
+  const [snackbarColor, setSnackbarColor] = useState(theme.colors.success);
   const [isLoginProcessing, setIsLoginProcessing] = React.useState(null);
 
   // ?GPRS - LOGIN

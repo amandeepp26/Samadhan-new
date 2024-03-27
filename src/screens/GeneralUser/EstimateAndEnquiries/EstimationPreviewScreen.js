@@ -640,356 +640,370 @@ const EstimationPreviewScreen = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={[Styles.backgroundColorWhite,{flex:1,}]}>
-    <View style={[Styles.flex1]}>
-      <Header navigation={navigation} title="Design Estimation" />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        enabled
-      >
-        <ScrollView
-          style={[Styles.flex1, Styles.backgroundColor, { marginBottom: 64 }]}
-          contentInsetAdjustmentBehavior="automatic"
-          keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled
-        >
-          <Image
-            source={{ uri: route.params.data.designImage }}
-            style={[Styles.width100per, { height: 192 }]}
-          />
-          <View style={[Styles.flexColumn, Styles.border1, Styles.marginTop16]}>
-            <View
+    <SafeAreaView style={[Styles.backgroundColorWhite, {flex: 1}]}>
+      <View style={[Styles.flex1]}>
+        <Header navigation={navigation} title="Design Estimation" />
+        <KeyboardAvoidingView
+          style={{flex: 1}}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          enabled>
+          <ScrollView
+            style={[Styles.flex1, Styles.backgroundColor, {marginBottom: 64}]}
+            contentInsetAdjustmentBehavior="automatic"
+            keyboardShouldPersistTaps="handled"
+            nestedScrollEnabled>
+            <Image
+              source={{uri: route.params.data.designImage}}
               style={[
-                Styles.flexRow,
-                Styles.borderBottom1,
-                Styles.padding16,
-                Styles.flexAlignCenter,
+                {
+                  height: 192,
+                  width: '90%',
+                  alignSelf: 'center',
+                  borderRadius: 15,
+                  marginTop: 10,
+                },
               ]}
-            >
-              <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
-                Design Code
-              </Subheading>
-              <Subheading style={[Styles.flex1]}>
-                {selectedData.designNumber}
-              </Subheading>
-            </View>
+            />
             <View
-              style={[
-                Styles.flexRow,
-                Styles.borderBottom1,
-                Styles.padding16,
-                Styles.flexAlignCenter,
-              ]}
-            >
-              <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
-                Design Type
-              </Subheading>
-              <Subheading style={[Styles.flex1]}>
-                {selectedData.designTypeName}
-              </Subheading>
-            </View>
-            <View
-              style={[
-                Styles.flexRow,
-                Styles.borderBottom1,
-                Styles.padding16,
-                Styles.flexAlignCenter,
-              ]}
-            >
-              <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
-                Category Name
-              </Subheading>
-              <Subheading style={[Styles.flex1]}>
-                {selectedData.categoryName}
-              </Subheading>
-            </View>
-            <View
-              style={[Styles.flexRow, Styles.padding16, Styles.flexAlignCenter]}
-            >
-              <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
-                Product Name
-              </Subheading>
-              <Subheading style={[Styles.flex1]}>
-                {selectedData.productName}
-              </Subheading>
-            </View>
-          </View>
-          {route.params.isContractor && (
-            <View
-              style={[Styles.padding16, Styles.paddingBottom0, { zIndex: 10 }]}
-            >
-              <Dropdown
-                label="Client Name"
-                data={
-                  selectedData.client_data
-                    ? Object.values(selectedData?.client_data)
-                    : clients
-                }
-                onSelected={onClientNameSelected}
-                isError={errorCN}
-                selectedItem={clientName}
-              />
-              <HelperText type="error" visible={errorCN}>
-                {communication.InvalidClient}
-              </HelperText>
+              style={[Styles.flexColumn, Styles.border1, Styles.marginTop16]}>
               <View
                 style={[
                   Styles.flexRow,
-                  Styles.marginTop8,
-                  { justifyContent: "space-between" },
-                ]}
-              >
-                <Button
-                  mode="outlined"
-                  onPress={() => refRBSheet.current.open()}
-                >
-                  Search & Add
-                </Button>
-                <Button
-                  mode="contained"
-                  onPress={() => {
-                    navigation.navigate("AddClientScreen", {
-                      type: "client",
-                      fetchData: FetchImageGalleryProductDetail,
-                    });
-                  }}
-                >
-                  Create New
-                </Button>
+                  Styles.borderBottom1,
+                  Styles.padding16,
+                  Styles.flexAlignCenter,
+                ]}>
+                <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
+                  Design Code
+                </Subheading>
+                <Subheading
+                  style={[
+                    {alignSelf: 'flex-end', color: theme.colors.primary},
+                  ]}>
+                  {selectedData.designNumber}
+                </Subheading>
+              </View>
+              <View
+                style={[
+                  Styles.flexRow,
+                  Styles.borderBottom1,
+                  Styles.padding16,
+                  Styles.flexAlignCenter,
+                ]}>
+                <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
+                  Design Type
+                </Subheading>
+                <Subheading
+                  style={[
+                    {alignSelf: 'flex-end', color: theme.colors.primary},
+                  ]}>
+                  {selectedData.designTypeName}
+                </Subheading>
+              </View>
+              <View
+                style={[
+                  Styles.flexRow,
+                  Styles.borderBottom1,
+                  Styles.padding16,
+                  Styles.flexAlignCenter,
+                ]}>
+                <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
+                  Category Name
+                </Subheading>
+                <Subheading
+                  style={[
+                    {alignSelf: 'flex-end', color: theme.colors.primary},
+                  ]}>
+                  {selectedData.categoryName}
+                </Subheading>
+              </View>
+              <View
+                style={[
+                  Styles.flexRow,
+                  Styles.padding16,
+                  Styles.flexAlignCenter,
+                ]}>
+                <Subheading style={[Styles.flex1, Styles.textSecondaryColor]}>
+                  Product Name
+                </Subheading>
+                <Subheading
+                  style={[
+                    {alignSelf: 'flex-end', color: theme.colors.primary},
+                  ]}>
+                  {selectedData.productName}
+                </Subheading>
               </View>
             </View>
-          )}
-          <View style={[Styles.height400, Styles.marginTop16, Styles.paddingHorizontal16, Styles.paddingBottom16]}>
-            <TabView renderTabBar={renderTabBar} navigationState={{ index, routes }}
-              renderScene={renderScene} onIndexChange={setIndex} initialLayout={{ width: layout.width }} />
-            <TextInput
-              mode="outlined"
-              label="Total (Sq.Ft.)"
-              value={totalSqFt}
-              editable={false}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-      <View
-        style={[
-          Styles.backgroundColor,
-          Styles.width100per,
-          Styles.marginTop32,
-          Styles.padding16,
-          { position: "absolute", bottom: 0, elevation: 3 },
-        ]}
-      >
-        {route.params.isContractor ? (
-          <Card.Content>
-            <Button mode="contained" onPress={() => CreateQuote()}>
-              Create Quote
-            </Button>
-          </Card.Content>
-        ) : (
-          <Card.Content
-            style={[Styles.flexRow, { justifyContent: "space-between" }]}
-          >
-            <Button mode="outlined" onPress={() => AddMoreDesigns()}>
-              Add More
-            </Button>
-            <Button
-              mode="contained"
-              onPress={() => InsertDesignEstimationEnquiry("get", "1")}
-            >
-              Get Estimation
-            </Button>
-          </Card.Content>
-        )}
-      </View>
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        dragFromTopOnly={true}
-        height={640}
-        animationType="fade"
-        customStyles={{
-          wrapper: { backgroundColor: "rgba(0,0,0,0.5)" },
-          draggableIcon: { backgroundColor: "#000" },
-        }}
-      >
-        <ScrollView
-          style={[Styles.flex1, Styles.backgroundColor]}
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled
-        >
-          <View
-            style={[Styles.flex1, Styles.backgroundColor, Styles.padding16]}
-          >
-            <View style={[Styles.flexColumn]}>
-              <AutocompleteDropdown
-                clearOnFocus={false}
-                closeOnBlur={true}
-                direction="down"
-                suggestionsListContainerStyle={{
-                  borderColor: theme.colors.border,
-                  borderWidth: 1,
-                }}
-                inputContainerStyle={{
-                  backgroundColor: theme.colors.textLight,
-                  borderBottomColor: errorCON
-                    ? theme.colors.error
-                    : theme.colors.textfield,
-                  borderBottomWidth: 1,
-                }}
-                textInputProps={{
-                  placeholder: "Company Name",
-                  value: companyName,
-                  placeholderTextColor: errorCON
-                    ? theme.colors.error
-                    : theme.colors.textSecondary,
-                  onChangeText: onCompanyNameSelected,
-                }}
-                renderItem={(item) => (
-                  <View style={[Styles.paddingVertical16]}>
-                    <Text
-                      style={{
-                        color: theme.colors.text,
-                        paddingHorizontal: 16,
-                      }}
-                    >
-                      {item ? item.title : ""}
-                    </Text>
-                  </View>
-                )}
-                onClear={() => {
-                  setIsButtonDisabled(true);
-                  setCompanyName("");
-                  setCompanyData([]);
-                }}
-                onSelectItem={(item) => {
-                  if (item) {
-                    setIsButtonDisabled(false);
-                    setCompanyName(item.title);
+            {route.params.isContractor && (
+              <View
+                style={[Styles.padding16, Styles.paddingBottom0, {zIndex: 10}]}>
+                <Dropdown
+                  label="Client Name"
+                  data={
+                    selectedData.client_data
+                      ? Object.values(selectedData?.client_data)
+                      : clients
                   }
-                }}
-                dataSet={companyData}
-              />
-              <HelperText type="error" visible={errorCON}>
-                {communication.InvalidClient}
-              </HelperText>
-              <AutocompleteDropdown
-                clearOnFocus={false}
-                closeOnBlur={true}
-                direction="down"
-                suggestionsListContainerStyle={{
-                  borderColor: theme.colors.border,
-                  borderWidth: 1,
-                }}
-                inputContainerStyle={{
-                  backgroundColor: theme.colors.textLight,
-                  borderBottomColor: errorMN
-                    ? theme.colors.error
-                    : theme.colors.textfield,
-                  borderBottomWidth: 1,
-                }}
-                textInputProps={{
-                  placeholder: "Mobile No",
-                  value: mobileno,
-                  placeholderTextColor: errorMN
-                    ? theme.colors.error
-                    : theme.colors.textSecondary,
-                  onChangeText: onMobileNumberSelected,
-                }}
-                renderItem={(item) => (
-                  <View style={[Styles.paddingVertical8]}>
-                    <Text
-                      style={{
-                        color: theme.colors.text,
-                        paddingHorizontal: 16,
-                      }}
-                    >
-                      {item ? item.title : ""}
-                    </Text>
-                    <Text
-                      style={{
-                        color: theme.colors.textSecondary,
-                        paddingHorizontal: 16,
-                      }}
-                    >
-                      {item ? item.contact : ""}
-                    </Text>
-                  </View>
-                )}
-                onClear={() => {
-                  setIsButtonDisabled(true);
-                  setMobileNo("");
-                  setMobileNoData([]);
-                }}
-                onSelectItem={(item) => {
-                  if (item) {
-                    setIsButtonDisabled(false);
-                    setMobileNo(item.title);
-                  }
-                }}
-                dataSet={mobilenoData}
-              />
-              <HelperText type="error" visible={errorMN}>
-                {communication.InvalidClient}
-              </HelperText>
-            </View>
-            <Button
-              mode="contained"
-              disabled={isButtonDisabled}
-              style={[Styles.marginTop32, { zIndex: -1 }]}
-              onPress={SearchClient}
-            >
-              Search
-            </Button>
+                  onSelected={onClientNameSelected}
+                  isError={errorCN}
+                  selectedItem={clientName}
+                />
+                <HelperText type="error" visible={errorCN}>
+                  {communication.InvalidClient}
+                </HelperText>
+                <View
+                  style={[
+                    Styles.flexRow,
+                    Styles.marginTop8,
+                    {justifyContent: 'space-between'},
+                  ]}>
+                  <Button
+                    mode="outlined"
+                    onPress={() => refRBSheet.current.open()}>
+                    Search & Add
+                  </Button>
+                  <Button
+                    mode="contained"
+                    onPress={() => {
+                      navigation.navigate('AddClientScreen', {
+                        type: 'client',
+                        fetchData: FetchImageGalleryProductDetail,
+                      });
+                    }}>
+                    Create New
+                  </Button>
+                </View>
+              </View>
+            )}
             <View
-              style={[Styles.flexColumn, Styles.border1, Styles.marginTop16]}
-            >
-              {otherClients &&
-                otherClients.map((v, k) => {
-                  return (
-                    <View
-                      style={[
-                        Styles.flexRow,
-                        Styles.padding16,
-                        Styles.flexAlignCenter,
-                        Styles.borderBottom1,
-                        { justifyContent: "space-between" },
-                      ]}
-                    >
-                      <View style={[Styles.flexColumn]}>
-                        <Text style={{ color: theme.colors.text }}>
-                          {v.Search_company_name}
-                        </Text>
-                        <Text style={{ color: theme.colors.text }}>
-                          {v.Search_mobile_no}
-                        </Text>
-                      </View>
-                      <Button
-                        mode="contained"
-                        disabled={isButtonDisabled}
-                        onPress={() => InsertOtherClient(v.Search_user_refno)}
-                      >
-                        Add
-                      </Button>
-                    </View>
-                  );
-                })}
+              style={[
+                Styles.height400,
+                Styles.marginTop16,
+                Styles.paddingHorizontal16,
+                Styles.paddingBottom16,
+              ]}>
+              <TabView
+                renderTabBar={renderTabBar}
+                navigationState={{index, routes}}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                initialLayout={{width: layout.width}}
+              />
+              <TextInput
+                mode="outlined"
+                label="Total (Sq.Ft.)"
+                value={totalSqFt}
+                editable={false}
+              />
             </View>
-          </View>
-        </ScrollView>
-      </RBSheet>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        duration={3000}
-        style={{ backgroundColor: snackbarColor }}
-      >
-        {snackbarText}
-      </Snackbar>
-    </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+        <View
+          style={[
+            Styles.backgroundColor,
+            Styles.width100per,
+            Styles.marginTop32,
+            Styles.padding16,
+            {position: 'absolute', bottom: 0, elevation: 3},
+          ]}>
+          {route.params.isContractor ? (
+            <Card.Content>
+              <Button mode="contained" onPress={() => CreateQuote()}>
+                Create Quote
+              </Button>
+            </Card.Content>
+          ) : (
+            <Card.Content
+              style={[Styles.flexRow, {justifyContent: 'space-between'}]}>
+              <Button mode="outlined" onPress={() => AddMoreDesigns()}>
+                Add More
+              </Button>
+              <Button
+                mode="contained"
+                onPress={() => InsertDesignEstimationEnquiry('get', '1')}>
+                Get Estimation
+              </Button>
+            </Card.Content>
+          )}
+        </View>
+        <RBSheet
+          ref={refRBSheet}
+          closeOnDragDown={true}
+          closeOnPressMask={true}
+          dragFromTopOnly={true}
+          height={640}
+          animationType="fade"
+          customStyles={{
+            wrapper: {backgroundColor: 'rgba(0,0,0,0.5)'},
+            draggableIcon: {backgroundColor: '#000'},
+          }}>
+          <ScrollView
+            style={[Styles.flex1, Styles.backgroundColor]}
+            contentContainerStyle={{flexGrow: 1}}
+            keyboardShouldPersistTaps="handled"
+            nestedScrollEnabled>
+            <View
+              style={[Styles.flex1, Styles.backgroundColor, Styles.padding16]}>
+              <View style={[Styles.flexColumn]}>
+                <AutocompleteDropdown
+                  clearOnFocus={false}
+                  closeOnBlur={true}
+                  direction="down"
+                  suggestionsListContainerStyle={{
+                    borderColor: theme.colors.border,
+                    borderWidth: 1,
+                  }}
+                  inputContainerStyle={{
+                    backgroundColor: theme.colors.textLight,
+                    borderBottomColor: errorCON
+                      ? theme.colors.error
+                      : theme.colors.textfield,
+                    borderBottomWidth: 1,
+                  }}
+                  textInputProps={{
+                    placeholder: 'Company Name',
+                    value: companyName,
+                    placeholderTextColor: errorCON
+                      ? theme.colors.error
+                      : theme.colors.textSecondary,
+                    onChangeText: onCompanyNameSelected,
+                  }}
+                  renderItem={item => (
+                    <View style={[Styles.paddingVertical16]}>
+                      <Text
+                        style={{
+                          color: theme.colors.text,
+                          paddingHorizontal: 16,
+                        }}>
+                        {item ? item.title : ''}
+                      </Text>
+                    </View>
+                  )}
+                  onClear={() => {
+                    setIsButtonDisabled(true);
+                    setCompanyName('');
+                    setCompanyData([]);
+                  }}
+                  onSelectItem={item => {
+                    if (item) {
+                      setIsButtonDisabled(false);
+                      setCompanyName(item.title);
+                    }
+                  }}
+                  dataSet={companyData}
+                />
+                <HelperText type="error" visible={errorCON}>
+                  {communication.InvalidClient}
+                </HelperText>
+                <AutocompleteDropdown
+                  clearOnFocus={false}
+                  closeOnBlur={true}
+                  direction="down"
+                  suggestionsListContainerStyle={{
+                    borderColor: theme.colors.border,
+                    borderWidth: 1,
+                  }}
+                  inputContainerStyle={{
+                    backgroundColor: theme.colors.textLight,
+                    borderBottomColor: errorMN
+                      ? theme.colors.error
+                      : theme.colors.textfield,
+                    borderBottomWidth: 1,
+                  }}
+                  textInputProps={{
+                    placeholder: 'Mobile No',
+                    value: mobileno,
+                    placeholderTextColor: errorMN
+                      ? theme.colors.error
+                      : theme.colors.textSecondary,
+                    onChangeText: onMobileNumberSelected,
+                  }}
+                  renderItem={item => (
+                    <View style={[Styles.paddingVertical8]}>
+                      <Text
+                        style={{
+                          color: theme.colors.text,
+                          paddingHorizontal: 16,
+                        }}>
+                        {item ? item.title : ''}
+                      </Text>
+                      <Text
+                        style={{
+                          color: theme.colors.textSecondary,
+                          paddingHorizontal: 16,
+                        }}>
+                        {item ? item.contact : ''}
+                      </Text>
+                    </View>
+                  )}
+                  onClear={() => {
+                    setIsButtonDisabled(true);
+                    setMobileNo('');
+                    setMobileNoData([]);
+                  }}
+                  onSelectItem={item => {
+                    if (item) {
+                      setIsButtonDisabled(false);
+                      setMobileNo(item.title);
+                    }
+                  }}
+                  dataSet={mobilenoData}
+                />
+                <HelperText type="error" visible={errorMN}>
+                  {communication.InvalidClient}
+                </HelperText>
+              </View>
+              <Button
+                mode="contained"
+                disabled={isButtonDisabled}
+                style={[Styles.marginTop32, {zIndex: -1}]}
+                onPress={SearchClient}>
+                Search
+              </Button>
+              <View
+                style={[Styles.flexColumn, Styles.border1, Styles.marginTop16]}>
+                {otherClients &&
+                  otherClients.map((v, k) => {
+                    return (
+                      <View
+                        style={[
+                          Styles.flexRow,
+                          Styles.padding16,
+                          Styles.flexAlignCenter,
+                          Styles.borderBottom1,
+                          {justifyContent: 'space-between'},
+                        ]}>
+                        <View style={[Styles.flexColumn]}>
+                          <Text style={{color: theme.colors.text}}>
+                            {v.Search_company_name}
+                          </Text>
+                          <Text style={{color: theme.colors.text}}>
+                            {v.Search_mobile_no}
+                          </Text>
+                        </View>
+                        <Button
+                          mode="contained"
+                          disabled={isButtonDisabled}
+                          onPress={() =>
+                            InsertOtherClient(v.Search_user_refno)
+                          }>
+                          Add
+                        </Button>
+                      </View>
+                    );
+                  })}
+              </View>
+            </View>
+          </ScrollView>
+        </RBSheet>
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          duration={3000}
+          style={{backgroundColor: snackbarColor}}>
+          {snackbarText}
+        </Snackbar>
+      </View>
     </SafeAreaView>
   );
 };

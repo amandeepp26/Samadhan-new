@@ -10,6 +10,7 @@ import Provider from "../../../../api/Provider";
 import { Button, Snackbar } from "react-native-paper";
 import { communication } from "../../../../utils/communication";
 import { theme } from "../../../../theme/apptheme";
+import Header from "../../../../components/Header";
 
 let userID = 0, compayID = 0, branchID = 0;
 
@@ -171,7 +172,7 @@ const EditCompanyForm = ({ navigation, route }) => {
     return (
         <View style={[Styles.flex1, Styles.backgroundColor]}>
 
-
+<Header navigation={navigation} title={'Edit Company'} />
             <ScrollView keyboardShouldPersistTaps="handled">
                 <View style={[Styles.flex1, Styles.padding16, { background: "#fff" }]}>
                     <FormInput

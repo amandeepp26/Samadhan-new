@@ -94,6 +94,7 @@ const DealerProductScreen = ({ navigation }) => {
 
   const GetUserID = async () => {
     const userData = await AsyncStorage.getItem("user");
+    console.warn('user--->',userData)
     if (userData !== null) {
       dealerID = JSON.parse(userData).UserID;
       ifBrandCreate = JSON.parse(userData).Sess_if_create_brand;
@@ -114,21 +115,24 @@ const DealerProductScreen = ({ navigation }) => {
       data: {
         Sess_UserRefno: dealerID,
         company_product_refno: "all",
-        Sess_if_create_brand: ifBrandCreate,
+        Sess_if_create_brand: 0,
       },
     };
+        console.warn('params--->', params);
+
     Provider.createDFCommon(
       Provider.API_URLS.dealercompanyproductrefnocheck,
       params
     )
       .then((response) => {
+        console.warn('response--->', response.data);
         if (response.data && response.data.code === 200) {
           if (response.data.data) {
-            response.data.data = APIConverter(response.data.data);
-            const lisData = [...response.data.data];
-            lisData.map((k, i) => {
-              k.key = (parseInt(i) + 1).toString();
-            });
+            // response.data.data = APIConverter(response.data.data);
+            // const lisData = [...response.data.data];
+            // lisData.map((k, i) => {
+            //   k.key = (parseInt(i) + 1).toString();
+            // });
             setListData(response.data.data);
             setListSearchData(response.data.data);
           }
@@ -162,48 +166,47 @@ const DealerProductScreen = ({ navigation }) => {
           Styles.borderBottom1,
           Styles.paddingStart16,
           Styles.flexJustifyCenter,
-          { height: 72 },
-        ]}
-      >
+          {height: 72},
+        ]}>
         <List.Item
-          title={`${data.item.brandPrefix} ${data.item.productName}`}
-          titleStyle={{ fontSize: 18 }}
+          title={`${data.item.brand_prefixname} ${data.item.product_name}`}
+          titleStyle={{fontSize: 18}}
           description={
             <View>
               <Text>
                 Brand:
-                <Text style={[Styles.fontBold, { color: theme.colors.primary }]}>
-                  {data.item.brandName}
+                <Text style={[Styles.fontBold, {color: theme.colors.primary}]}>
+                  {data.item.brand_name}
                 </Text>
               </Text>
             </View>
           }
           onPress={() => {
             refRBSheet.current.open();
-            setBrandName(data.item.brandName);
-            setBrandPrefix(data.item.brandPrefix);
-            setProductName(data.item.productName);
-            setImage(data.item.image);
+            setBrandName(data.item.brand_name);
+            setBrandPrefix(data.item.brand_prefixname);
+            setProductName(data.item.product_name);
+            setImage(data.item.product_image_url);
             setPrice(data.item.price);
-            setUnitValue(data.item.unitValue);
+            setUnitValue(data.item.converted_unit_value);
             setDescription(data.item.description);
 
             setUnitOfSale(data.item.unitOfSale);
-            setUonvertUnit(data.item.convertUnitName);
-            setDisplay(data.item.display ? "Yes" : "No");
-            setAnnounceStatus(data.item.isPublish == "1" ? "Yes" : "No");
-            setApproveStatus(data.item.isApprove == "1" ? "Yes" : "No");
+            setUonvertUnit(data.item.convert_unit_name);
+            setDisplay(data.item.display ? 'Yes' : 'No');
+            setAnnounceStatus(data.item.isPublish == '1' ? 'Yes' : 'No');
+            setApproveStatus(data.item.isApprove == '1' ? 'Yes' : 'No');
           }}
           left={() => (
             <Image
-              source={{ uri: data.item.image }}
+              source={{uri: data.item.product_image_url}}
               style={[Styles.width56, Styles.height56]}
             />
           )}
           // left={() => <Icon style={{ marginVertical: 12, marginRight: 12 }} size={30} color={theme.colors.textSecondary} name="account-group" />}
           right={() => (
             <Icon
-              style={{ marginVertical: 12, marginRight: 12 }}
+              style={{marginVertical: 12, marginRight: 12}}
               size={30}
               color={theme.colors.textSecondary}
               name="eye"

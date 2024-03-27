@@ -99,7 +99,7 @@ function CustomDrawerContent({navigation,loginUser,name,role,data,profileIcon, .
                     title: item.title,
                   });
                 } else {
-                  navigation.navigate(item.title);
+                  navigation.navigate(item.navigation);
                 }
               }}
               style={{

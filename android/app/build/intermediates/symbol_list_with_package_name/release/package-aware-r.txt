@@ -2901,6 +2901,10 @@ drawable assets_addemployee
 drawable assets_api
 drawable assets_category
 drawable assets_defaulticon
+drawable assets_dreamfour
+drawable assets_dreamone
+drawable assets_dreamthree
+drawable assets_dreamtwo
 drawable assets_estimate
 drawable assets_eye
 drawable assets_gallery
@@ -5271,3 +5275,4 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 xml imagepicker_provider_paths
 xml rn_dev_preferences
+xml share_download_paths

@@ -15,12 +15,18 @@ import java.util.ArrayList;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 // @react-native-community/datetimepicker
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
+// react-native-contacts
+import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 // react-native-document-picker
 import com.reactnativedocumentpicker.RNDocumentPickerPackage;
+// react-native-fs
+import com.rnfs.RNFSPackage;
 // react-native-geolocation-service
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.RNGestureHandlerPackage;
+// react-native-html-to-pdf
+import com.christopherdro.htmltopdf.RNHTMLtoPDFPackage;
 // react-native-image-picker
 import com.imagepicker.ImagePickerPackage;
 // react-native-pager-view
@@ -35,6 +41,8 @@ import com.swmansion.reanimated.ReanimatedPackage;
 import com.th3rdwave.safeareacontext.SafeAreaContextPackage;
 // react-native-screens
 import com.swmansion.rnscreens.RNScreensPackage;
+// react-native-share
+import cl.json.RNSharePackage;
 // react-native-svg
 import com.horcrux.svg.SvgPackage;
 // react-native-vector-icons
@@ -86,9 +94,12 @@ public class PackageList {
       new MainReactPackage(mConfig),
       new AsyncStoragePackage(),
       new RNDateTimePickerPackage(),
+      new ReactNativeContacts(),
       new RNDocumentPickerPackage(),
+      new RNFSPackage(),
       new RNFusedLocationPackage(),
       new RNGestureHandlerPackage(),
+      new RNHTMLtoPDFPackage(),
       new ImagePickerPackage(),
       new PagerViewPackage(),
       new RNPermissionsPackage(),
@@ -96,6 +107,7 @@ public class PackageList {
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
       new RNScreensPackage(),
+      new RNSharePackage(),
       new SvgPackage(),
       new VectorIconsPackage()
     ));

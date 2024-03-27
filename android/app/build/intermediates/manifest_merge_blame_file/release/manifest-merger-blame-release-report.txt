@@ -11,123 +11,150 @@
 11    <uses-permission android:name="android.permission.INTERNET" />
 11-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:3:5-67
 11-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:3:22-64
-12
-13    <permission
-13-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
-14        android:name="com.samadhan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-14-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
-15        android:protectionLevel="signature" />
-15-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:4:5-78
+12-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:4:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:5:5-80
+13-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:5:22-78
+14    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+14-->[:react-native-fs] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-fs/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:7:5-81
+14-->[:react-native-fs] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-fs/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:7:22-78
+15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 16
-17    <uses-permission android:name="com.samadhan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-17-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
-17-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
-18
-19    <application
-19-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:5:5-24:19
-20        android:name="com.samadhan.MainApplication"
-20-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:6:7-38
-21        android:allowBackup="false"
-21-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:10:7-34
-22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-22-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
-23        android:extractNativeLibs="true"
-24        android:icon="@mipmap/ic_launcher"
-24-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:8:7-41
-25        android:label="@string/app_name"
-25-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:7:7-39
-26        android:roundIcon="@mipmap/ic_launcher"
-26-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:9:7-46
-27        android:theme="@style/AppTheme" >
-27-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:11:7-38
-28        <activity
-28-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:12:7-23:18
-29            android:name="com.samadhan.MainActivity"
-29-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:13:9-37
-30            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-30-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:15:9-118
-31            android:exported="true"
-31-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:18:9-32
-32            android:label="@string/app_name"
-32-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:14:9-41
-33            android:launchMode="singleTask"
-33-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:16:9-40
-34            android:windowSoftInputMode="adjustResize" >
-34-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:17:9-51
-35            <intent-filter>
-35-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:19:9-22:25
-36                <action android:name="android.intent.action.MAIN" />
-36-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:20:13-65
-36-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:20:21-62
-37
-38                <category android:name="android.intent.category.LAUNCHER" />
-38-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:21:13-73
-38-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:21:23-70
-39            </intent-filter>
-40        </activity>
+17    <permission
+17-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+18        android:name="com.samadhan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.samadhan.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+22
+23    <application
+23-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:7:5-26:19
+24        android:name="com.samadhan.MainApplication"
+24-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:8:7-38
+25        android:allowBackup="false"
+25-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:12:7-34
+26        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+26-->[androidx.core:core:1.9.0] /Users/aman/.gradle/caches/transforms-3/22683146be7de19e680288086dc84be1/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+27        android:extractNativeLibs="true"
+28        android:icon="@mipmap/ic_launcher"
+28-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:10:7-41
+29        android:label="@string/app_name"
+29-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:9:7-39
+30        android:roundIcon="@mipmap/ic_launcher"
+30-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:11:7-46
+31        android:theme="@style/AppTheme" >
+31-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:13:7-38
+32        <activity
+32-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:14:7-25:18
+33            android:name="com.samadhan.MainActivity"
+33-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:15:9-37
+34            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+34-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:17:9-118
+35            android:exported="true"
+35-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:20:9-32
+36            android:label="@string/app_name"
+36-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:16:9-41
+37            android:launchMode="singleTask"
+37-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:18:9-40
+38            android:windowSoftInputMode="adjustResize" >
+38-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:19:9-51
+39            <intent-filter>
+39-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:21:9-24:25
+40                <action android:name="android.intent.action.MAIN" />
+40-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:22:13-65
+40-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:22:21-62
 41
-42        <provider
-42-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-16:20
-43            android:name="com.imagepicker.ImagePickerProvider"
-43-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-63
-44            android:authorities="com.samadhan.imagepickerprovider"
-44-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-71
-45            android:exported="false"
-45-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-37
-46            android:grantUriPermissions="true" >
-46-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-47
-47            <meta-data
-47-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-15:70
-48                android:name="android.support.FILE_PROVIDER_PATHS"
-48-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:17-67
-49                android:resource="@xml/imagepicker_provider_paths" />
-49-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:17-67
-50        </provider>
-51
-52        <activity
-52-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:23:9-26:75
-53            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-53-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:24:13-79
-54            android:exported="false"
-54-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:25:13-37
-55            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-55-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:26:13-72
-56
-57        <meta-data
-57-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:23:9-25:69
-58            android:name="com.google.android.gms.version"
-58-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:24:13-58
-59            android:value="@integer/google_play_services_version" />
-59-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:25:13-66
-60
-61        <provider
-61-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-62            android:name="androidx.startup.InitializationProvider"
-62-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
-63            android:authorities="com.samadhan.androidx-startup"
-63-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
-64            android:exported="false" >
-64-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
-65            <meta-data
-65-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-66                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-66-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
-67                android:value="androidx.startup" />
-67-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
-68            <meta-data
-68-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
-69                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-69-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
-70                android:value="androidx.startup" />
-70-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
-71        </provider>
-72
-73        <meta-data
-73-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:12:9-14:37
-74            android:name="com.facebook.soloader.enabled"
-74-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:13:13-57
-75            android:value="false" />
-75-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:14:13-34
-76    </application>
-77
-78</manifest>
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:23:13-73
+42-->/Users/aman/Documents/Apps/Samadhan/android/app/src/main/AndroidManifest.xml:23:23-70
+43            </intent-filter>
+44        </activity>
+45
+46        <provider
+46-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-16:20
+47            android:name="com.imagepicker.ImagePickerProvider"
+47-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-63
+48            android:authorities="com.samadhan.imagepickerprovider"
+48-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-71
+49            android:exported="false"
+49-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-37
+50            android:grantUriPermissions="true" >
+50-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-47
+51            <meta-data
+51-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-15:70
+52                android:name="android.support.FILE_PROVIDER_PATHS"
+52-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:17-67
+53                android:resource="@xml/imagepicker_provider_paths" />
+53-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:17-67
+54        </provider>
+55        <provider
+55-->[:react-native-share] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:8:9-16:20
+56            android:name="cl.json.RNShareFileProvider"
+56-->[:react-native-share] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:9:13-55
+57            android:authorities="com.samadhan.rnshare.fileprovider"
+57-->[:react-native-share] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:10:13-72
+58            android:exported="false"
+58-->[:react-native-share] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-37
+59            android:grantUriPermissions="true" >
+59-->[:react-native-share] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-share/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-47
+60            <meta-data
+60-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-15:70
+61                android:name="android.support.FILE_PROVIDER_PATHS"
+61-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:14:17-67
+62                android:resource="@xml/share_download_paths" />
+62-->[:react-native-image-picker] /Users/aman/Documents/Apps/Samadhan/node_modules/react-native-image-picker/android/build/intermediates/merged_manifest/release/AndroidManifest.xml:15:17-67
+63        </provider>
+64
+65        <activity
+65-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:23:9-26:75
+66            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+66-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:24:13-79
+67            android:exported="false"
+67-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:25:13-37
+68            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+68-->[com.google.android.gms:play-services-base:17.5.0] /Users/aman/.gradle/caches/transforms-3/664e9d1cd62a3b188969298e7aa961c5/transformed/jetified-play-services-base-17.5.0/AndroidManifest.xml:26:13-72
+69
+70        <meta-data
+70-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:23:9-25:69
+71            android:name="com.google.android.gms.version"
+71-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:24:13-58
+72            android:value="@integer/google_play_services_version" />
+72-->[com.google.android.gms:play-services-basement:17.5.0] /Users/aman/.gradle/caches/transforms-3/2e0beb6a78a2fb05bcf60088047f7651/transformed/jetified-play-services-basement-17.5.0/AndroidManifest.xml:25:13-66
+73
+74        <provider
+74-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+75            android:name="androidx.startup.InitializationProvider"
+75-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+76            android:authorities="com.samadhan.androidx-startup"
+76-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+77            android:exported="false" >
+77-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+78            <meta-data
+78-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+79                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+79-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+80                android:value="androidx.startup" />
+80-->[androidx.emoji2:emoji2:1.2.0] /Users/aman/.gradle/caches/transforms-3/d384e11cb57f8f6f3da7dccf65594a47/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+81            <meta-data
+81-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+82                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+82-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+83                android:value="androidx.startup" />
+83-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/aman/.gradle/caches/transforms-3/40e7084908ffc361c33d5d92a7628fd5/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+84        </provider>
+85
+86        <meta-data
+86-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:12:9-14:37
+87            android:name="com.facebook.soloader.enabled"
+87-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:13:13-57
+88            android:value="false" />
+88-->[com.facebook.soloader:soloader:0.10.5] /Users/aman/.gradle/caches/transforms-3/55c8f4ac4c6afa14d2f9f0e0c27efba5/transformed/jetified-soloader-0.10.5/AndroidManifest.xml:14:13-34
+89    </application>
+90
+91</manifest>
